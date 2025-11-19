@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TimeLord Browser - A lightweight, feature-rich PWA browser">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>TimeLord Browser</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌐</text></svg>">
+</head>
+<body>
+    <div class="browser-container">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="browser-name">
+                <span class="logo">🌐</span>
+                <span class="name">TimeLord Browser</span>
+            </div>
+            <div class="header-controls">
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">🌓</button>
+                <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+            </div>
+        </header>
+
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+            <div class="tabs-container" id="tabsContainer"></div>
+            <button id="newTabBtn" class="new-tab-btn" title="New Tab">+</button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <div class="nav-controls">
+                <button id="backBtn" class="nav-btn" title="Back" disabled>◀</button>
+                <button id="forwardBtn" class="nav-btn" title="Forward" disabled>▶</button>
+                <button id="refreshBtn" class="nav-btn" title="Refresh">↻</button>
+                <button id="homeBtn" class="nav-btn" title="Home">🏠</button>
+            </div>
+
+            <div class="address-bar-container">
+                <span class="protocol-indicator" id="protocolIndicator">🔒</span>
+                <input type="text" id="addressBar" class="address-bar" placeholder="Enter URL or search...">
+                <button id="goBtn" class="go-btn">Go</button>
+            </div>
+
+            <div class="action-controls">
+                <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
+                <button id="historyBtn" class="action-btn" title="History">📜</button>
+                <button id="downloadsBtn" class="action-btn" title="Downloads">💾</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Tabs will be dynamically inserted here -->
+        </main>
+
+        <!-- Sidebar (for bookmarks, history, etc.) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 id="sidebarTitle">Bookmarks</h3>
+                <button class="close-sidebar" id="closeSidebar">✕</button>
+            </div>
+            <div class="sidebar-content" id="sidebarContent"></div>
+        </aside>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2>Settings</h2>
+                    <button class="close-settings" id="closeSettings">✕</button>
+                </div>
+
+                <div class="settings-body">
+                    <div class="setting-group">
+                        <h3>General</h3>
+                        <div class="setting-item">
+                            <label for="homePageInput">Home Page URL:</label>
+                            <input type="text" id="homePageInput" placeholder="https://example.com">
+                            <button id="saveHomePage" class="small-btn">Save</button>
+                        </div>
+                        <div class="setting-item">
+                            <label for="searchEngineSelect">Default Search Engine:</label>
+                            <select id="searchEngineSelect">
+                                <option value="google">Google</option>
+                                <option value="duckduckgo">DuckDuckGo</option>
+                                <option value="bing">Bing</option>
+                                <option value="brave">Brave Search</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Privacy</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="saveHistory">
+                                Save browsing history
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <button id="clearHistoryBtn" class="danger-btn">Clear History</button>
+                            <button id="clearBookmarksBtn" class="danger-btn">Clear Bookmarks</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Appearance</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="autoTheme">
+                                Auto theme based on system preference
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>About</h3>
+                        <p class="about-text">
+                            <strong>TimeLord Browser v1.0</strong><br>
+                            A lightweight, feature-rich Progressive Web App browser.<br>
+                            Built with vanilla JavaScript for optimal performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+                <h1>🌐 Welcome to TimeLord Browser</h1>
+                <p class="tagline">A lightweight, powerful browsing experience</p>
+
+                <div class="quick-links">
+                    <h3>Quick Links</h3>
+                    <div class="links-grid">
+                        <a href="https://www.google.com" class="quick-link" data-url="https://www.google.com">
+                            <span class="link-icon">🔍</span>
+                            <span class="link-name">Google</span>
+                        </a>
+                        <a href="https://github.com" class="quick-link" data-url="https://github.com">
+                            <span class="link-icon">💻</span>
+                            <span class="link-name">GitHub</span>
+                        </a>
+                        <a href="https://www.wikipedia.org" class="quick-link" data-url="https://www.wikipedia.org">
+                            <span class="link-icon">📚</span>
+                            <span class="link-name">Wikipedia</span>
+                        </a>
+                        <a href="https://www.youtube.com" class="quick-link" data-url="https://www.youtube.com">
+                            <span class="link-icon">📺</span>
+                            <span class="link-name">YouTube</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>🚀 Lightweight and fast</li>
+                        <li>📑 Multi-tab browsing</li>
+                        <li>⭐ Bookmark management</li>
+                        <li>📜 History tracking</li>
+                        <li>🌓 Dark/Light theme</li>
+                        <li>📱 Works offline (PWA)</li>
+                        <li>🔒 Privacy-focused</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
