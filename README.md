@@ -2,7 +2,7 @@
 
 A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities, Bluetooth file sharing, cloud file management, code execution VM, split-screen browsing, and a clean, intuitive interface.
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![PWA](https://img.shields.io/badge/PWA-enabled-orange.svg)
 ![Bluetooth](https://img.shields.io/badge/Bluetooth-enabled-blue.svg)
@@ -229,6 +229,122 @@ Browse multiple pages simultaneously with split-screen support.
 - Research across multiple sources
 - Split workflow between tasks
 
+### Download Manager
+Track and manage all your downloads with real-time progress monitoring.
+
+#### How to Use Download Manager:
+1. **Open Download Manager**: Click the Downloads (💾) button in the navigation bar
+2. **Track Downloads**: Downloads are automatically tracked when initiated
+3. **View Progress**: See real-time progress bars and status updates
+4. **View History**: Access all completed downloads
+
+#### Features:
+- Real-time download progress tracking
+- Download status indicators (in progress, completed)
+- Download history with timestamps
+- File size and name display
+- Persistent download tracking
+- Clean, organized interface
+
+### Tab Groups
+Organize your tabs into groups for better productivity and workflow management.
+
+#### How to Use Tab Groups:
+1. **Open Tab Groups**: Click the More Tools (⋮) button, then select "Tab Groups"
+2. **Create Group**: Click "Create Group" and name your group
+3. **Add Tabs**: Drag tabs to groups or use the group menu
+4. **Manage Groups**: View, organize, and delete groups as needed
+
+#### Features:
+- Create unlimited tab groups
+- Color-coded groups for easy identification
+- Group tabs by project, topic, or workflow
+- View tab count per group
+- Delete groups without closing tabs
+- Persistent group storage
+
+### Reading Mode
+Enjoy distraction-free reading with article extraction and customization.
+
+#### How to Use Reading Mode:
+1. **Open Reading Mode**: Click the More Tools (⋮) button, then select "Reading Mode"
+2. **View Article**: The main content is automatically extracted
+3. **Customize**: Adjust font size and family to your preference
+4. **Exit**: Click the exit button to return to normal browsing
+
+#### Features:
+- Clean article extraction
+- Adjustable font size (12-32px)
+- Multiple font family options
+- Article metadata display
+- Distraction-free interface
+- Easy navigation controls
+
+#### Font Options:
+- Georgia (serif)
+- Arial (sans-serif)
+- Courier New (monospace)
+- Times New Roman (serif)
+
+### Screenshot Tool
+Capture and share screenshots directly from your browser.
+
+#### How to Use Screenshot Tool:
+1. **Open Screenshot Tool**: Click the More Tools (⋮) button, then select "Screenshot"
+2. **Choose Capture Type**:
+   - **Visible Area**: Capture what's currently visible
+   - **Full Page**: Capture the entire page (requires extension permissions)
+   - **Selection**: Draw a box to capture specific area
+3. **Save or Share**: Download the screenshot or copy to clipboard
+
+#### Features:
+- Multiple capture modes
+- Instant screenshot generation
+- Download as PNG
+- Copy to clipboard support
+- Screen capture API integration
+- High-quality image output
+
+### QR Code Generator
+Generate QR codes for URLs, text, and share them easily.
+
+#### How to Use QR Code Generator:
+1. **Open QR Generator**: Click the More Tools (⋮) button, then select "QR Code"
+2. **Enter Content**: Type URL or text, or use "Current Page" button
+3. **Generate**: Click "Generate QR Code"
+4. **Download or Share**: Save the QR code or share via native sharing
+
+#### Features:
+- Generate QR codes from any text or URL
+- Quick QR for current page
+- Download as PNG image
+- Native share integration
+- Canvas-based rendering
+- High-resolution output
+
+### Ad Blocker
+Block ads and trackers for faster, cleaner browsing.
+
+#### How to Use Ad Blocker:
+1. **Open Ad Blocker**: Click the More Tools (⋮) button, then select "Ad Blocker"
+2. **Enable Blocking**: Toggle the ad blocker on
+3. **Configure**: Select filter lists and add custom filters
+4. **Monitor**: View blocking statistics
+
+#### Features:
+- Enable/disable ad blocking with one click
+- Multiple filter list support (EasyList, EasyPrivacy, etc.)
+- Custom filter rules
+- Blocking statistics (ads and trackers)
+- Domain-based blocking
+- Regular filter list updates
+
+#### Filter Lists:
+- **EasyList**: General ad blocking
+- **EasyPrivacy**: Privacy protection and tracker blocking
+- **Fanboy Annoyances**: Remove social media widgets and annoyances
+- **Custom Filters**: Add your own blocking rules
+
 ### Settings
 Access settings by clicking the gear (⚙️) icon:
 
@@ -264,14 +380,16 @@ TimeLordHorus/
 ├── index.html          # Main HTML structure
 ├── styles.css          # All styling and themes
 ├── app.js              # Core browser functionality
-├── bluedrop.js        # BlueDrop Bluetooth sharing service
-├── filemanager.js     # File Manager with cloud storage
-├── coderunner.js      # Code Runner VM engine
-├── splitview.js       # Split view manager
+├── bluedrop.js         # BlueDrop Bluetooth sharing service
+├── filemanager.js      # File Manager with cloud storage
+├── coderunner.js       # Code Runner VM engine
+├── splitview.js        # Split view manager
+├── downloadmanager.js  # Download Manager with progress tracking
+├── advancedtools.js    # Advanced tools (Tab Groups, Reading Mode, etc.)
 ├── manifest.json       # PWA manifest
-├── sw.js              # Service worker
-├── .gitignore         # Git ignore configuration
-└── README.md          # Documentation
+├── sw.js               # Service worker
+├── .gitignore          # Git ignore configuration
+└── README.md           # Documentation
 ```
 
 ### Key Technologies
@@ -359,17 +477,17 @@ Potential features for future versions:
 - [x] File Manager with cloud storage (✅ Implemented in v2.0.0)
 - [x] Code Runner VM (✅ Implemented in v2.0.0)
 - [x] Split View browsing (✅ Implemented in v2.0.0)
-- [ ] Download manager with progress tracking
+- [x] Download manager with progress tracking (✅ Implemented in v2.1.0)
+- [x] Tab groups (✅ Implemented in v2.1.0)
+- [x] Reading mode with article extraction (✅ Implemented in v2.1.0)
+- [x] Screenshot and screen recording tool (✅ Implemented in v2.1.0)
+- [x] Ad blocker with custom filter lists (✅ Implemented in v2.1.0)
+- [x] QR code generation and sharing (✅ Implemented in v2.1.0)
 - [ ] Password manager with encryption
 - [ ] Extensions support
-- [ ] Tab groups
-- [ ] Reading mode with article extraction
 - [ ] Built-in PDF viewer and editor
-- [ ] Screenshot and screen recording tool
 - [ ] Private browsing mode with encryption
-- [ ] Ad blocker with custom filter lists
 - [ ] Enhanced Bluetooth features (larger file transfers, device pairing memory)
-- [ ] QR code generation and sharing
 - [ ] Tab drag-and-drop between split panes
 - [ ] Synchronized scrolling in split view
 - [ ] Code collaboration features

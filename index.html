@@ -52,7 +52,32 @@
                 <button id="fileManagerBtn" class="action-btn" title="File Manager & Cloud Storage">📁</button>
                 <button id="splitViewBtn" class="action-btn" title="Split View">⚡</button>
                 <button id="codeRunnerBtn" class="action-btn" title="Code Runner VM">💻</button>
-                <button id="downloadsBtn" class="action-btn" title="Downloads">💾</button>
+                <button id="downloadsBtn" class="action-btn" title="Downloads & Manager">💾</button>
+                <button id="moreToolsBtn" class="action-btn" title="More Tools">🔧</button>
+            </div>
+
+            <!-- More Tools Dropdown -->
+            <div class="more-tools-dropdown" id="moreToolsDropdown" style="display: none;">
+                <button class="tool-item" id="tabGroupsBtn">
+                    <span class="tool-icon">📑</span>
+                    <span class="tool-name">Tab Groups</span>
+                </button>
+                <button class="tool-item" id="readingModeBtn">
+                    <span class="tool-icon">📖</span>
+                    <span class="tool-name">Reading Mode</span>
+                </button>
+                <button class="tool-item" id="screenshotBtn">
+                    <span class="tool-icon">📸</span>
+                    <span class="tool-name">Screenshot</span>
+                </button>
+                <button class="tool-item" id="qrCodeBtn">
+                    <span class="tool-icon">📱</span>
+                    <span class="tool-name">QR Code</span>
+                </button>
+                <button class="tool-item" id="adBlockerBtn">
+                    <span class="tool-icon">🛡️</span>
+                    <span class="tool-name">Ad Blocker</span>
+                </button>
             </div>
         </nav>
 
@@ -469,6 +494,152 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                 <span>✕</span>
             </button>
         </div>
+
+        <!-- Download Manager Panel -->
+        <div class="download-manager-panel" id="downloadManagerPanel">
+            <div class="download-manager-content">
+                <div class="panel-header">
+                    <h2>💾 Download Manager</h2>
+                    <button class="close-panel" id="closeDownloadManager">✕</button>
+                </div>
+                <div class="panel-body">
+                    <div class="downloads-list" id="downloadsList">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💾</div>
+                            <div class="empty-state-text">No downloads yet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reading Mode Panel -->
+        <div class="reading-mode-panel" id="readingModePanel" style="display: none;">
+            <div class="reading-mode-content">
+                <div class="reading-header">
+                    <button id="closeReadingMode" class="reading-close">✕</button>
+                    <div class="reading-controls">
+                        <button id="decreaseFontSize" class="reading-btn">A-</button>
+                        <button id="increaseFontSize" class="reading-btn">A+</button>
+                        <button id="toggleReadingTheme" class="reading-btn">🌓</button>
+                    </div>
+                </div>
+                <article id="readingContent" class="reading-article"></article>
+            </div>
+        </div>
+
+        <!-- QR Code Generator Panel -->
+        <div class="modal" id="qrCodeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📱 QR Code Generator</h3>
+                    <button class="close-modal" id="closeQRModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-input-section">
+                        <label>Generate QR Code for:</label>
+                        <select id="qrType" class="qr-select">
+                            <option value="current">Current Page URL</option>
+                            <option value="custom">Custom Text/URL</option>
+                        </select>
+                        <textarea id="qrCustomText" placeholder="Enter custom text or URL..." rows="3" style="display: none;"></textarea>
+                    </div>
+                    <div class="qr-display" id="qrDisplay">
+                        <canvas id="qrCanvas"></canvas>
+                    </div>
+                    <div class="qr-actions">
+                        <button id="generateQRBtn" class="primary-btn">Generate QR Code</button>
+                        <button id="downloadQRBtn" class="secondary-btn">Download PNG</button>
+                        <button id="shareQRBtn" class="secondary-btn">Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screenshot Tool Panel -->
+        <div class="modal" id="screenshotModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📸 Screenshot Tool</h3>
+                    <button class="close-modal" id="closeScreenshotModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="screenshot-options">
+                        <button id="captureVisibleBtn" class="primary-btn">📸 Capture Visible Area</button>
+                        <button id="captureFullPageBtn" class="secondary-btn">📄 Full Page</button>
+                        <button id="captureSelectionBtn" class="secondary-btn">✂️ Selection</button>
+                    </div>
+                    <div class="screenshot-preview" id="screenshotPreview" style="display: none;">
+                        <img id="screenshotImg" alt="Screenshot preview">
+                        <div class="screenshot-actions">
+                            <button id="downloadScreenshotBtn" class="primary-btn">Download</button>
+                            <button id="copyScreenshotBtn" class="secondary-btn">Copy to Clipboard</button>
+                            <button id="shareScreenshotBtn" class="secondary-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Groups Panel -->
+        <div class="tab-groups-panel" id="tabGroupsPanel">
+            <div class="panel-content">
+                <div class="panel-header">
+                    <h3>📑 Tab Groups</h3>
+                    <button class="close-panel" id="closeTabGroups">✕</button>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-groups-controls">
+                        <button id="createGroupBtn" class="primary-btn">+ Create Group</button>
+                    </div>
+                    <div class="groups-list" id="groupsList">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📑</div>
+                            <div class="empty-state-text">No tab groups yet. Create one to organize your tabs!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Blocker Settings Panel -->
+        <div class="modal" id="adBlockerModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🛡️ Ad Blocker Settings</h3>
+                    <button class="close-modal" id="closeAdBlockerModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="adblocker-section">
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableAdBlocker">
+                                Enable Ad Blocker
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Blocked Ads: <span id="blockedCount">0</span></h4>
+                        </div>
+                        <div class="setting-item">
+                            <label>Custom Filter Rules:</label>
+                            <textarea id="customFilters" placeholder="Enter custom filter rules (one per line)..." rows="5"></textarea>
+                            <button id="saveFiltersBtn" class="primary-btn">Save Filters</button>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Default Filter Lists:</h4>
+                            <label>
+                                <input type="checkbox" id="easyList" checked>
+                                EasyList (General ads)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="easyPrivacy" checked>
+                                EasyPrivacy (Tracking)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Notifications -->
@@ -479,5 +650,7 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
     <script src="filemanager.js"></script>
     <script src="coderunner.js"></script>
     <script src="splitview.js"></script>
+    <script src="downloadmanager.js"></script>
+    <script src="advancedtools.js"></script>
 </body>
 </html>
