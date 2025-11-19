@@ -49,6 +49,7 @@
                 <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
                 <button id="historyBtn" class="action-btn" title="History">📜</button>
                 <button id="archivesBtn" class="action-btn" title="Free Internet Archives">📚</button>
+                <button id="editorsBtn" class="action-btn" title="Document Editors">📝</button>
                 <button id="blueDropBtn" class="action-btn" title="BlueDrop - Share via Bluetooth">📡</button>
                 <button id="fileManagerBtn" class="action-btn" title="File Manager & Cloud Storage">📁</button>
                 <button id="splitViewBtn" class="action-btn" title="Split View">⚡</button>
@@ -689,6 +690,81 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
         </div>
     </div>
 
+    <!-- Document Editors Panel -->
+    <div class="editors-panel" id="editorsPanel">
+        <div class="editors-container">
+            <div class="editors-header">
+                <h2>📝 Document Editors</h2>
+                <button class="close-editors" id="closeEditors">✕</button>
+            </div>
+
+            <div class="editors-body">
+                <!-- Editor Type Selector -->
+                <div class="editor-selector">
+                    <label for="editorTypeSelect">Document Type:</label>
+                    <select id="editorTypeSelect" class="editor-type-select">
+                        <option value="text">Plain Text (.txt)</option>
+                        <option value="markdown">Markdown (.md)</option>
+                        <option value="html">HTML (.html)</option>
+                        <option value="css">CSS (.css)</option>
+                        <option value="javascript">JavaScript (.js)</option>
+                        <option value="json">JSON (.json)</option>
+                        <option value="xml">XML (.xml)</option>
+                        <option value="csv">CSV (.csv)</option>
+                        <option value="python">Python (.py)</option>
+                        <option value="java">Java (.java)</option>
+                        <option value="cpp">C++ (.cpp)</option>
+                        <option value="sql">SQL (.sql)</option>
+                    </select>
+                </div>
+
+                <!-- File Operations -->
+                <div class="editor-operations">
+                    <button id="newDocBtn" class="editor-btn" title="New Document">
+                        🆕 New
+                    </button>
+                    <button id="loadDocBtn" class="editor-btn" title="Load Document">
+                        📂 Load
+                    </button>
+                    <button id="saveDocBtn" class="editor-btn" title="Save Document">
+                        💾 Save
+                    </button>
+                    <button id="downloadDocBtn" class="editor-btn" title="Download Document">
+                        ⬇️ Download
+                    </button>
+                    <button id="previewDocBtn" class="editor-btn" title="Preview" style="display: none;">
+                        👁️ Preview
+                    </button>
+                    <input type="file" id="loadDocInput" style="display: none;" accept=".txt,.md,.html,.css,.js,.json,.xml,.csv,.py,.java,.cpp,.sql">
+                </div>
+
+                <!-- Filename Input -->
+                <div class="editor-filename">
+                    <label for="docFilename">Filename:</label>
+                    <input type="text" id="docFilename" placeholder="untitled.txt" class="filename-input">
+                </div>
+
+                <!-- Editor Stats -->
+                <div class="editor-stats">
+                    <span class="stat-item">Lines: <span id="editorLines">0</span></span>
+                    <span class="stat-item">Words: <span id="editorWords">0</span></span>
+                    <span class="stat-item">Characters: <span id="editorChars">0</span></span>
+                </div>
+
+                <!-- Main Editor Area -->
+                <div class="editor-main">
+                    <textarea id="documentEditor" class="document-editor" placeholder="Start typing your document here..." spellcheck="true"></textarea>
+                </div>
+
+                <!-- Preview Area (for HTML/Markdown) -->
+                <div class="editor-preview" id="editorPreview" style="display: none;">
+                    <div class="preview-header">Preview</div>
+                    <div class="preview-content" id="previewContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Internet Archives Panel -->
     <div class="archives-panel" id="archivesPanel">
         <div class="archives-container">
@@ -707,28 +783,28 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">🌐 Web Archives</h3>
                         <div class="archive-links">
-                            <a href="https://archive.org" target="_blank" class="archive-link">
+                            <a href="https://archive.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🏛️</span>
                                 <div class="link-details">
                                     <div class="link-name">Internet Archive</div>
                                     <div class="link-desc">Digital library of websites, books, movies, and more</div>
                                 </div>
                             </a>
-                            <a href="https://web.archive.org" target="_blank" class="archive-link">
+                            <a href="https://web.archive.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">⏪</span>
                                 <div class="link-details">
                                     <div class="link-name">Wayback Machine</div>
                                     <div class="link-desc">Browse archived versions of websites</div>
                                 </div>
                             </a>
-                            <a href="https://archive.today" target="_blank" class="archive-link">
+                            <a href="https://archive.today" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📸</span>
                                 <div class="link-details">
                                     <div class="link-name">Archive.today</div>
                                     <div class="link-desc">Take snapshots of web pages</div>
                                 </div>
                             </a>
-                            <a href="https://archiveofourown.org" target="_blank" class="archive-link">
+                            <a href="https://archiveofourown.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📝</span>
                                 <div class="link-details">
                                     <div class="link-name">Archive of Our Own (AO3)</div>
@@ -742,35 +818,35 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">📖 Books & Literature</h3>
                         <div class="archive-links">
-                            <a href="https://www.gutenberg.org" target="_blank" class="archive-link">
+                            <a href="https://www.gutenberg.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📚</span>
                                 <div class="link-details">
                                     <div class="link-name">Project Gutenberg</div>
                                     <div class="link-desc">70,000+ free eBooks</div>
                                 </div>
                             </a>
-                            <a href="https://openlibrary.org" target="_blank" class="archive-link">
+                            <a href="https://openlibrary.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📕</span>
                                 <div class="link-details">
                                     <div class="link-name">Open Library</div>
                                     <div class="link-desc">Millions of books, borrow and read</div>
                                 </div>
                             </a>
-                            <a href="https://standardebooks.org" target="_blank" class="archive-link">
+                            <a href="https://standardebooks.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📗</span>
                                 <div class="link-details">
                                     <div class="link-name">Standard Ebooks</div>
                                     <div class="link-desc">High-quality public domain ebooks</div>
                                 </div>
                             </a>
-                            <a href="https://www.fadedpage.com" target="_blank" class="archive-link">
+                            <a href="https://www.fadedpage.com" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📘</span>
                                 <div class="link-details">
                                     <div class="link-name">FadedPage</div>
                                     <div class="link-desc">Canadian public domain eBooks</div>
                                 </div>
                             </a>
-                            <a href="https://www.manybooks.net" target="_blank" class="archive-link">
+                            <a href="https://www.manybooks.net" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📙</span>
                                 <div class="link-details">
                                     <div class="link-name">ManyBooks</div>
@@ -784,42 +860,42 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">🎓 Academic & Research</h3>
                         <div class="archive-links">
-                            <a href="https://scholar.google.com" target="_blank" class="archive-link">
+                            <a href="https://scholar.google.com" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🔬</span>
                                 <div class="link-details">
                                     <div class="link-name">Google Scholar</div>
                                     <div class="link-desc">Search scholarly literature</div>
                                 </div>
                             </a>
-                            <a href="https://arxiv.org" target="_blank" class="archive-link">
+                            <a href="https://arxiv.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📄</span>
                                 <div class="link-details">
                                     <div class="link-name">arXiv</div>
                                     <div class="link-desc">Open access research papers</div>
                                 </div>
                             </a>
-                            <a href="https://www.ncbi.nlm.nih.gov/pmc" target="_blank" class="archive-link">
+                            <a href="https://www.ncbi.nlm.nih.gov/pmc" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🧬</span>
                                 <div class="link-details">
                                     <div class="link-name">PubMed Central</div>
                                     <div class="link-desc">Free biomedical research articles</div>
                                 </div>
                             </a>
-                            <a href="https://core.ac.uk" target="_blank" class="archive-link">
+                            <a href="https://core.ac.uk" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🌍</span>
                                 <div class="link-details">
                                     <div class="link-name">CORE</div>
                                     <div class="link-desc">Millions of open access research papers</div>
                                 </div>
                             </a>
-                            <a href="https://www.base-search.net" target="_blank" class="archive-link">
+                            <a href="https://www.base-search.net" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🔍</span>
                                 <div class="link-details">
                                     <div class="link-name">BASE</div>
                                     <div class="link-desc">Academic web resources search</div>
                                 </div>
                             </a>
-                            <a href="https://doaj.org" target="_blank" class="archive-link">
+                            <a href="https://doaj.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📰</span>
                                 <div class="link-details">
                                     <div class="link-name">DOAJ</div>
@@ -833,28 +909,28 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">🎬 Media & Entertainment</h3>
                         <div class="archive-links">
-                            <a href="https://archive.org/details/movies" target="_blank" class="archive-link">
+                            <a href="https://archive.org/details/movies" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎥</span>
                                 <div class="link-details">
                                     <div class="link-name">Internet Archive Movies</div>
                                     <div class="link-desc">Free classic movies and videos</div>
                                 </div>
                             </a>
-                            <a href="https://commons.wikimedia.org" target="_blank" class="archive-link">
+                            <a href="https://commons.wikimedia.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🖼️</span>
                                 <div class="link-details">
                                     <div class="link-name">Wikimedia Commons</div>
                                     <div class="link-desc">Free media files repository</div>
                                 </div>
                             </a>
-                            <a href="https://www.loc.gov/free-to-use" target="_blank" class="archive-link">
+                            <a href="https://www.loc.gov/free-to-use" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🏛️</span>
                                 <div class="link-details">
                                     <div class="link-name">Library of Congress</div>
                                     <div class="link-desc">Free historical media and documents</div>
                                 </div>
                             </a>
-                            <a href="https://www.europeana.eu" target="_blank" class="archive-link">
+                            <a href="https://www.europeana.eu" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🇪🇺</span>
                                 <div class="link-details">
                                     <div class="link-name">Europeana</div>
@@ -868,21 +944,21 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">🎵 Music & Audio</h3>
                         <div class="archive-links">
-                            <a href="https://archive.org/details/audio" target="_blank" class="archive-link">
+                            <a href="https://archive.org/details/audio" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎧</span>
                                 <div class="link-details">
                                     <div class="link-name">Internet Archive Audio</div>
                                     <div class="link-desc">Free music, podcasts, and audio</div>
                                 </div>
                             </a>
-                            <a href="https://freemusicarchive.org" target="_blank" class="archive-link">
+                            <a href="https://freemusicarchive.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎼</span>
                                 <div class="link-details">
                                     <div class="link-name">Free Music Archive</div>
                                     <div class="link-desc">High-quality, legal audio downloads</div>
                                 </div>
                             </a>
-                            <a href="https://musopen.org" target="_blank" class="archive-link">
+                            <a href="https://musopen.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎹</span>
                                 <div class="link-details">
                                     <div class="link-name">Musopen</div>
@@ -896,21 +972,21 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">💾 Software & Games</h3>
                         <div class="archive-links">
-                            <a href="https://archive.org/details/software" target="_blank" class="archive-link">
+                            <a href="https://archive.org/details/software" data-navigate="true" class="archive-link">
                                 <span class="link-icon">💻</span>
                                 <div class="link-details">
                                     <div class="link-name">Internet Archive Software</div>
                                     <div class="link-desc">Historical software collection</div>
                                 </div>
                             </a>
-                            <a href="https://github.com" target="_blank" class="archive-link">
+                            <a href="https://github.com" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🐙</span>
                                 <div class="link-details">
                                     <div class="link-name">GitHub</div>
                                     <div class="link-desc">Open source software repository</div>
                                 </div>
                             </a>
-                            <a href="https://www.myabandonware.com" target="_blank" class="archive-link">
+                            <a href="https://www.myabandonware.com" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎮</span>
                                 <div class="link-details">
                                     <div class="link-name">My Abandonware</div>
@@ -924,28 +1000,28 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">🎓 Educational Resources</h3>
                         <div class="archive-links">
-                            <a href="https://www.khanacademy.org" target="_blank" class="archive-link">
+                            <a href="https://www.khanacademy.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📚</span>
                                 <div class="link-details">
                                     <div class="link-name">Khan Academy</div>
                                     <div class="link-desc">Free online courses and lessons</div>
                                 </div>
                             </a>
-                            <a href="https://www.coursera.org" target="_blank" class="archive-link">
+                            <a href="https://www.coursera.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎓</span>
                                 <div class="link-details">
                                     <div class="link-name">Coursera</div>
                                     <div class="link-desc">Online courses from universities</div>
                                 </div>
                             </a>
-                            <a href="https://www.edx.org" target="_blank" class="archive-link">
+                            <a href="https://www.edx.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🏫</span>
                                 <div class="link-details">
                                     <div class="link-name">edX</div>
                                     <div class="link-desc">University-level online courses</div>
                                 </div>
                             </a>
-                            <a href="https://ocw.mit.edu" target="_blank" class="archive-link">
+                            <a href="https://ocw.mit.edu" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🎯</span>
                                 <div class="link-details">
                                     <div class="link-name">MIT OpenCourseWare</div>
@@ -959,14 +1035,14 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">📰 News & Magazines</h3>
                         <div class="archive-links">
-                            <a href="https://archive.org/details/magazines" target="_blank" class="archive-link">
+                            <a href="https://archive.org/details/magazines" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📖</span>
                                 <div class="link-details">
                                     <div class="link-name">Internet Archive Magazines</div>
                                     <div class="link-desc">Historical magazine collection</div>
                                 </div>
                             </a>
-                            <a href="https://chroniclingamerica.loc.gov" target="_blank" class="archive-link">
+                            <a href="https://chroniclingamerica.loc.gov" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📜</span>
                                 <div class="link-details">
                                     <div class="link-name">Chronicling America</div>
@@ -980,21 +1056,21 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                     <div class="archive-category">
                         <h3 class="category-title">📊 Data & Statistics</h3>
                         <div class="archive-links">
-                            <a href="https://data.gov" target="_blank" class="archive-link">
+                            <a href="https://data.gov" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🏛️</span>
                                 <div class="link-details">
                                     <div class="link-name">Data.gov</div>
                                     <div class="link-desc">US government open data</div>
                                 </div>
                             </a>
-                            <a href="https://www.kaggle.com/datasets" target="_blank" class="archive-link">
+                            <a href="https://www.kaggle.com/datasets" data-navigate="true" class="archive-link">
                                 <span class="link-icon">📈</span>
                                 <div class="link-details">
                                     <div class="link-name">Kaggle Datasets</div>
                                     <div class="link-desc">Public datasets for data science</div>
                                 </div>
                             </a>
-                            <a href="https://ourworldindata.org" target="_blank" class="archive-link">
+                            <a href="https://ourworldindata.org" data-navigate="true" class="archive-link">
                                 <span class="link-icon">🌍</span>
                                 <div class="link-details">
                                     <div class="link-name">Our World in Data</div>
@@ -1019,5 +1095,6 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
     <script src="splitview.js"></script>
     <script src="downloadmanager.js"></script>
     <script src="advancedtools.js"></script>
+    <script src="documenteditor.js"></script>
 </body>
 </html>

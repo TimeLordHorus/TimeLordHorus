@@ -2,7 +2,7 @@
 
 A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities, Bluetooth file sharing, cloud file management, code execution VM, split-screen browsing, and a clean, intuitive interface.
 
-![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![PWA](https://img.shields.io/badge/PWA-enabled-orange.svg)
 ![Bluetooth](https://img.shields.io/badge/Bluetooth-enabled-blue.svg)
@@ -40,8 +40,102 @@ Quick access to a curated collection of free internet archives and resources.
 - **45+ Curated Resources**: Handpicked quality archives
 - **Category Organization**: Browse by type (books, academic, media, etc.)
 - **Real-time Search**: Filter archives by name, description, or category
-- **Direct Access**: One-click access to any archive
+- **In-Browser Navigation**: All archives open within the browser
 - **Responsive Design**: Mobile-friendly archive browser
+
+**Note**: Archive links now open directly within TimeLord Browser. Some external sites may have restrictions on embedding.
+
+### Document Editors 📝
+Comprehensive multi-format document editor with save/load capabilities and live preview.
+
+#### Supported Formats:
+- **Plain Text** (.txt) - Basic text editing
+- **Markdown** (.md) - Markdown with live preview
+- **HTML** (.html) - HTML editing with live preview
+- **CSS** (.css) - CSS stylesheets
+- **JavaScript** (.js) - JavaScript code
+- **JSON** (.json) - JSON data files
+- **XML** (.xml) - XML documents
+- **CSV** (.csv) - Comma-separated values
+- **Python** (.py) - Python scripts
+- **Java** (.java) - Java code
+- **C++** (.cpp) - C++ code
+- **SQL** (.sql) - SQL queries
+
+#### Core Features:
+- **Multi-Format Support**: 12 different document types
+- **Syntax-Aware**: Templates and placeholders for each format
+- **File Operations**: New, Load, Save, Download
+- **Live Statistics**: Real-time line, word, and character counts
+- **Live Preview**: HTML and Markdown rendering
+- **Auto-Save**: Documents saved to browser storage
+- **Tab Key Support**: Proper indentation (4 spaces)
+- **Keyboard Shortcuts**: Ctrl/Cmd+S to save
+
+#### How to Use the Editor:
+
+**Opening the Editor:**
+1. Click the Editors button (📝) in the navigation bar
+2. The editor panel slides in from the right
+3. Select your document type from the dropdown
+
+**Creating a New Document:**
+1. Click "🆕 New" button
+2. Select document type from dropdown
+3. Filename automatically updates with correct extension
+4. Start typing in the editor
+
+**Loading a Document:**
+1. Click "📂 Load" button
+2. Select a file from your computer
+3. Document type auto-detected from file extension
+4. Content appears in editor
+
+**Saving a Document:**
+1. Enter filename (or use auto-generated name)
+2. Click "💾 Save" to save to browser storage
+3. Click "⬇️ Download" to save to your computer
+4. Use Ctrl/Cmd+S keyboard shortcut for quick save
+
+**Using Live Preview:**
+- Available for HTML and Markdown files
+- Click "👁️ Preview" to toggle preview panel
+- Preview updates automatically as you type
+- See rendered output in real-time
+
+#### Document Statistics:
+The editor displays real-time statistics:
+- **Lines**: Total number of lines
+- **Words**: Word count
+- **Characters**: Character count
+
+#### File Templates:
+Each document type includes helpful templates:
+- **HTML**: Complete HTML5 boilerplate
+- **Java**: Main class structure
+- **C++**: Include statements and main function
+- **XML**: XML declaration and root element
+- **SQL**: Comment header
+- **And more...**
+
+#### Storage:
+- **Browser Storage**: Documents saved in localStorage
+- **Persistent**: Saved documents persist across sessions
+- **Multiple Documents**: Save and manage multiple files
+- **Auto-Recovery**: Documents retained even if browser closes
+
+#### Keyboard Shortcuts:
+- `Ctrl/Cmd + S` - Save document
+- `Tab` - Insert 4 spaces (proper indentation)
+- `Enter` - New line
+
+#### Tips:
+- Change document type anytime from dropdown
+- Filename auto-updates with correct extension
+- Use "Download" to save to your computer
+- Use "Save" to keep in browser for later editing
+- Preview updates automatically for HTML/Markdown
+- All saved documents available for future editing
 
 ### BlueDrop - Wireless Sharing
 - **Bluetooth Sharing**: Share files, links, and text via Web Bluetooth API
@@ -577,6 +671,7 @@ TimeLordHorus/
 ├── splitview.js        # Split view manager
 ├── downloadmanager.js  # Download Manager with progress tracking
 ├── advancedtools.js    # Advanced tools (Tab Groups, Reading Mode, etc.)
+├── documenteditor.js   # Multi-format document editor with save/load
 ├── manifest.json       # PWA manifest
 ├── sw.js               # Service worker
 ├── .gitignore          # Git ignore configuration

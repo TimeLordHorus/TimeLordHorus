@@ -687,6 +687,18 @@ class TimeLordBrowser {
         });
     }
 
+    // Editors Panel
+    openEditors() {
+        document.getElementById('editorsPanel').classList.add('open');
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('archivesPanel').classList.remove('open');
+        this.showToast('Document Editor opened', 'info');
+    }
+
+    closeEditors() {
+        document.getElementById('editorsPanel').classList.remove('open');
+    }
+
     // Event Listeners
     setupEventListeners() {
         // New Tab
@@ -755,6 +767,28 @@ class TimeLordBrowser {
         // Archives search functionality
         document.getElementById('archivesSearch').addEventListener('input', (e) => {
             this.filterArchives(e.target.value);
+        });
+
+        // Archive links navigation within browser
+        document.addEventListener('click', (e) => {
+            const archiveLink = e.target.closest('.archive-link[data-navigate="true"]');
+            if (archiveLink) {
+                e.preventDefault();
+                const url = archiveLink.getAttribute('href');
+                if (url) {
+                    this.navigateTab(this.activeTabId, url);
+                    this.closeArchives();
+                }
+            }
+        });
+
+        // Editors
+        document.getElementById('editorsBtn').addEventListener('click', () => {
+            this.openEditors();
+        });
+
+        document.getElementById('closeEditors').addEventListener('click', () => {
+            this.closeEditors();
         });
 
         // Settings
