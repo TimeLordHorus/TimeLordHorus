@@ -163,45 +163,44 @@ package: iso
 # Create release notes
 release-notes:
 	@echo "Generating release notes..."
-	@cat > release/RELEASE-NOTES.txt << 'EOF'
-TL Linux 1.0.0 "Chronos" Release Notes
-========================================
-
-Release Date: $(date +%Y-%m-%d)
-
-TL Linux is the world's most accessible Linux distribution, designed
-specifically for users with ADHD, autism, motor impairments, and
-visual disabilities.
-
-What's New in 1.0.0:
---------------------
-• Complete ADHD/Autism support suite
-• Advanced motor accessibility (Sticky Keys, Mouse Keys, Slow Keys)
-• Dual A/B partition system (never brick your system!)
-• AI voice control and troubleshooting
-• Professional screen reader and magnification
-• Modern terminal emulator with tabs
-• Archive manager for all formats
-• Screenshot tool with annotations
-• System log viewer
-• Complete backup and restore system
-
-System Requirements:
---------------------
-• 64-bit processor (x86_64/AMD64)
-• 2 GB RAM minimum (4 GB recommended)
-• 20 GB free disk space
-• USB 2.0 or DVD drive for installation
-
-Boot the Live System:
----------------------
-Username: tluser
-Password: tluser
-
-For full documentation, visit:
-https://github.com/TimeLordHorus/TL-Linux
-
-EOF
+	@mkdir -p release
+	@echo "TL Linux 1.0.0 \"Chronos\" Release Notes" > release/RELEASE-NOTES.txt
+	@echo "========================================" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "Release Date: $$(date +%Y-%m-%d)" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "TL Linux is the world's most accessible Linux distribution, designed" >> release/RELEASE-NOTES.txt
+	@echo "specifically for users with ADHD, autism, motor impairments, and" >> release/RELEASE-NOTES.txt
+	@echo "visual disabilities." >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "What's New in 1.0.0:" >> release/RELEASE-NOTES.txt
+	@echo "--------------------" >> release/RELEASE-NOTES.txt
+	@echo "• Complete ADHD/Autism support suite" >> release/RELEASE-NOTES.txt
+	@echo "• Advanced motor accessibility (Sticky Keys, Mouse Keys, Slow Keys)" >> release/RELEASE-NOTES.txt
+	@echo "• Dual A/B partition system (never brick your system!)" >> release/RELEASE-NOTES.txt
+	@echo "• AI voice control and troubleshooting" >> release/RELEASE-NOTES.txt
+	@echo "• Professional screen reader and magnification" >> release/RELEASE-NOTES.txt
+	@echo "• Modern terminal emulator with tabs" >> release/RELEASE-NOTES.txt
+	@echo "• Archive manager for all formats" >> release/RELEASE-NOTES.txt
+	@echo "• Screenshot tool with annotations" >> release/RELEASE-NOTES.txt
+	@echo "• System log viewer" >> release/RELEASE-NOTES.txt
+	@echo "• Complete backup and restore system" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "System Requirements:" >> release/RELEASE-NOTES.txt
+	@echo "--------------------" >> release/RELEASE-NOTES.txt
+	@echo "• 64-bit processor (x86_64/AMD64)" >> release/RELEASE-NOTES.txt
+	@echo "• 2 GB RAM minimum (4 GB recommended)" >> release/RELEASE-NOTES.txt
+	@echo "• 20 GB free disk space" >> release/RELEASE-NOTES.txt
+	@echo "• USB 2.0 or DVD drive for installation" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "Boot the Live System:" >> release/RELEASE-NOTES.txt
+	@echo "---------------------" >> release/RELEASE-NOTES.txt
+	@echo "Username: tluser" >> release/RELEASE-NOTES.txt
+	@echo "Password: tluser" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
+	@echo "For full documentation, visit:" >> release/RELEASE-NOTES.txt
+	@echo "https://github.com/TimeLordHorus/TL-Linux" >> release/RELEASE-NOTES.txt
+	@echo "" >> release/RELEASE-NOTES.txt
 	@echo "✓ Release notes created"
 
 # Full release build
