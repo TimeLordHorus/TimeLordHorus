@@ -1,10 +1,11 @@
 # TimeLord Browser 🌐
 
-A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities and a clean, intuitive interface.
+A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities, Bluetooth file sharing, and a clean, intuitive interface.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![PWA](https://img.shields.io/badge/PWA-enabled-orange.svg)
+![Bluetooth](https://img.shields.io/badge/Bluetooth-enabled-blue.svg)
 
 ## Features
 
@@ -18,6 +19,13 @@ A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla
 - **Bookmark System**: Save and organize your favorite sites with IndexedDB
 - **History Tracking**: Keep track of visited pages with full history management
 - **Persistent Storage**: All data stored locally using IndexedDB
+
+### BlueDrop - Wireless Sharing
+- **Bluetooth Sharing**: Share files, links, and text via Web Bluetooth API
+- **Web Share Integration**: Native system sharing on mobile devices
+- **Multiple Methods**: Automatic fallback to clipboard for maximum compatibility
+- **Transfer History**: Track all shared items with timestamps
+- **Progress Tracking**: Real-time transfer progress indicators
 
 ### Customization
 - **Theme Support**: Toggle between light and dark themes
@@ -91,6 +99,44 @@ A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla
 - **Navigate from History**: Click any history item to visit that page
 - **Clear History**: Go to Settings → Privacy → Clear History
 
+### BlueDrop - Bluetooth Sharing
+BlueDrop is a revolutionary feature that allows you to wirelessly share files, links, and text using Bluetooth or Web Share API.
+
+#### How to Use BlueDrop:
+1. **Open BlueDrop**: Click the BlueDrop (📡) button in the navigation bar
+2. **Enable Bluetooth**: Click "Enable Bluetooth" to connect to a device
+3. **Select Device**: Choose a nearby Bluetooth device from the list
+4. **Share Content**:
+   - **Share Current Page**: Share the URL of the page you're viewing
+   - **Share File**: Select and share files from your device
+   - **Share Text**: Share custom text or notes
+
+#### Sharing Methods:
+- **Bluetooth**: Direct peer-to-peer transfer via Web Bluetooth API
+- **Web Share API**: System sharing (mobile and supported desktop browsers)
+- **Clipboard**: Automatic fallback for links and text
+
+#### Features:
+- Share files, links, and text wirelessly
+- Secure Bluetooth connection
+- Transfer progress tracking
+- Share history with timestamps
+- Multiple sharing method support
+- Automatic fallback options
+
+#### Browser Requirements:
+- **Full Support**: Chrome/Edge 90+ (Bluetooth + Web Share)
+- **Partial Support**: Firefox (Web Share API only)
+- **Mobile**: Full support on Android Chrome
+- **iOS Safari**: Web Share API support
+
+#### Troubleshooting:
+- Ensure Bluetooth is enabled on your device
+- Grant Bluetooth permissions when prompted
+- Some devices may not support the custom service UUID
+- Large files (>512 bytes) use Web Share API instead of Bluetooth
+- If Bluetooth fails, links/text are automatically copied to clipboard
+
 ### Settings
 Access settings by clicking the gear (⚙️) icon:
 
@@ -126,14 +172,18 @@ TimeLordHorus/
 ├── index.html          # Main HTML structure
 ├── styles.css          # All styling and themes
 ├── app.js              # Core browser functionality
+├── bluedrop.js        # BlueDrop Bluetooth sharing service
 ├── manifest.json       # PWA manifest
 ├── sw.js              # Service worker
+├── .gitignore         # Git ignore configuration
 └── README.md          # Documentation
 ```
 
 ### Key Technologies
 - **IndexedDB**: Client-side database for persistent storage
 - **Service Worker**: Offline functionality and caching
+- **Web Bluetooth API**: Device-to-device wireless communication
+- **Web Share API**: Native system sharing integration
 - **Web App Manifest**: PWA installation and configuration
 - **CSS Custom Properties**: Dynamic theming
 - **LocalStorage**: Settings persistence
@@ -206,16 +256,19 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Future Enhancements
 
 Potential features for future versions:
-- [ ] Download manager
-- [ ] Password manager
+- [x] Bluetooth file sharing (✅ Implemented in v1.1.0)
+- [ ] Download manager with progress tracking
+- [ ] Password manager with encryption
 - [ ] Extensions support
 - [ ] Tab groups
 - [ ] Reading mode
 - [ ] PDF viewer
 - [ ] Screenshot tool
-- [ ] Sync across devices
+- [ ] Cloud sync across devices (via Bluetooth/Web Share)
 - [ ] Private browsing mode
 - [ ] Ad blocker
+- [ ] Enhanced Bluetooth features (larger file transfers, device pairing memory)
+- [ ] QR code sharing
 
 ## License
 

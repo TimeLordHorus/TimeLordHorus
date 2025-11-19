@@ -48,6 +48,7 @@
             <div class="action-controls">
                 <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
                 <button id="historyBtn" class="action-btn" title="History">📜</button>
+                <button id="blueDropBtn" class="action-btn" title="BlueDrop - Share via Bluetooth">📡</button>
                 <button id="downloadsBtn" class="action-btn" title="Downloads">💾</button>
             </div>
         </nav>
@@ -120,8 +121,9 @@
                     <div class="setting-group">
                         <h3>About</h3>
                         <p class="about-text">
-                            <strong>TimeLord Browser v1.0</strong><br>
+                            <strong>TimeLord Browser v1.1.0</strong><br>
                             A lightweight, feature-rich Progressive Web App browser.<br>
+                            Now with BlueDrop Bluetooth sharing!<br>
                             Built with vanilla JavaScript for optimal performance.
                         </p>
                     </div>
@@ -164,10 +166,134 @@
                         <li>📑 Multi-tab browsing</li>
                         <li>⭐ Bookmark management</li>
                         <li>📜 History tracking</li>
+                        <li>📡 BlueDrop Bluetooth sharing</li>
                         <li>🌓 Dark/Light theme</li>
                         <li>📱 Works offline (PWA)</li>
                         <li>🔒 Privacy-focused</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BlueDrop Panel -->
+        <div class="bluedrop-panel" id="blueDropPanel">
+            <div class="bluedrop-content">
+                <div class="bluedrop-header">
+                    <h2>📡 BlueDrop</h2>
+                    <button class="close-bluedrop" id="closeBlueDrop">✕</button>
+                </div>
+
+                <div class="bluedrop-body">
+                    <!-- Status Section -->
+                    <div class="bluedrop-section">
+                        <div class="bluedrop-status" id="blueDropStatus">
+                            <span class="status-indicator" id="statusIndicator">⚫</span>
+                            <span class="status-text" id="statusText">Bluetooth disconnected</span>
+                        </div>
+                        <button id="toggleBluetoothBtn" class="primary-btn">Enable Bluetooth</button>
+                    </div>
+
+                    <!-- Share Section -->
+                    <div class="bluedrop-section" id="shareSection" style="display: none;">
+                        <h3>Share Content</h3>
+
+                        <div class="share-options">
+                            <div class="share-option">
+                                <button id="shareCurrentPageBtn" class="share-btn">
+                                    <span class="share-icon">🔗</span>
+                                    <span class="share-label">Share Current Page</span>
+                                </button>
+                            </div>
+
+                            <div class="share-option">
+                                <label for="fileInput" class="share-btn file-share-btn">
+                                    <span class="share-icon">📁</span>
+                                    <span class="share-label">Share File</span>
+                                </label>
+                                <input type="file" id="fileInput" style="display: none;" multiple>
+                            </div>
+
+                            <div class="share-option">
+                                <button id="shareTextBtn" class="share-btn">
+                                    <span class="share-icon">📝</span>
+                                    <span class="share-label">Share Text</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device Discovery Section -->
+                    <div class="bluedrop-section" id="deviceSection" style="display: none;">
+                        <h3>Nearby Devices</h3>
+                        <button id="scanDevicesBtn" class="secondary-btn">Scan for Devices</button>
+                        <div class="device-list" id="deviceList">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📡</div>
+                                <div class="empty-state-text">No devices found. Click "Scan for Devices" to search.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Progress Section -->
+                    <div class="bluedrop-section" id="transferSection" style="display: none;">
+                        <h3>Transfer Progress</h3>
+                        <div class="transfer-item">
+                            <div class="transfer-info">
+                                <span class="transfer-name" id="transferName">-</span>
+                                <span class="transfer-size" id="transferSize">-</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="transfer-status" id="transferStatus">Ready</div>
+                        </div>
+                    </div>
+
+                    <!-- Share History Section -->
+                    <div class="bluedrop-section">
+                        <div class="section-header">
+                            <h3>Recent Shares</h3>
+                            <button id="clearShareHistoryBtn" class="text-btn">Clear</button>
+                        </div>
+                        <div class="share-history" id="shareHistory">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📤</div>
+                                <div class="empty-state-text">No recent shares</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="bluedrop-section bluedrop-info">
+                        <p><strong>About BlueDrop:</strong></p>
+                        <ul>
+                            <li>Share files, links, and text wirelessly</li>
+                            <li>Uses Web Bluetooth API for device communication</li>
+                            <li>Secure peer-to-peer transfers</li>
+                            <li>Works with compatible Bluetooth devices</li>
+                        </ul>
+                        <p class="info-note">
+                            <strong>Note:</strong> Your browser must support Web Bluetooth API.
+                            Make sure Bluetooth is enabled on your device.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Share Modal -->
+        <div class="modal" id="textShareModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Share Text</h3>
+                    <button class="close-modal" id="closeTextModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="shareTextArea" placeholder="Enter text to share..." rows="6"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelTextShare" class="secondary-btn">Cancel</button>
+                    <button id="confirmTextShare" class="primary-btn">Share</button>
                 </div>
             </div>
         </div>
@@ -177,5 +303,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script src="app.js"></script>
+    <script src="bluedrop.js"></script>
 </body>
 </html>

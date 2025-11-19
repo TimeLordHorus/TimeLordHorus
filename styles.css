@@ -799,3 +799,487 @@ body {
 .empty-state-text {
     font-size: 18px;
 }
+
+/* BlueDrop Panel */
+.bluedrop-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.bluedrop-panel.open {
+    display: flex;
+}
+
+.bluedrop-content {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px var(--shadow-heavy);
+}
+
+.bluedrop-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: var(--bg-secondary);
+    z-index: 1;
+}
+
+.close-bluedrop {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.close-bluedrop:hover {
+    background: var(--bg-tertiary);
+}
+
+.bluedrop-body {
+    padding: 20px;
+}
+
+.bluedrop-section {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bluedrop-section:last-child {
+    border-bottom: none;
+}
+
+.bluedrop-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.status-indicator {
+    font-size: 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.status-indicator.connected {
+    color: var(--success-color);
+}
+
+.status-indicator.disconnected {
+    color: var(--text-secondary);
+}
+
+.status-indicator.scanning {
+    color: var(--accent-color);
+}
+
+.status-text {
+    flex: 1;
+    font-weight: 500;
+}
+
+.primary-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.primary-btn:hover {
+    background: var(--accent-hover);
+}
+
+.primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.secondary-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.secondary-btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent-color);
+}
+
+.text-btn {
+    background: transparent;
+    color: var(--accent-color);
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.text-btn:hover {
+    color: var(--accent-hover);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.share-options {
+    display: grid;
+    gap: 12px;
+}
+
+.share-option {
+    width: 100%;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.share-btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent-color);
+    transform: translateX(4px);
+}
+
+.file-share-btn {
+    text-decoration: none;
+}
+
+.share-icon {
+    font-size: 24px;
+}
+
+.share-label {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+}
+
+.device-list {
+    margin-top: 16px;
+}
+
+.device-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.device-item:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent-color);
+}
+
+.device-item.selected {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.device-icon {
+    font-size: 24px;
+}
+
+.device-info {
+    flex: 1;
+}
+
+.device-name {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.device-id {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.device-item.selected .device-id {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.transfer-item {
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.transfer-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.transfer-name {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transfer-size {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-primary);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.transfer-status {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.share-history {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.share-history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.history-icon {
+    font-size: 20px;
+}
+
+.history-details {
+    flex: 1;
+    overflow: hidden;
+}
+
+.history-item-name {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-item-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.bluedrop-info {
+    background: var(--bg-tertiary);
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.bluedrop-info ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.bluedrop-info li {
+    margin-bottom: 8px;
+}
+
+.info-note {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--warning-color);
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px var(--shadow-heavy);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.close-modal {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.close-modal:hover {
+    background: var(--bg-tertiary);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer .secondary-btn,
+.modal-footer .primary-btn {
+    width: auto;
+    min-width: 100px;
+}
+
+/* Responsive BlueDrop */
+@media (max-width: 768px) {
+    .bluedrop-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .share-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .bluedrop-header h2 {
+        font-size: 18px;
+    }
+
+    .share-btn {
+        padding: 12px;
+    }
+
+    .device-item {
+        padding: 10px;
+    }
+}
