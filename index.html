@@ -46,6 +46,7 @@
             </div>
 
             <div class="action-controls">
+                <button id="dashboardBtn" class="action-btn" title="Dashboard - All Features">🏠</button>
                 <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
                 <button id="historyBtn" class="action-btn" title="History">📜</button>
                 <button id="archivesBtn" class="action-btn" title="Free Internet Archives">📚</button>
@@ -203,6 +204,191 @@
                             Built with vanilla JavaScript for optimal performance.
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Dashboard -->
+        <div class="dashboard-panel" id="dashboardPanel">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>🏠 TimeLord Dashboard</h1>
+                    <p class="dashboard-subtitle">Quick access to all features and tools</p>
+                    <button class="close-dashboard" id="closeDashboard">✕</button>
+                </div>
+
+                <!-- Dashboard Search -->
+                <div class="dashboard-search">
+                    <input type="text" id="dashboardSearch" placeholder="Search features, tools, and resources..." class="dashboard-search-input">
+                </div>
+
+                <!-- Dashboard Stats -->
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statBookmarks">0</div>
+                            <div class="stat-label">Bookmarks</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📜</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statHistory">0</div>
+                            <div class="stat-label">History Items</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💾</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statDownloads">0</div>
+                            <div class="stat-label">Downloads</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📑</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statTabs">1</div>
+                            <div class="stat-label">Active Tabs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Categories -->
+                <div class="dashboard-content">
+
+                    <!-- Productivity Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📝 Productivity Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="editors">
+                                <div class="feature-icon">📝</div>
+                                <h3 class="feature-name">Document Editors</h3>
+                                <p class="feature-desc">Edit 12 file formats with live preview</p>
+                                <button class="feature-action">Open Editor</button>
+                            </div>
+                            <div class="feature-card" data-feature="coderunner">
+                                <div class="feature-icon">💻</div>
+                                <h3 class="feature-name">Code Runner VM</h3>
+                                <p class="feature-desc">Run JavaScript, Python, HTML, TypeScript</p>
+                                <button class="feature-action">Launch VM</button>
+                            </div>
+                            <div class="feature-card" data-feature="tabgroups">
+                                <div class="feature-icon">📑</div>
+                                <h3 class="feature-name">Tab Groups</h3>
+                                <p class="feature-desc">Organize tabs into custom groups</p>
+                                <button class="feature-action">Manage Groups</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File & Storage -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📁 File & Storage</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="filemanager">
+                                <div class="feature-icon">📁</div>
+                                <h3 class="feature-name">File Manager</h3>
+                                <p class="feature-desc">Local and cloud storage management</p>
+                                <button class="feature-action">Open Files</button>
+                            </div>
+                            <div class="feature-card" data-feature="downloads">
+                                <div class="feature-icon">💾</div>
+                                <h3 class="feature-name">Download Manager</h3>
+                                <p class="feature-desc">Track and manage downloads</p>
+                                <button class="feature-action">View Downloads</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Communication & Sharing -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📡 Communication</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="bluedrop">
+                                <div class="feature-icon">📡</div>
+                                <h3 class="feature-name">BlueDrop</h3>
+                                <p class="feature-desc">Share files via Bluetooth & Web Share</p>
+                                <button class="feature-action">Start Sharing</button>
+                            </div>
+                            <div class="feature-card" data-feature="qrcode">
+                                <div class="feature-icon">📱</div>
+                                <h3 class="feature-name">QR Code Generator</h3>
+                                <p class="feature-desc">Generate QR codes for URLs and text</p>
+                                <button class="feature-action">Generate QR</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Browsing Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">🌐 Browsing Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="splitview">
+                                <div class="feature-icon">⚡</div>
+                                <h3 class="feature-name">Split View</h3>
+                                <p class="feature-desc">Browse multiple pages side-by-side</p>
+                                <button class="feature-action">Enable Split</button>
+                            </div>
+                            <div class="feature-card" data-feature="reading">
+                                <div class="feature-icon">📖</div>
+                                <h3 class="feature-name">Reading Mode</h3>
+                                <p class="feature-desc">Distraction-free article reading</p>
+                                <button class="feature-action">Activate</button>
+                            </div>
+                            <div class="feature-card" data-feature="adblocker">
+                                <div class="feature-icon">🛡️</div>
+                                <h3 class="feature-name">Ad Blocker</h3>
+                                <p class="feature-desc">Block ads and trackers</p>
+                                <button class="feature-action">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Archives & Resources -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📚 Archives & Resources</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="archives">
+                                <div class="feature-icon">📚</div>
+                                <h3 class="feature-name">Internet Archives</h3>
+                                <p class="feature-desc">16 free archives - books, research, media</p>
+                                <button class="feature-action">Browse Archives</button>
+                            </div>
+                            <div class="feature-card" data-feature="bookmarks">
+                                <div class="feature-icon">⭐</div>
+                                <h3 class="feature-name">Bookmarks</h3>
+                                <p class="feature-desc">Manage your saved pages</p>
+                                <button class="feature-action">View All</button>
+                            </div>
+                            <div class="feature-card" data-feature="history">
+                                <div class="feature-icon">📜</div>
+                                <h3 class="feature-name">History</h3>
+                                <p class="feature-desc">Browse your browsing history</p>
+                                <button class="feature-action">View History</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">🔧 Advanced Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="screenshot">
+                                <div class="feature-icon">📸</div>
+                                <h3 class="feature-name">Screenshot Tool</h3>
+                                <p class="feature-desc">Capture visible area or full page</p>
+                                <button class="feature-action">Take Screenshot</button>
+                            </div>
+                            <div class="feature-card" data-feature="encryption">
+                                <div class="feature-icon">🔒</div>
+                                <h3 class="feature-name">Encryption</h3>
+                                <p class="feature-desc">AES-256 data protection</p>
+                                <button class="feature-action">Settings</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
