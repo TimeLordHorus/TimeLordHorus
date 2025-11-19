@@ -2,11 +2,12 @@
 
 A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities, Bluetooth file sharing, cloud file management, code execution VM, split-screen browsing, and a clean, intuitive interface.
 
-![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![PWA](https://img.shields.io/badge/PWA-enabled-orange.svg)
 ![Bluetooth](https://img.shields.io/badge/Bluetooth-enabled-blue.svg)
 ![VM](https://img.shields.io/badge/Code_VM-enabled-purple.svg)
+![Encryption](https://img.shields.io/badge/AES--256-encrypted-red.svg)
 
 ## Features
 
@@ -345,6 +346,102 @@ Block ads and trackers for faster, cleaner browsing.
 - **Fanboy Annoyances**: Remove social media widgets and annoyances
 - **Custom Filters**: Add your own blocking rules
 
+### End-to-End Encryption 🔒
+Protect your browsing data from host browser collection using military-grade encryption.
+
+#### How to Enable Encryption:
+1. **Open Settings**: Click the gear (⚙️) icon
+2. **Navigate to Encryption Section**: Scroll to "End-to-End Encryption"
+3. **Enable Encryption**: Click "🔐 Enable Encryption"
+4. **Set Master Password**: Enter a strong password (minimum 8 characters)
+5. **Confirm Password**: Re-enter to confirm
+6. **Data Encryption**: All existing data is automatically encrypted
+
+#### Encryption Features:
+- **AES-256-GCM Encryption**: Military-grade encryption algorithm
+- **PBKDF2 Key Derivation**: 100,000 iterations for strong key generation
+- **Zero-Knowledge Architecture**: Your password is NEVER stored anywhere
+- **Encrypted Data Storage**: Bookmarks, history, and settings are encrypted
+- **Privacy Mode**: Automatically encrypt all data with one toggle
+- **Password Protection**: Only you can access your encrypted data
+
+#### What Gets Encrypted:
+- ✅ All bookmarks (titles, URLs, timestamps)
+- ✅ Complete browsing history
+- ✅ Browser settings and preferences
+- ✅ Tab groups and organization data
+- ✅ File manager metadata
+- ✅ Download history
+- ✅ Custom filters and preferences
+
+#### How Encryption Works:
+
+**Encryption Process:**
+1. You provide a master password
+2. Password is hashed using PBKDF2 (100,000 iterations + random salt)
+3. A 256-bit AES key is derived from the hash
+4. All data is encrypted using AES-GCM before storage
+5. Each encryption uses a unique Initialization Vector (IV)
+6. Encrypted data is stored in Base64 format
+
+**Decryption Process:**
+1. You enter your master password
+2. Same key derivation process recreates the encryption key
+3. Data is decrypted on-the-fly when accessed
+4. Decrypted data is only in memory, never stored unencrypted
+
+**Security Benefits:**
+- 🛡️ **Host Browser Protection**: Your data is encrypted before the host browser (Chrome, Firefox, etc.) can collect it
+- 🔐 **Local Encryption**: Data encrypted on your device before storage
+- 🚫 **No Cloud Sync**: Encryption keys never leave your device
+- 🔑 **Password-Only Access**: Only someone with your password can decrypt the data
+- 🎯 **Zero-Knowledge**: Even if someone accesses your device storage, they cannot read encrypted data
+
+#### Privacy Mode:
+Enable Privacy Mode for automatic encryption of all data:
+- One-click toggle in settings
+- Automatically enables encryption if not already enabled
+- All new data is encrypted by default
+- Perfect for maximum privacy protection
+
+#### Important Security Notes:
+
+⚠️ **CRITICAL**: If you forget your master password, your encrypted data **CANNOT BE RECOVERED**. There is no password reset or recovery mechanism by design.
+
+✅ **Best Practices:**
+- Use a strong, unique password (12+ characters recommended)
+- Include uppercase, lowercase, numbers, and symbols
+- Store your password securely (password manager recommended)
+- Never share your master password
+- Change your password periodically using "Change Password" button
+
+🔄 **Changing Password:**
+1. Click "🔑 Change Password" in encryption settings
+2. Enter current password
+3. Enter new password (must be different)
+4. All data is automatically re-encrypted with new password
+
+🔓 **Disabling Encryption:**
+1. Click "🔓 Disable Encryption" (requires current password)
+2. Confirm you want to disable protection
+3. All data is decrypted and stored unencrypted
+4. WARNING: Data will be accessible to host browser after disabling
+
+#### Technical Specifications:
+- **Algorithm**: AES-GCM (Galois/Counter Mode)
+- **Key Length**: 256 bits
+- **Key Derivation**: PBKDF2-SHA256
+- **Iterations**: 100,000 (recommended by NIST)
+- **Salt**: 128-bit random salt (unique per user)
+- **IV**: 96-bit random IV (unique per encryption operation)
+- **Authentication**: Built-in authentication tag (GCM mode)
+- **Encoding**: Base64 for storage
+
+#### Encryption Status Indicators:
+- 🟢 **Enabled & Unlocked**: Encryption active, data accessible
+- 🟡 **Enabled & Locked**: Encryption active, password required
+- ⚫ **Disabled**: No encryption, data unprotected
+
 ### Settings
 Access settings by clicking the gear (⚙️) icon:
 
@@ -379,6 +476,7 @@ Access settings by clicking the gear (⚙️) icon:
 TimeLordHorus/
 ├── index.html          # Main HTML structure
 ├── styles.css          # All styling and themes
+├── encryption.js       # End-to-end encryption manager (AES-256-GCM)
 ├── app.js              # Core browser functionality
 ├── bluedrop.js         # BlueDrop Bluetooth sharing service
 ├── filemanager.js      # File Manager with cloud storage

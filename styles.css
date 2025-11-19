@@ -635,6 +635,140 @@ body {
     background: #c0392b;
 }
 
+.primary-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 8px;
+    transition: background 0.2s;
+}
+
+.primary-btn:hover {
+    background: var(--accent-hover);
+}
+
+.secondary-btn {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 8px;
+    transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+    background: var(--border-color);
+}
+
+/* Encryption Settings */
+.setting-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.encryption-status-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.encryption-status-item label {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-active {
+    background: #27ae60;
+    color: white;
+}
+
+.status-inactive {
+    background: #95a5a6;
+    color: white;
+}
+
+.status-warning {
+    background: #f39c12;
+    color: white;
+}
+
+.encryption-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.encryption-info {
+    background: var(--bg-secondary);
+    padding: 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.encryption-info p {
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.encryption-info ul {
+    margin: 8px 0 8px 20px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.encryption-info li {
+    margin: 4px 0;
+    color: var(--text-secondary);
+}
+
+.warning-text {
+    background: #fff3cd;
+    color: #856404;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 3px solid #ffc107;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+[data-theme="dark"] .warning-text {
+    background: #4a3d1a;
+    color: #ffd54f;
+    border-left-color: #ffc107;
+}
+
 .about-text {
     line-height: 1.6;
     color: var(--text-secondary);

@@ -137,6 +137,52 @@
                     </div>
 
                     <div class="setting-group">
+                        <h3>🔒 End-to-End Encryption</h3>
+                        <p class="setting-description">
+                            Protect your browsing data from host browser collection using AES-256 encryption.
+                            All bookmarks, history, and settings are encrypted before storage.
+                        </p>
+
+                        <div class="setting-item encryption-status-item">
+                            <label>Encryption Status:</label>
+                            <span class="status-badge status-inactive" id="encryptionStatus">Disabled</span>
+                        </div>
+
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="privacyModeToggle">
+                                Enable Privacy Mode (auto-encrypt all data)
+                            </label>
+                        </div>
+
+                        <div class="encryption-controls">
+                            <button id="enableEncryptionBtn" class="primary-btn">
+                                🔐 Enable Encryption
+                            </button>
+                            <button id="disableEncryptionBtn" class="danger-btn" style="display: none;">
+                                🔓 Disable Encryption
+                            </button>
+                            <button id="changePasswordBtn" class="secondary-btn" style="display: none;">
+                                🔑 Change Password
+                            </button>
+                        </div>
+
+                        <div class="encryption-info">
+                            <p><strong>⚡ Features:</strong></p>
+                            <ul>
+                                <li>AES-256-GCM encryption (military grade)</li>
+                                <li>Password-based key derivation (PBKDF2, 100,000 iterations)</li>
+                                <li>Zero-knowledge architecture (password never stored)</li>
+                                <li>Encrypted bookmarks, history, and settings</li>
+                                <li>Protection from host browser data collection</li>
+                            </ul>
+                            <p class="warning-text">
+                                ⚠️ <strong>Important:</strong> If you forget your password, your encrypted data cannot be recovered. Keep your password safe!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
                         <h3>Appearance</h3>
                         <div class="setting-item">
                             <label>
@@ -645,6 +691,7 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
     <!-- Toast Notifications -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <script src="encryption.js"></script>
     <script src="app.js"></script>
     <script src="bluedrop.js"></script>
     <script src="filemanager.js"></script>
