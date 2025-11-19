@@ -25,28 +25,26 @@ A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla
 ### Free Internet Archives 📚
 Quick access to a curated collection of free internet archives that work seamlessly within the browser.
 
-#### Categories (24 Working Archives):
+#### Categories (16 Working Archives):
 - **🌐 Web Archives** (2): Internet Archive, Wayback Machine
 - **📖 Books & Literature** (3): Project Gutenberg (70,000+ free eBooks), Open Library, FadedPage
 - **🎓 Academic & Research** (3): CORE, BASE, DOAJ
 - **🎬 Media & Entertainment** (2): Internet Archive Movies, Wikimedia Commons
 - **🎵 Music & Audio** (1): Internet Archive Audio
 - **💾 Software & Games** (2): Internet Archive Software, My Abandonware
-- **🎮 Free Online Games** (8): CrazyGames, Poki, Kongregate, Miniclip, Addicting Games, Armor Games, Newgrounds, itch.io
 - **🎓 Educational Resources** (1): MIT OpenCourseWare
 - **📰 News & Magazines** (1): Internet Archive Magazines
 - **📊 Data & Statistics** (1): Our World in Data
 
 #### Features:
-- **24 Verified Archives**: All tested to work within the browser
-- **Category Organization**: Browse by type (books, academic, media, games, etc.)
+- **16 Verified Archives**: All tested to work within the browser
+- **Category Organization**: Browse by type (books, academic, media, etc.)
 - **Real-time Search**: Filter archives by name, description, or category
 - **In-Browser Navigation**: All archives open within TimeLord Browser
 - **Responsive Design**: Mobile-friendly archive browser
 - **No External Tabs**: Everything stays within your browsing context
-- **HTML5 Games**: Modern browser games, no Java or Flash required
 
-**Note**: Only archives that load properly within iframes are included. Sites with X-Frame-Options restrictions have been removed for a better user experience. All games use modern HTML5/JavaScript technology.
+**Note**: Only archives that load properly within iframes are included. Sites with X-Frame-Options restrictions have been removed for a better user experience.
 
 ### Document Editors 📝
 Comprehensive multi-format document editor with save/load capabilities and live preview.
@@ -503,16 +501,6 @@ Block ads and trackers for faster, cleaner browsing.
 - Internet Archive Software - Historical software preservation
 - My Abandonware - Classic PC games (abandonware)
 
-**🎮 Free Online Games**
-- CrazyGames - 1000+ free HTML5 games, no downloads required
-- Poki - Free online games for every mood and genre
-- Kongregate - Thousands of free browser-based games
-- Miniclip - Free online games and mobile games
-- Addicting Games - Free online arcade and puzzle games
-- Armor Games - Free browser games and indie titles
-- Newgrounds - Independent games and creative content
-- itch.io - Free indie games from independent creators
-
 **🎓 Educational Resources**
 - MIT OpenCourseWare - Free MIT course materials
 
@@ -527,8 +515,6 @@ Block ads and trackers for faster, cleaner browsing.
 - Use search to quickly find specific resources
 - Archives are organized by content type for easy browsing
 - All included archives are tested to work within the browser
-- Games use modern HTML5/JavaScript (no Java applets or Flash)
-- No downloads or installations required for games
 - No X-Frame-Options restrictions
 
 ### End-to-End Encryption 🔒
