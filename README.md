@@ -23,27 +23,28 @@ A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla
 - **Persistent Storage**: All data stored locally using IndexedDB
 
 ### Free Internet Archives 📚
-Quick access to a curated collection of free internet archives and resources.
+Quick access to a curated collection of free internet archives that work seamlessly within the browser.
 
-#### Categories:
-- **🌐 Web Archives**: Internet Archive, Wayback Machine, Archive.today
-- **📖 Books & Literature**: Project Gutenberg (70,000+ free eBooks), Open Library, Standard Ebooks
-- **🎓 Academic & Research**: Google Scholar, arXiv, PubMed Central, CORE, BASE, DOAJ
-- **🎬 Media & Entertainment**: Internet Archive Movies, Wikimedia Commons, Library of Congress
-- **🎵 Music & Audio**: Internet Archive Audio, Free Music Archive, Musopen
-- **💾 Software & Games**: Internet Archive Software, GitHub, My Abandonware
-- **🎓 Educational Resources**: Khan Academy, Coursera, edX, MIT OpenCourseWare
-- **📰 News & Magazines**: Internet Archive Magazines, Chronicling America
-- **📊 Data & Statistics**: Data.gov, Kaggle Datasets, Our World in Data
+#### Categories (16 Working Archives):
+- **🌐 Web Archives** (2): Internet Archive, Wayback Machine
+- **📖 Books & Literature** (3): Project Gutenberg (70,000+ free eBooks), Open Library, FadedPage
+- **🎓 Academic & Research** (3): CORE, BASE, DOAJ
+- **🎬 Media & Entertainment** (2): Internet Archive Movies, Wikimedia Commons
+- **🎵 Music & Audio** (1): Internet Archive Audio
+- **💾 Software & Games** (2): Internet Archive Software, My Abandonware
+- **🎓 Educational Resources** (1): MIT OpenCourseWare
+- **📰 News & Magazines** (1): Internet Archive Magazines
+- **📊 Data & Statistics** (1): Our World in Data
 
 #### Features:
-- **45+ Curated Resources**: Handpicked quality archives
+- **16 Verified Archives**: All tested to work within the browser
 - **Category Organization**: Browse by type (books, academic, media, etc.)
 - **Real-time Search**: Filter archives by name, description, or category
-- **In-Browser Navigation**: All archives open within the browser
+- **In-Browser Navigation**: All archives open within TimeLord Browser
 - **Responsive Design**: Mobile-friendly archive browser
+- **No External Tabs**: Everything stays within your browsing context
 
-**Note**: Archive links now open directly within TimeLord Browser. Some external sites may have restrictions on embedding.
+**Note**: Only archives that load properly within iframes are included. Sites with X-Frame-Options restrictions have been removed for a better user experience.
 
 ### Document Editors 📝
 Comprehensive multi-format document editor with save/load capabilities and live preview.
@@ -478,20 +479,13 @@ Block ads and trackers for faster, cleaner browsing.
 **🌐 Web Archives**
 - Internet Archive - Digital library with millions of free resources
 - Wayback Machine - Browse 800+ billion archived web pages
-- Archive.today - Create permanent snapshots of web pages
-- Archive of Our Own - Fanfiction and creative works
 
 **📖 Books & Literature**
 - Project Gutenberg - 70,000+ free eBooks in public domain
 - Open Library - Millions of books to borrow and read
-- Standard Ebooks - High-quality formatted public domain ebooks
 - FadedPage - Canadian public domain eBooks
-- ManyBooks - 50,000+ free ebooks in multiple formats
 
 **🎓 Academic & Research**
-- Google Scholar - Search scholarly literature across disciplines
-- arXiv - 2M+ open access research papers (physics, math, CS, etc.)
-- PubMed Central - Free biomedical and life sciences research
 - CORE - Millions of open access research papers
 - BASE - Bielefeld Academic Search Engine
 - DOAJ - Directory of Open Access Journals (18,000+ journals)
@@ -499,39 +493,29 @@ Block ads and trackers for faster, cleaner browsing.
 **🎬 Media & Entertainment**
 - Internet Archive Movies - Classic films and documentaries
 - Wikimedia Commons - 90M+ free media files
-- Library of Congress - Historical media and documents
-- Europeana - European cultural heritage collections
 
 **🎵 Music & Audio**
 - Internet Archive Audio - Free music, podcasts, and recordings
-- Free Music Archive - High-quality, legal audio downloads
-- Musopen - Free classical music recordings and sheet music
 
 **💾 Software & Games**
 - Internet Archive Software - Historical software preservation
-- GitHub - World's largest open source code repository
 - My Abandonware - Classic PC games (abandonware)
 
 **🎓 Educational Resources**
-- Khan Academy - Free online courses and lessons for all ages
-- Coursera - University courses (many free to audit)
-- edX - University-level online courses
 - MIT OpenCourseWare - Free MIT course materials
 
 **📰 News & Magazines**
 - Internet Archive Magazines - Historical magazine collections
-- Chronicling America - Historic American newspapers (1777-1963)
 
 **📊 Data & Statistics**
-- Data.gov - US government open data portal
-- Kaggle Datasets - Public datasets for data science
 - Our World in Data - Research and data on global issues
 
 **Tips:**
-- All links open in new tabs to preserve your browsing
+- All links open within TimeLord Browser
 - Use search to quickly find specific resources
 - Archives are organized by content type for easy browsing
-- Most resources are completely free with no registration required
+- All included archives are tested to work within the browser
+- No X-Frame-Options restrictions
 
 ### End-to-End Encryption 🔒
 Protect your browsing data from host browser collection using military-grade encryption.
