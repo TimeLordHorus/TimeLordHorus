@@ -640,6 +640,53 @@ class TimeLordBrowser {
         }, 3000);
     }
 
+    // Archives Panel
+    openArchives() {
+        document.getElementById('archivesPanel').classList.add('open');
+        document.getElementById('sidebar').classList.remove('open');
+        this.showToast('Browse free internet archives', 'info');
+    }
+
+    closeArchives() {
+        document.getElementById('archivesPanel').classList.remove('open');
+    }
+
+    filterArchives(searchTerm) {
+        const categories = document.querySelectorAll('.archive-category');
+        const searchLower = searchTerm.toLowerCase();
+
+        if (!searchTerm) {
+            // Show all categories and links
+            categories.forEach(category => {
+                category.style.display = 'block';
+                const links = category.querySelectorAll('.archive-link');
+                links.forEach(link => link.style.display = 'flex');
+            });
+            return;
+        }
+
+        categories.forEach(category => {
+            const links = category.querySelectorAll('.archive-link');
+            let hasVisibleLinks = false;
+
+            links.forEach(link => {
+                const name = link.querySelector('.link-name').textContent.toLowerCase();
+                const desc = link.querySelector('.link-desc').textContent.toLowerCase();
+                const categoryTitle = category.querySelector('.category-title').textContent.toLowerCase();
+
+                if (name.includes(searchLower) || desc.includes(searchLower) || categoryTitle.includes(searchLower)) {
+                    link.style.display = 'flex';
+                    hasVisibleLinks = true;
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+
+            // Hide category if no links match
+            category.style.display = hasVisibleLinks ? 'block' : 'none';
+        });
+    }
+
     // Event Listeners
     setupEventListeners() {
         // New Tab
@@ -694,6 +741,20 @@ class TimeLordBrowser {
 
         document.getElementById('historyBtn').addEventListener('click', () => {
             this.showHistory();
+        });
+
+        // Archives
+        document.getElementById('archivesBtn').addEventListener('click', () => {
+            this.openArchives();
+        });
+
+        document.getElementById('closeArchives').addEventListener('click', () => {
+            this.closeArchives();
+        });
+
+        // Archives search functionality
+        document.getElementById('archivesSearch').addEventListener('input', (e) => {
+            this.filterArchives(e.target.value);
         });
 
         // Settings

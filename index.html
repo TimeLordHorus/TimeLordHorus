@@ -48,6 +48,7 @@
             <div class="action-controls">
                 <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
                 <button id="historyBtn" class="action-btn" title="History">📜</button>
+                <button id="archivesBtn" class="action-btn" title="Free Internet Archives">📚</button>
                 <button id="blueDropBtn" class="action-btn" title="BlueDrop - Share via Bluetooth">📡</button>
                 <button id="fileManagerBtn" class="action-btn" title="File Manager & Cloud Storage">📁</button>
                 <button id="splitViewBtn" class="action-btn" title="Split View">⚡</button>
@@ -681,6 +682,325 @@ console.log('Hello from TimeLord Browser VM!');</textarea>
                                 <input type="checkbox" id="easyPrivacy" checked>
                                 EasyPrivacy (Tracking)
                             </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Internet Archives Panel -->
+    <div class="archives-panel" id="archivesPanel">
+        <div class="archives-container">
+            <div class="archives-header">
+                <h2>📚 Free Internet Archives</h2>
+                <button class="close-archives" id="closeArchives">✕</button>
+            </div>
+
+            <div class="archives-body">
+                <div class="archives-search">
+                    <input type="text" id="archivesSearch" placeholder="Search archives..." class="archives-search-input">
+                </div>
+
+                <div class="archives-categories">
+                    <!-- Web Archives -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🌐 Web Archives</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🏛️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive</div>
+                                    <div class="link-desc">Digital library of websites, books, movies, and more</div>
+                                </div>
+                            </a>
+                            <a href="https://web.archive.org" target="_blank" class="archive-link">
+                                <span class="link-icon">⏪</span>
+                                <div class="link-details">
+                                    <div class="link-name">Wayback Machine</div>
+                                    <div class="link-desc">Browse archived versions of websites</div>
+                                </div>
+                            </a>
+                            <a href="https://archive.today" target="_blank" class="archive-link">
+                                <span class="link-icon">📸</span>
+                                <div class="link-details">
+                                    <div class="link-name">Archive.today</div>
+                                    <div class="link-desc">Take snapshots of web pages</div>
+                                </div>
+                            </a>
+                            <a href="https://archiveofourown.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📝</span>
+                                <div class="link-details">
+                                    <div class="link-name">Archive of Our Own (AO3)</div>
+                                    <div class="link-desc">Fanfiction and creative works archive</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Books & Literature -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📖 Books & Literature</h3>
+                        <div class="archive-links">
+                            <a href="https://www.gutenberg.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📚</span>
+                                <div class="link-details">
+                                    <div class="link-name">Project Gutenberg</div>
+                                    <div class="link-desc">70,000+ free eBooks</div>
+                                </div>
+                            </a>
+                            <a href="https://openlibrary.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📕</span>
+                                <div class="link-details">
+                                    <div class="link-name">Open Library</div>
+                                    <div class="link-desc">Millions of books, borrow and read</div>
+                                </div>
+                            </a>
+                            <a href="https://standardebooks.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📗</span>
+                                <div class="link-details">
+                                    <div class="link-name">Standard Ebooks</div>
+                                    <div class="link-desc">High-quality public domain ebooks</div>
+                                </div>
+                            </a>
+                            <a href="https://www.fadedpage.com" target="_blank" class="archive-link">
+                                <span class="link-icon">📘</span>
+                                <div class="link-details">
+                                    <div class="link-name">FadedPage</div>
+                                    <div class="link-desc">Canadian public domain eBooks</div>
+                                </div>
+                            </a>
+                            <a href="https://www.manybooks.net" target="_blank" class="archive-link">
+                                <span class="link-icon">📙</span>
+                                <div class="link-details">
+                                    <div class="link-name">ManyBooks</div>
+                                    <div class="link-desc">50,000+ free ebooks</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Academic & Research -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎓 Academic & Research</h3>
+                        <div class="archive-links">
+                            <a href="https://scholar.google.com" target="_blank" class="archive-link">
+                                <span class="link-icon">🔬</span>
+                                <div class="link-details">
+                                    <div class="link-name">Google Scholar</div>
+                                    <div class="link-desc">Search scholarly literature</div>
+                                </div>
+                            </a>
+                            <a href="https://arxiv.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📄</span>
+                                <div class="link-details">
+                                    <div class="link-name">arXiv</div>
+                                    <div class="link-desc">Open access research papers</div>
+                                </div>
+                            </a>
+                            <a href="https://www.ncbi.nlm.nih.gov/pmc" target="_blank" class="archive-link">
+                                <span class="link-icon">🧬</span>
+                                <div class="link-details">
+                                    <div class="link-name">PubMed Central</div>
+                                    <div class="link-desc">Free biomedical research articles</div>
+                                </div>
+                            </a>
+                            <a href="https://core.ac.uk" target="_blank" class="archive-link">
+                                <span class="link-icon">🌍</span>
+                                <div class="link-details">
+                                    <div class="link-name">CORE</div>
+                                    <div class="link-desc">Millions of open access research papers</div>
+                                </div>
+                            </a>
+                            <a href="https://www.base-search.net" target="_blank" class="archive-link">
+                                <span class="link-icon">🔍</span>
+                                <div class="link-details">
+                                    <div class="link-name">BASE</div>
+                                    <div class="link-desc">Academic web resources search</div>
+                                </div>
+                            </a>
+                            <a href="https://doaj.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📰</span>
+                                <div class="link-details">
+                                    <div class="link-name">DOAJ</div>
+                                    <div class="link-desc">Directory of Open Access Journals</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Media & Entertainment -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎬 Media & Entertainment</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/movies" target="_blank" class="archive-link">
+                                <span class="link-icon">🎥</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Movies</div>
+                                    <div class="link-desc">Free classic movies and videos</div>
+                                </div>
+                            </a>
+                            <a href="https://commons.wikimedia.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🖼️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Wikimedia Commons</div>
+                                    <div class="link-desc">Free media files repository</div>
+                                </div>
+                            </a>
+                            <a href="https://www.loc.gov/free-to-use" target="_blank" class="archive-link">
+                                <span class="link-icon">🏛️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Library of Congress</div>
+                                    <div class="link-desc">Free historical media and documents</div>
+                                </div>
+                            </a>
+                            <a href="https://www.europeana.eu" target="_blank" class="archive-link">
+                                <span class="link-icon">🇪🇺</span>
+                                <div class="link-details">
+                                    <div class="link-name">Europeana</div>
+                                    <div class="link-desc">European cultural heritage</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Music & Audio -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎵 Music & Audio</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/audio" target="_blank" class="archive-link">
+                                <span class="link-icon">🎧</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Audio</div>
+                                    <div class="link-desc">Free music, podcasts, and audio</div>
+                                </div>
+                            </a>
+                            <a href="https://freemusicarchive.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🎼</span>
+                                <div class="link-details">
+                                    <div class="link-name">Free Music Archive</div>
+                                    <div class="link-desc">High-quality, legal audio downloads</div>
+                                </div>
+                            </a>
+                            <a href="https://musopen.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🎹</span>
+                                <div class="link-details">
+                                    <div class="link-name">Musopen</div>
+                                    <div class="link-desc">Free classical music recordings</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Software & Games -->
+                    <div class="archive-category">
+                        <h3 class="category-title">💾 Software & Games</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/software" target="_blank" class="archive-link">
+                                <span class="link-icon">💻</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Software</div>
+                                    <div class="link-desc">Historical software collection</div>
+                                </div>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="archive-link">
+                                <span class="link-icon">🐙</span>
+                                <div class="link-details">
+                                    <div class="link-name">GitHub</div>
+                                    <div class="link-desc">Open source software repository</div>
+                                </div>
+                            </a>
+                            <a href="https://www.myabandonware.com" target="_blank" class="archive-link">
+                                <span class="link-icon">🎮</span>
+                                <div class="link-details">
+                                    <div class="link-name">My Abandonware</div>
+                                    <div class="link-desc">Classic PC games archive</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Educational Resources -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎓 Educational Resources</h3>
+                        <div class="archive-links">
+                            <a href="https://www.khanacademy.org" target="_blank" class="archive-link">
+                                <span class="link-icon">📚</span>
+                                <div class="link-details">
+                                    <div class="link-name">Khan Academy</div>
+                                    <div class="link-desc">Free online courses and lessons</div>
+                                </div>
+                            </a>
+                            <a href="https://www.coursera.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🎓</span>
+                                <div class="link-details">
+                                    <div class="link-name">Coursera</div>
+                                    <div class="link-desc">Online courses from universities</div>
+                                </div>
+                            </a>
+                            <a href="https://www.edx.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🏫</span>
+                                <div class="link-details">
+                                    <div class="link-name">edX</div>
+                                    <div class="link-desc">University-level online courses</div>
+                                </div>
+                            </a>
+                            <a href="https://ocw.mit.edu" target="_blank" class="archive-link">
+                                <span class="link-icon">🎯</span>
+                                <div class="link-details">
+                                    <div class="link-name">MIT OpenCourseWare</div>
+                                    <div class="link-desc">Free MIT course materials</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- News & Magazines -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📰 News & Magazines</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/magazines" target="_blank" class="archive-link">
+                                <span class="link-icon">📖</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Magazines</div>
+                                    <div class="link-desc">Historical magazine collection</div>
+                                </div>
+                            </a>
+                            <a href="https://chroniclingamerica.loc.gov" target="_blank" class="archive-link">
+                                <span class="link-icon">📜</span>
+                                <div class="link-details">
+                                    <div class="link-name">Chronicling America</div>
+                                    <div class="link-desc">Historic American newspapers</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Data & Statistics -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📊 Data & Statistics</h3>
+                        <div class="archive-links">
+                            <a href="https://data.gov" target="_blank" class="archive-link">
+                                <span class="link-icon">🏛️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Data.gov</div>
+                                    <div class="link-desc">US government open data</div>
+                                </div>
+                            </a>
+                            <a href="https://www.kaggle.com/datasets" target="_blank" class="archive-link">
+                                <span class="link-icon">📈</span>
+                                <div class="link-details">
+                                    <div class="link-name">Kaggle Datasets</div>
+                                    <div class="link-desc">Public datasets for data science</div>
+                                </div>
+                            </a>
+                            <a href="https://ourworldindata.org" target="_blank" class="archive-link">
+                                <span class="link-icon">🌍</span>
+                                <div class="link-details">
+                                    <div class="link-name">Our World in Data</div>
+                                    <div class="link-desc">Research and data on global issues</div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>

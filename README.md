@@ -2,7 +2,7 @@
 
 A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla JavaScript. Experience fast, modern browsing with offline capabilities, Bluetooth file sharing, cloud file management, code execution VM, split-screen browsing, and a clean, intuitive interface.
 
-![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![PWA](https://img.shields.io/badge/PWA-enabled-orange.svg)
 ![Bluetooth](https://img.shields.io/badge/Bluetooth-enabled-blue.svg)
@@ -21,6 +21,27 @@ A lightweight, feature-rich Progressive Web App (PWA) browser built with vanilla
 - **Bookmark System**: Save and organize your favorite sites with IndexedDB
 - **History Tracking**: Keep track of visited pages with full history management
 - **Persistent Storage**: All data stored locally using IndexedDB
+
+### Free Internet Archives 📚
+Quick access to a curated collection of free internet archives and resources.
+
+#### Categories:
+- **🌐 Web Archives**: Internet Archive, Wayback Machine, Archive.today
+- **📖 Books & Literature**: Project Gutenberg (70,000+ free eBooks), Open Library, Standard Ebooks
+- **🎓 Academic & Research**: Google Scholar, arXiv, PubMed Central, CORE, BASE, DOAJ
+- **🎬 Media & Entertainment**: Internet Archive Movies, Wikimedia Commons, Library of Congress
+- **🎵 Music & Audio**: Internet Archive Audio, Free Music Archive, Musopen
+- **💾 Software & Games**: Internet Archive Software, GitHub, My Abandonware
+- **🎓 Educational Resources**: Khan Academy, Coursera, edX, MIT OpenCourseWare
+- **📰 News & Magazines**: Internet Archive Magazines, Chronicling America
+- **📊 Data & Statistics**: Data.gov, Kaggle Datasets, Our World in Data
+
+#### Features:
+- **45+ Curated Resources**: Handpicked quality archives
+- **Category Organization**: Browse by type (books, academic, media, etc.)
+- **Real-time Search**: Filter archives by name, description, or category
+- **Direct Access**: One-click access to any archive
+- **Responsive Design**: Mobile-friendly archive browser
 
 ### BlueDrop - Wireless Sharing
 - **Bluetooth Sharing**: Share files, links, and text via Web Bluetooth API
@@ -345,6 +366,78 @@ Block ads and trackers for faster, cleaner browsing.
 - **EasyPrivacy**: Privacy protection and tracker blocking
 - **Fanboy Annoyances**: Remove social media widgets and annoyances
 - **Custom Filters**: Add your own blocking rules
+
+### How to Use Free Internet Archives
+
+**Accessing Archives:**
+1. Click the Archives button (📚) in the navigation bar
+2. Browse by category or use the search bar
+3. Click any archive link to open it in a new tab
+
+**Search Functionality:**
+- Type keywords in the search box to filter archives
+- Search matches archive names, descriptions, and categories
+- Real-time filtering shows only matching results
+
+**Archive Categories:**
+
+**🌐 Web Archives**
+- Internet Archive - Digital library with millions of free resources
+- Wayback Machine - Browse 800+ billion archived web pages
+- Archive.today - Create permanent snapshots of web pages
+- Archive of Our Own - Fanfiction and creative works
+
+**📖 Books & Literature**
+- Project Gutenberg - 70,000+ free eBooks in public domain
+- Open Library - Millions of books to borrow and read
+- Standard Ebooks - High-quality formatted public domain ebooks
+- FadedPage - Canadian public domain eBooks
+- ManyBooks - 50,000+ free ebooks in multiple formats
+
+**🎓 Academic & Research**
+- Google Scholar - Search scholarly literature across disciplines
+- arXiv - 2M+ open access research papers (physics, math, CS, etc.)
+- PubMed Central - Free biomedical and life sciences research
+- CORE - Millions of open access research papers
+- BASE - Bielefeld Academic Search Engine
+- DOAJ - Directory of Open Access Journals (18,000+ journals)
+
+**🎬 Media & Entertainment**
+- Internet Archive Movies - Classic films and documentaries
+- Wikimedia Commons - 90M+ free media files
+- Library of Congress - Historical media and documents
+- Europeana - European cultural heritage collections
+
+**🎵 Music & Audio**
+- Internet Archive Audio - Free music, podcasts, and recordings
+- Free Music Archive - High-quality, legal audio downloads
+- Musopen - Free classical music recordings and sheet music
+
+**💾 Software & Games**
+- Internet Archive Software - Historical software preservation
+- GitHub - World's largest open source code repository
+- My Abandonware - Classic PC games (abandonware)
+
+**🎓 Educational Resources**
+- Khan Academy - Free online courses and lessons for all ages
+- Coursera - University courses (many free to audit)
+- edX - University-level online courses
+- MIT OpenCourseWare - Free MIT course materials
+
+**📰 News & Magazines**
+- Internet Archive Magazines - Historical magazine collections
+- Chronicling America - Historic American newspapers (1777-1963)
+
+**📊 Data & Statistics**
+- Data.gov - US government open data portal
+- Kaggle Datasets - Public datasets for data science
+- Our World in Data - Research and data on global issues
+
+**Tips:**
+- All links open in new tabs to preserve your browsing
+- Use search to quickly find specific resources
+- Archives are organized by content type for easy browsing
+- Most resources are completely free with no registration required
 
 ### End-to-End Encryption 🔒
 Protect your browsing data from host browser collection using military-grade encryption.
