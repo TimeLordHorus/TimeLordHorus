@@ -1,0 +1,773 @@
+/**
+ * Sanctuary - Brutalist-Victorian-Utilitarian Design System
+ *
+ * Aesthetic: Raw concrete brutalism + Victorian industrial + Functional utility
+ * Palette: Concrete grays, brass/copper accents, deep industrial blacks
+ */
+
+:root {
+    /* Brutalist Concrete Colors */
+    --concrete-dark: #2a2a2a;
+    --concrete-medium: #3a3a3a;
+    --concrete-light: #4a4a4a;
+    --concrete-highlight: #5a5a5a;
+
+    /* Victorian Brass/Copper */
+    --brass-dark: #6b4423;
+    --brass-medium: #8b5a3c;
+    --brass-light: #b87333;
+    --brass-bright: #cd853f;
+
+    /* Industrial Accents */
+    --iron-black: #1a1a1a;
+    --steel-gray: #6c6c6c;
+    --rust-orange: #a0522d;
+    --verdigris-green: #43b78a;
+
+    /* Functional States */
+    --success-brass: #b8860b;
+    --warning-copper: #cd853f;
+    --danger-rust: #8b4513;
+    --info-steel: #708090;
+
+    /* Typography */
+    --font-brutalist: 'Courier New', 'Consolas', monospace;
+    --font-victorian: 'Georgia', 'Times New Roman', serif;
+    --font-technical: 'Monaco', 'Menlo', monospace;
+
+    /* Spacing (utilitarian grid) */
+    --unit: 8px;
+}
+
+/* Global Brutalist Foundation */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.hud-active {
+    font-family: var(--font-brutalist);
+    background: var(--iron-black);
+    color: var(--concrete-light);
+    line-height: 1.4;
+}
+
+/* Brutalist Typography */
+.brutalist-heading {
+    font-family: var(--font-brutalist);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border-left: 4px solid var(--brass-light);
+    padding-left: calc(var(--unit) * 2);
+    margin: calc(var(--unit) * 2) 0;
+}
+
+.victorian-title {
+    font-family: var(--font-victorian);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--brass-bright);
+    border-bottom: 2px double var(--brass-dark);
+    padding-bottom: var(--unit);
+}
+
+.technical-label {
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--steel-gray);
+}
+
+/* Victorian Ornamental Borders */
+.victorian-frame {
+    border: 3px double var(--brass-dark);
+    border-radius: 0; /* Brutalist sharp corners */
+    position: relative;
+}
+
+.victorian-frame::before,
+.victorian-frame::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--brass-light);
+}
+
+.victorian-frame::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.victorian-frame::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+/* Brutalist Concrete Panels */
+.concrete-panel {
+    background: var(--concrete-dark);
+    border: 1px solid var(--concrete-highlight);
+    padding: calc(var(--unit) * 2);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.concrete-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.02) 2px,
+            rgba(255, 255, 255, 0.02) 4px
+        );
+    pointer-events: none;
+}
+
+/* Industrial Rivets */
+.riveted {
+    position: relative;
+}
+
+.riveted::before,
+.riveted::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, var(--steel-gray), var(--concrete-dark));
+    border-radius: 50%;
+    border: 1px solid var(--iron-black);
+}
+
+.riveted::before {
+    top: 8px;
+    left: 8px;
+}
+
+.riveted::after {
+    top: 8px;
+    right: 8px;
+}
+
+/* HUD Container */
+.hud-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+    font-family: var(--font-brutalist);
+}
+
+/* HUD Elements - Utilitarian Grid Layout */
+.hud-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, var(--iron-black) 0%, transparent 100%);
+    border-bottom: 2px solid var(--brass-dark);
+    display: flex;
+    align-items: center;
+    padding: 0 calc(var(--unit) * 2);
+    pointer-events: auto;
+}
+
+.hud-left-panel {
+    position: absolute;
+    top: 80px;
+    left: calc(var(--unit) * 2);
+    width: 320px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    pointer-events: auto;
+}
+
+.hud-right-panel {
+    position: absolute;
+    top: 80px;
+    right: calc(var(--unit) * 2);
+    width: 280px;
+    pointer-events: auto;
+}
+
+.hud-bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(0deg, var(--iron-black) 0%, transparent 100%);
+    border-top: 2px solid var(--brass-dark);
+    pointer-events: auto;
+}
+
+/* Profile Card - Victorian Portrait Style */
+.profile-card {
+    background: var(--concrete-dark);
+    border: 3px double var(--brass-medium);
+    padding: calc(var(--unit) * 2);
+    margin-bottom: calc(var(--unit) * 2);
+    position: relative;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border: 4px solid var(--brass-dark);
+    border-radius: 50%;
+    background: var(--concrete-medium);
+    margin: 0 auto calc(var(--unit) * 2);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--brass-light);
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.profile-name {
+    text-align: center;
+    font-family: var(--font-victorian);
+    font-size: 1.2rem;
+    color: var(--brass-bright);
+    margin-bottom: var(--unit);
+}
+
+.profile-level {
+    text-align: center;
+    font-family: var(--font-brutalist);
+    font-size: 0.85rem;
+    color: var(--steel-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+/* Stats Grid - Utilitarian Layout */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--unit) * 2);
+    margin: calc(var(--unit) * 2) 0;
+}
+
+.stat-block {
+    background: var(--concrete-medium);
+    border: 2px solid var(--concrete-highlight);
+    border-left: 4px solid var(--brass-medium);
+    padding: calc(var(--unit) * 1.5);
+    position: relative;
+}
+
+.stat-label {
+    font-family: var(--font-technical);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--steel-gray);
+    margin-bottom: calc(var(--unit) / 2);
+}
+
+.stat-value {
+    font-family: var(--font-brutalist);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brass-light);
+    line-height: 1;
+}
+
+.stat-subvalue {
+    font-size: 0.7rem;
+    color: var(--concrete-light);
+    margin-top: calc(var(--unit) / 2);
+}
+
+/* Progress Bars - Industrial Style */
+.progress-container {
+    background: var(--iron-black);
+    border: 2px inset var(--concrete-dark);
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+    margin: calc(var(--unit)) 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brass-dark), var(--brass-light), var(--brass-dark));
+    background-size: 200% 100%;
+    animation: progress-shine 2s linear infinite;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.1) 20px
+    );
+}
+
+.progress-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-technical);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+    z-index: 1;
+}
+
+@keyframes progress-shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* Inventory Grid - Brutalist Cards */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: calc(var(--unit));
+    margin: calc(var(--unit) * 2) 0;
+}
+
+.inventory-slot {
+    aspect-ratio: 1;
+    background: var(--concrete-medium);
+    border: 2px solid var(--concrete-highlight);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.inventory-slot:hover {
+    border-color: var(--brass-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.inventory-slot.empty {
+    border-style: dashed;
+    opacity: 0.5;
+}
+
+.inventory-slot.rarity-common { border-left-color: #9e9e9e; }
+.inventory-slot.rarity-uncommon { border-left-color: #4caf50; }
+.inventory-slot.rarity-rare { border-left-color: #2196f3; }
+.inventory-slot.rarity-epic { border-left-color: #9c27b0; }
+.inventory-slot.rarity-legendary { border-left-color: #ff9800; }
+.inventory-slot.rarity-mythic { border-left-color: #f44336; }
+
+.inventory-quantity {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: var(--iron-black);
+    color: var(--brass-bright);
+    font-family: var(--font-brutalist);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border: 1px solid var(--brass-dark);
+}
+
+/* Skill Tree - Victorian Diagram */
+.skill-tree {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--unit) * 2);
+}
+
+.skill-node {
+    background: var(--concrete-dark);
+    border: 2px solid var(--brass-dark);
+    padding: calc(var(--unit) * 1.5);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.skill-node:hover {
+    border-color: var(--brass-light);
+    background: var(--concrete-medium);
+}
+
+.skill-node.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.skill-node.active {
+    border-color: var(--brass-bright);
+    border-width: 3px;
+    box-shadow: 0 0 20px rgba(205, 133, 63, 0.3);
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--unit);
+}
+
+.skill-name {
+    font-family: var(--font-victorian);
+    font-size: 1rem;
+    color: var(--brass-light);
+}
+
+.skill-level {
+    font-family: var(--font-brutalist);
+    font-size: 0.85rem;
+    color: var(--steel-gray);
+    background: var(--iron-black);
+    padding: 2px 8px;
+    border: 1px solid var(--concrete-highlight);
+}
+
+.skill-description {
+    font-size: 0.8rem;
+    color: var(--concrete-light);
+    line-height: 1.4;
+    font-family: var(--font-victorian);
+    font-style: italic;
+}
+
+/* Spell Grimoire - Victorian Book Style */
+.spell-grimoire {
+    background: var(--concrete-dark);
+    border: 4px double var(--brass-medium);
+    padding: calc(var(--unit) * 2);
+}
+
+.spell-card {
+    background: var(--concrete-medium);
+    border-left: 4px solid var(--brass-dark);
+    padding: calc(var(--unit) * 1.5);
+    margin-bottom: calc(var(--unit) * 1.5);
+    position: relative;
+}
+
+.spell-card.ready {
+    border-left-color: var(--success-brass);
+}
+
+.spell-card.cooldown {
+    border-left-color: var(--danger-rust);
+    opacity: 0.6;
+}
+
+.spell-school {
+    display: inline-block;
+    font-family: var(--font-technical);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    background: var(--brass-dark);
+    color: var(--concrete-light);
+    padding: 2px 8px;
+    margin-bottom: var(--unit);
+}
+
+.spell-name {
+    font-family: var(--font-victorian);
+    font-size: 1.1rem;
+    color: var(--brass-bright);
+    margin-bottom: calc(var(--unit) / 2);
+}
+
+.spell-cost {
+    font-family: var(--font-brutalist);
+    font-size: 0.75rem;
+    color: var(--steel-gray);
+}
+
+/* Credentials Display - Certificate Style */
+.credential-showcase {
+    background: var(--concrete-dark);
+    border: 3px double var(--brass-medium);
+    padding: calc(var(--unit) * 2);
+    margin-bottom: calc(var(--unit) * 2);
+    position: relative;
+}
+
+.credential-showcase::before,
+.credential-showcase::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--brass-light);
+}
+
+.credential-showcase::before {
+    top: -3px;
+    left: -3px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.credential-showcase::after {
+    bottom: -3px;
+    right: -3px;
+    border-left: none;
+    border-top: none;
+}
+
+.credential-badge {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto calc(var(--unit) * 2);
+    border: 3px solid var(--brass-bright);
+    border-radius: 50%;
+    background: var(--concrete-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.credential-title {
+    text-align: center;
+    font-family: var(--font-victorian);
+    font-size: 1.1rem;
+    color: var(--brass-bright);
+    margin-bottom: var(--unit);
+}
+
+.credential-org {
+    text-align: center;
+    font-family: var(--font-brutalist);
+    font-size: 0.8rem;
+    color: var(--steel-gray);
+    text-transform: uppercase;
+}
+
+.verified-badge {
+    display: inline-block;
+    background: var(--success-brass);
+    color: var(--iron-black);
+    font-family: var(--font-technical);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    margin-top: var(--unit);
+    border: 2px solid var(--brass-bright);
+}
+
+/* Knowledge Library - Victorian Bookshelf */
+.knowledge-library {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--unit));
+}
+
+.knowledge-entry {
+    background: var(--concrete-medium);
+    border-left: 4px solid var(--brass-dark);
+    padding: calc(var(--unit) * 1.5);
+    position: relative;
+}
+
+.knowledge-entry.completed {
+    border-left-color: var(--success-brass);
+}
+
+.knowledge-category {
+    font-family: var(--font-technical);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--steel-gray);
+    margin-bottom: calc(var(--unit) / 2);
+}
+
+.knowledge-title {
+    font-family: var(--font-victorian);
+    font-size: 0.95rem;
+    color: var(--brass-light);
+    margin-bottom: calc(var(--unit) / 2);
+}
+
+/* Buttons - Industrial Style */
+.industrial-button {
+    font-family: var(--font-brutalist);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--concrete-medium);
+    color: var(--brass-light);
+    border: 2px solid var(--brass-dark);
+    padding: calc(var(--unit) * 1.5) calc(var(--unit) * 3);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.industrial-button:hover {
+    background: var(--brass-dark);
+    color: var(--concrete-light);
+    border-color: var(--brass-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.industrial-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.industrial-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 6px;
+    height: 6px;
+    background: var(--steel-gray);
+    border-radius: 50%;
+}
+
+.industrial-button::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background: var(--steel-gray);
+    border-radius: 50%;
+}
+
+/* Tabs - Brutalist Navigation */
+.brutalist-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 3px solid var(--brass-dark);
+    margin-bottom: calc(var(--unit) * 2);
+}
+
+.tab-button {
+    font-family: var(--font-brutalist);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--concrete-dark);
+    color: var(--steel-gray);
+    border: none;
+    border-right: 2px solid var(--iron-black);
+    padding: calc(var(--unit) * 1.5) calc(var(--unit) * 2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background: var(--concrete-medium);
+    color: var(--brass-light);
+}
+
+.tab-button.active {
+    background: var(--brass-dark);
+    color: var(--concrete-light);
+    border-bottom: 3px solid var(--brass-bright);
+    margin-bottom: -3px;
+}
+
+/* Scrollbar - Industrial */
+.hud-left-panel::-webkit-scrollbar {
+    width: 12px;
+}
+
+.hud-left-panel::-webkit-scrollbar-track {
+    background: var(--iron-black);
+    border: 2px solid var(--concrete-dark);
+}
+
+.hud-left-panel::-webkit-scrollbar-thumb {
+    background: var(--brass-dark);
+    border: 2px solid var(--iron-black);
+}
+
+.hud-left-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--brass-light);
+}
+
+/* Tooltips - Victorian Plaques */
+.victorian-tooltip {
+    position: absolute;
+    background: var(--concrete-dark);
+    border: 2px double var(--brass-medium);
+    padding: calc(var(--unit) * 1.5);
+    font-family: var(--font-victorian);
+    font-size: 0.85rem;
+    color: var(--concrete-light);
+    z-index: 10000;
+    pointer-events: none;
+    max-width: 300px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes concrete-texture {
+    0%, 100% { opacity: 0.02; }
+    50% { opacity: 0.05; }
+}
+
+@keyframes brass-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(205, 133, 63, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(205, 133, 63, 0.4); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1280px) {
+    .hud-left-panel,
+    .hud-right-panel {
+        width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hud-left-panel {
+        width: calc(100vw - var(--unit) * 4);
+        max-height: 40vh;
+    }
+
+    .hud-right-panel {
+        display: none; /* Hide on mobile */
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
