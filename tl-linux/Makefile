@@ -53,6 +53,10 @@ install-deps:
 		grub-efi-amd64-bin \
 		mtools \
 		dosfstools \
+		syslinux \
+		syslinux-utils \
+		isolinux \
+		syslinux-common \
 		qemu-system-x86 \
 		rsync \
 		wget

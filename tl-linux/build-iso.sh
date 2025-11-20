@@ -36,6 +36,36 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# Check for spaces in current directory path
+CURRENT_DIR="$(pwd)"
+if [[ "$CURRENT_DIR" =~ [[:space:]] ]]; then
+    echo -e "${RED}╔════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ERROR: Path contains spaces!                             ║${NC}"
+    echo -e "${RED}╚════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}Current directory:${NC} $CURRENT_DIR"
+    echo ""
+    echo -e "${YELLOW}The build process cannot handle spaces in the path.${NC}"
+    echo ""
+    echo "Please move the TL Linux directory to a path without spaces:"
+    echo ""
+    echo "  Good paths:"
+    echo "    /home/user/tl-linux"
+    echo "    /opt/tl-linux"
+    echo "    ~/Projects/tl-linux"
+    echo ""
+    echo "  Bad paths (contain spaces):"
+    echo "    /home/curtis/Desktop/TimeLordHorus-main (1)/tl-linux"
+    echo "    ~/My Documents/tl-linux"
+    echo ""
+    echo "Example fix:"
+    echo "  mv \"$CURRENT_DIR\" ~/tl-linux"
+    echo "  cd ~/tl-linux"
+    echo "  sudo ./build-iso.sh"
+    echo ""
+    exit 1
+fi
+
 # Check dependencies
 echo -e "${YELLOW}[1/8]${NC} Checking dependencies..."
 REQUIRED_PACKAGES=(
@@ -46,6 +76,10 @@ REQUIRED_PACKAGES=(
     "grub-efi-amd64-bin"
     "mtools"
     "dosfstools"
+    "syslinux"
+    "syslinux-utils"
+    "isolinux"
+    "syslinux-common"
 )
 
 MISSING_PACKAGES=()
@@ -89,6 +123,19 @@ debootstrap \
     bookworm \
     "$ROOTFS_DIR" \
     http://deb.debian.org/debian/
+
+# Verify debootstrap completed successfully
+if [ ! -f "${ROOTFS_DIR}/bin/bash" ]; then
+    echo -e "${RED}✗ Debootstrap failed - /bin/bash not found${NC}"
+    exit 1
+fi
+
+# Verify dynamic linker exists
+if [ ! -f "${ROOTFS_DIR}/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2" ] && \
+   [ ! -f "${ROOTFS_DIR}/lib64/ld-linux-x86-64.so.2" ]; then
+    echo -e "${RED}✗ Dynamic linker missing - debootstrap incomplete${NC}"
+    exit 1
+fi
 
 echo -e "${GREEN}✓ Base system bootstrapped${NC}"
 
@@ -163,6 +210,31 @@ pip3 install --break-system-packages \
     pillow \
     python-xlib
 
+echo "==> Installing firmware packages"
+apt-get install -y \
+    linux-firmware \
+    firmware-linux \
+    firmware-linux-free \
+    firmware-linux-nonfree \
+    firmware-misc-nonfree \
+    intel-microcode \
+    amd64-microcode \
+    firmware-realtek \
+    firmware-atheros \
+    firmware-iwlwifi \
+    firmware-bnx2 \
+    firmware-bnx2x \
+    firmware-brcm80211 \
+    firmware-intelwimax \
+    firmware-ipw2x00 \
+    firmware-libertas \
+    firmware-ralink \
+    firmware-ti-connectivity \
+    firmware-amd-graphics \
+    firmware-nvidia-gsp \
+    fwupd \
+    fwupd-signed || true
+
 echo "==> Installing accessibility tools"
 apt-get install -y \
     orca \
@@ -185,6 +257,22 @@ apt-get install -y \
     p7zip-full \
     p7zip-rar
 
+echo "==> Installing media codecs and tools"
+apt-get install -y \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-libav \
+    gstreamer1.0-tools \
+    gstreamer1.0-pulseaudio \
+    ffmpeg \
+    vlc \
+    mpv \
+    poppler-utils \
+    imagemagick \
+    gimp || true
+
 echo "==> Installing system utilities"
 apt-get install -y \
     htop \
@@ -194,7 +282,13 @@ apt-get install -y \
     time \
     file \
     less \
-    psmisc
+    psmisc \
+    ufw \
+    gufw \
+    gparted \
+    timeshift \
+    baobab \
+    dconf-editor
 
 echo "==> Configuring locale"
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
@@ -235,8 +329,39 @@ CHROOT_EOF
 
 chmod +x "${ROOTFS_DIR}/tmp/configure-system.sh"
 
+# Test chroot before running configuration
+echo "  Testing chroot environment..."
+if ! chroot "$ROOTFS_DIR" /bin/true 2>/dev/null; then
+    echo -e "${RED}✗ Chroot test failed!${NC}"
+    echo ""
+    echo "Common causes:"
+    echo "  1. Debootstrap didn't complete properly"
+    echo "  2. Missing dynamic linker"
+    echo "  3. Architecture mismatch"
+    echo ""
+    echo "Checking system..."
+    echo "  bash exists: $([ -f "${ROOTFS_DIR}/bin/bash" ] && echo 'YES' || echo 'NO')"
+    echo "  /lib exists: $([ -d "${ROOTFS_DIR}/lib" ] && echo 'YES' || echo 'NO')"
+    echo "  /lib64 exists: $([ -d "${ROOTFS_DIR}/lib64" ] && echo 'YES' || echo 'NO')"
+
+    if [ -d "${ROOTFS_DIR}/lib/x86_64-linux-gnu" ]; then
+        echo "  Dynamic linker: $([ -f "${ROOTFS_DIR}/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2" ] && echo 'YES' || echo 'NO')"
+    fi
+
+    echo ""
+    echo "Try running debootstrap manually to see detailed errors:"
+    echo "  sudo debootstrap --arch=amd64 bookworm ${ROOTFS_DIR} http://deb.debian.org/debian/"
+    exit 1
+fi
+echo "  Chroot test passed ✓"
+
 # Run configuration in chroot
-chroot "$ROOTFS_DIR" /tmp/configure-system.sh
+echo "  Running system configuration..."
+if ! chroot "$ROOTFS_DIR" /tmp/configure-system.sh; then
+    echo -e "${RED}✗ System configuration failed${NC}"
+    echo "Check ${ROOTFS_DIR}/tmp/configure-system.sh for errors"
+    exit 1
+fi
 
 # Copy TL Linux files
 echo "  Installing TL Linux applications..."
@@ -333,6 +458,52 @@ echo -e "${GREEN}✓ Filesystem compressed${NC}"
 echo "  Copying kernel and initrd..."
 cp "${ROOTFS_DIR}/boot"/vmlinuz-* "${ISO_DIR}/live/vmlinuz"
 cp "${ROOTFS_DIR}/boot"/initrd.img-* "${ISO_DIR}/live/initrd"
+
+# Copy ISOLINUX bootloader files for BIOS
+echo "  Copying ISOLINUX bootloader..."
+mkdir -p "${ISO_DIR}/isolinux"
+if [ -f "/usr/lib/ISOLINUX/isolinux.bin" ]; then
+    cp /usr/lib/ISOLINUX/isolinux.bin "${ISO_DIR}/isolinux/"
+elif [ -f "/usr/lib/syslinux/isolinux.bin" ]; then
+    cp /usr/lib/syslinux/isolinux.bin "${ISO_DIR}/isolinux/"
+else
+    echo -e "${YELLOW}  Warning: isolinux.bin not found, installing syslinux-utils...${NC}"
+    apt-get install -y syslinux-utils isolinux
+    cp /usr/lib/ISOLINUX/isolinux.bin "${ISO_DIR}/isolinux/"
+fi
+
+# Copy additional ISOLINUX modules
+for module in ldlinux.c32 libcom32.c32 libutil.c32 menu.c32 vesamenu.c32; do
+    if [ -f "/usr/lib/syslinux/modules/bios/$module" ]; then
+        cp "/usr/lib/syslinux/modules/bios/$module" "${ISO_DIR}/isolinux/" 2>/dev/null || true
+    elif [ -f "/usr/lib/ISOLINUX/$module" ]; then
+        cp "/usr/lib/ISOLINUX/$module" "${ISO_DIR}/isolinux/" 2>/dev/null || true
+    fi
+done
+
+# Create EFI boot image
+echo "  Creating EFI boot image..."
+mkdir -p "${ISO_DIR}/boot/grub"
+dd if=/dev/zero of="${ISO_DIR}/boot/grub/efi.img" bs=1M count=10 2>/dev/null
+mkfs.vfat "${ISO_DIR}/boot/grub/efi.img" >/dev/null 2>&1
+
+# Mount EFI image and populate it
+mkdir -p "${WORK_DIR}/efi-mount"
+mount -o loop "${ISO_DIR}/boot/grub/efi.img" "${WORK_DIR}/efi-mount"
+
+# Create EFI directory structure
+mkdir -p "${WORK_DIR}/efi-mount/EFI/BOOT"
+
+# Install GRUB to EFI image
+grub-mkstandalone \
+    --format=x86_64-efi \
+    --output="${WORK_DIR}/efi-mount/EFI/BOOT/BOOTX64.EFI" \
+    --locales="" \
+    --fonts="" \
+    "boot/grub/grub.cfg=${ISO_DIR}/boot/grub/grub.cfg"
+
+# Unmount EFI image
+umount "${WORK_DIR}/efi-mount"
 
 # Create GRUB configuration
 echo -e "${YELLOW}[8/8]${NC} Creating bootloader..."
