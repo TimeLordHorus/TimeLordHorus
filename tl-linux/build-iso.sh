@@ -16,6 +16,11 @@ NC='\033[0m' # No Color
 # Configuration
 TL_VERSION="1.0.0"
 TL_CODENAME="Chronos"
+
+# Debian base version: "bookworm" (Debian 12) or "trixie" (Debian 13)
+# You can change this to build on different Debian versions
+DEBIAN_RELEASE="${DEBIAN_RELEASE:-bookworm}"  # Default to Debian 12
+
 ISO_NAME="tl-linux-${TL_VERSION}-amd64.iso"
 BUILD_DIR="$(pwd)/iso-build"
 WORK_DIR="${BUILD_DIR}/work"
@@ -114,13 +119,14 @@ echo -e "${GREEN}✓ Directories created${NC}"
 # Bootstrap base system
 echo -e "${YELLOW}[4/8]${NC} Bootstrapping base Debian system (this may take 10-15 minutes)..."
 echo "  Installing minimal Debian base system..."
+echo "  Using Debian release: ${DEBIAN_RELEASE}"
 
 # Use debootstrap to create minimal system
 debootstrap \
     --arch=amd64 \
     --variant=minbase \
     --include=linux-image-amd64,live-boot,systemd-sysv \
-    bookworm \
+    "$DEBIAN_RELEASE" \
     "$ROOTFS_DIR" \
     http://deb.debian.org/debian/
 
@@ -350,7 +356,7 @@ if ! chroot "$ROOTFS_DIR" /bin/true 2>/dev/null; then
 
     echo ""
     echo "Try running debootstrap manually to see detailed errors:"
-    echo "  sudo debootstrap --arch=amd64 bookworm ${ROOTFS_DIR} http://deb.debian.org/debian/"
+    echo "  sudo debootstrap --arch=amd64 ${DEBIAN_RELEASE} ${ROOTFS_DIR} http://deb.debian.org/debian/"
     exit 1
 fi
 echo "  Chroot test passed ✓"

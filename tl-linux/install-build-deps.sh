@@ -65,6 +65,9 @@ case "$DISTRO" in
             isolinux \
             syslinux-common \
             qemu-system-x86 \
+            python3 \
+            python3-tk \
+            python3-pip \
             rsync \
             wget \
             2>&1 | tee /tmp/apt-install.log
