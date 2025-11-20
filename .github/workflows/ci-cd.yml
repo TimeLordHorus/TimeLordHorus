@@ -1,0 +1,172 @@
+name: NIX System CI/CD
+
+on:
+  push:
+    branches: [ main, develop, claude/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nix_test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-asyncio
+
+    - name: Run security scan with Bandit
+      run: |
+        pip install bandit
+        bandit -r nix-system/ -f json -o bandit-report.json || true
+
+    - name: Check for vulnerabilities with Safety
+      run: |
+        pip install safety
+        safety check --json || true
+
+    - name: Run linting with flake8
+      run: |
+        pip install flake8
+        flake8 nix-system/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 nix-system/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Run type checking with mypy
+      run: |
+        pip install mypy
+        mypy nix-system/ --ignore-missing-imports || true
+
+    - name: Run tests with pytest
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nix_test_db
+        REDIS_URL: redis://localhost:6379
+        MASTER_ENCRYPTION_KEY: dGVzdF9lbmNyeXB0aW9uX2tleV9mb3JfdGVzdGluZw==
+      run: |
+        pytest tests/ -v --cov=nix_system --cov-report=xml --cov-report=html
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+    - name: Generate test report
+      if: always()
+      run: |
+        pip install pytest-html
+        pytest tests/ --html=report.html --self-contained-html || true
+
+    - name: Upload test report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-report
+        path: report.html
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy results to GitHub Security
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository }}/nix-system:latest
+          ghcr.io/${{ github.repository }}/nix-system:${{ github.sha }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+    - name: Deploy to production
+      run: |
+        echo "Deployment step would go here"
+        # Add your deployment commands here
+        # Examples:
+        # - kubectl apply -f deployment/kubernetes/
+        # - aws ecs update-service ...
+        # - helm upgrade ...
