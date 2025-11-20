@@ -61,13 +61,13 @@ class CharacterHUD {
      */
     async loadCharacterData() {
         try {
-            // For demo, use mock data
-            // In production, fetch from API: await apiClient.request('/character/profile')
-            this.characterData = this.getMockCharacterData();
-
+            // Fetch from real API
+            this.characterData = await apiClient.getCharacterProfile();
             console.log('[CharacterHUD] Character data loaded:', this.characterData);
         } catch (error) {
             console.error('[CharacterHUD] Failed to load character data:', error);
+            console.warn('[CharacterHUD] Falling back to mock data');
+            // Fallback to mock data if API fails
             this.characterData = this.getMockCharacterData();
         }
     }
@@ -467,8 +467,33 @@ class CharacterHUD {
     /**
      * Start meditation
      */
-    startMeditation() {
-        alert('Meditation feature coming soon!\n\nTrack your meditation time and gain Enlightenment.');
+    async startMeditation() {
+        const minutes = prompt('How many minutes did you meditate?\n\n(Enter a number between 1 and 120)');
+
+        if (!minutes) return;
+
+        const minutesNum = parseInt(minutes);
+        if (isNaN(minutesNum) || minutesNum < 1 || minutesNum > 120) {
+            alert('Please enter a valid number between 1 and 120.');
+            return;
+        }
+
+        try {
+            console.log('[CharacterHUD] Tracking meditation...');
+            const result = await apiClient.trackMeditation(minutesNum);
+
+            console.log('[CharacterHUD] Meditation tracked:', result);
+
+            alert(`Meditation Complete!\n\nDuration: ${minutesNum} minutes\nXP Gained: +${result.xpGained}\n\nYou feel more enlightened...`);
+
+            // Reload character data
+            await this.loadCharacterData();
+            this.render();
+
+        } catch (error) {
+            console.error('[CharacterHUD] Failed to track meditation:', error);
+            alert(`Failed to track meditation:\n\n${error.message}`);
+        }
     }
 
     /**
@@ -513,6 +538,7 @@ class CharacterHUD {
         const title = document.getElementById('cred-title').value;
         const type = document.getElementById('cred-type').value;
         const org = document.getElementById('cred-org').value;
+        const issueDate = document.getElementById('cred-date')?.value || new Date().toISOString().split('T')[0];
         const file = document.getElementById('cred-file').files[0];
 
         if (!title || !org) {
@@ -525,16 +551,39 @@ class CharacterHUD {
             return;
         }
 
-        // In production, upload to API
-        // For demo, show success message
-        alert(`Credential Submitted!\n\nTitle: ${title}\nType: ${type}\nOrganization: ${org}\n\nYour credential has been submitted for verification. You'll receive an update within 24-48 hours.`);
+        try {
+            // Create FormData for file upload
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('type', type);
+            formData.append('issuingOrganization', org);
+            formData.append('issueDate', issueDate);
+            formData.append('document', file);
 
-        this.closeCredentialModal();
+            console.log('[CharacterHUD] Submitting credential...');
 
-        // Clear form
-        document.getElementById('cred-title').value = '';
-        document.getElementById('cred-org').value = '';
-        document.getElementById('cred-file').value = '';
+            // Upload to API
+            const result = await apiClient.submitCredential(formData);
+
+            console.log('[CharacterHUD] Credential submitted:', result);
+
+            alert(`Credential Submitted Successfully!\n\nTitle: ${title}\nType: ${type}\nOrganization: ${org}\n\nPotential Benefits:\n+${result.potentialXP} XP\nTitle: "${result.potentialTitle}"\n\nYour credential has been submitted for verification. You'll receive an update within 24-48 hours.`);
+
+            // Reload character data to show the new credential
+            await this.loadCharacterData();
+            this.renderCredentials();
+
+            this.closeCredentialModal();
+
+            // Clear form
+            document.getElementById('cred-title').value = '';
+            document.getElementById('cred-org').value = '';
+            document.getElementById('cred-file').value = '';
+
+        } catch (error) {
+            console.error('[CharacterHUD] Failed to submit credential:', error);
+            alert(`Failed to submit credential:\n\n${error.message}\n\nPlease try again or contact support.`);
+        }
     }
 }
 
