@@ -31,7 +31,7 @@ if [ -f /etc/os-release ]; then
     fi
 fi
 
-echo "[1/4] Updating package lists..."
+echo "[1/5] Updating package lists..."
 apt-get update || {
     echo ""
     echo "ERROR: Failed to update package lists"
@@ -47,7 +47,7 @@ apt-get update || {
 }
 
 echo ""
-echo "[2/4] Installing core build tools..."
+echo "[2/5] Installing core build tools..."
 apt-get install -y \
     debootstrap \
     squashfs-tools \
@@ -61,7 +61,7 @@ apt-get install -y \
     syslinux-common
 
 echo ""
-echo "[3/4] Installing bootloader packages..."
+echo "[3/5] Installing bootloader packages..."
 apt-get install -y \
     grub-pc-bin \
     grub-efi-amd64-bin \
@@ -69,7 +69,14 @@ apt-get install -y \
     grub-common
 
 echo ""
-echo "[4/4] Installing optional testing tools..."
+echo "[4/5] Installing Python dependencies for TL Linux apps..."
+apt-get install -y \
+    python3 \
+    python3-tk \
+    python3-pip
+
+echo ""
+echo "[5/5] Installing optional testing tools..."
 apt-get install -y \
     qemu-system-x86 \
     qemu-utils \

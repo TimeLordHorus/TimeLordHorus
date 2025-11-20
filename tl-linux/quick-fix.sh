@@ -15,11 +15,11 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-echo "[1/3] Updating package lists..."
+echo "[1/4] Updating package lists..."
 apt-get update
 
 echo ""
-echo "[2/3] Installing build dependencies..."
+echo "[2/4] Installing build dependencies..."
 apt-get install -y \
     debootstrap \
     squashfs-tools \
@@ -37,7 +37,14 @@ apt-get install -y \
     qemu-system-x86
 
 echo ""
-echo "[3/3] Verifying installation..."
+echo "[3/4] Installing Python dependencies for TL Linux apps..."
+apt-get install -y \
+    python3 \
+    python3-tk \
+    python3-pip
+
+echo ""
+echo "[4/4] Verifying installation..."
 MISSING=0
 
 for pkg in debootstrap squashfs-tools xorriso grub-pc-bin mtools; do
