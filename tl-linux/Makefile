@@ -1,7 +1,7 @@
 # TL Linux Makefile
 # Simplifies building and testing TL Linux
 
-.PHONY: all iso test-iso clean check-deps install-deps diagnose fix-repos test-vm help
+.PHONY: all iso iso-debian13 test-iso clean check-deps install-deps diagnose fix-repos test-vm help
 
 # Default target
 all: help
@@ -15,7 +15,8 @@ help:
 	@echo "  make diagnose      - Diagnose system and check build requirements"
 	@echo "  make install-deps  - Install required dependencies (auto-detects distro)"
 	@echo "  make fix-repos     - Fix broken APT repositories (Debian/Ubuntu only)"
-	@echo "  make iso           - Build full production ISO (~20-30 min)"
+	@echo "  make iso           - Build full production ISO with Debian 12 (~20-30 min)"
+	@echo "  make iso-debian13  - Build full production ISO with Debian 13 (~20-30 min)"
 	@echo "  make test-iso      - Build quick test ISO (~5-10 min)"
 	@echo "  make check-deps    - Check if all dependencies are installed"
 	@echo "  make test-vm       - Test latest ISO in QEMU"
@@ -61,15 +62,25 @@ fix-repos:
 	@chmod +x fix-repositories.sh
 	@./fix-repositories.sh
 
-# Build full production ISO
+# Build full production ISO (Debian 12 by default)
 iso:
 	@if [ "$$(id -u)" -ne 0 ]; then \
 		echo "Error: Must be run as root (use sudo make iso)"; \
 		exit 1; \
 	fi
-	@echo "Building full production ISO..."
+	@echo "Building full production ISO (Debian 12 - bookworm)..."
 	chmod +x build-iso.sh
 	./build-iso.sh
+
+# Build ISO with Debian 13 (Trixie)
+iso-debian13:
+	@if [ "$$(id -u)" -ne 0 ]; then \
+		echo "Error: Must be run as root (use sudo make iso-debian13)"; \
+		exit 1; \
+	fi
+	@echo "Building full production ISO (Debian 13 - trixie)..."
+	chmod +x build-iso.sh
+	DEBIAN_RELEASE=trixie ./build-iso.sh
 
 # Build quick test ISO
 test-iso:
