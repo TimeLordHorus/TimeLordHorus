@@ -1,7 +1,7 @@
 # TL Linux Makefile
 # Simplifies building and testing TL Linux
 
-.PHONY: all iso test-iso clean check-deps install-deps diagnose test-vm help
+.PHONY: all iso test-iso clean check-deps install-deps diagnose fix-repos test-vm help
 
 # Default target
 all: help
@@ -14,6 +14,7 @@ help:
 	@echo "Targets:"
 	@echo "  make diagnose      - Diagnose system and check build requirements"
 	@echo "  make install-deps  - Install required dependencies (auto-detects distro)"
+	@echo "  make fix-repos     - Fix broken APT repositories (Debian/Ubuntu only)"
 	@echo "  make iso           - Build full production ISO (~20-30 min)"
 	@echo "  make test-iso      - Build quick test ISO (~5-10 min)"
 	@echo "  make check-deps    - Check if all dependencies are installed"
@@ -50,6 +51,15 @@ install-deps:
 	fi
 	@chmod +x install-build-deps.sh
 	@./install-build-deps.sh
+
+# Fix APT repositories (Debian/Ubuntu only)
+fix-repos:
+	@if [ "$$(id -u)" -ne 0 ]; then \
+		echo "Error: Must be run as root (use sudo make fix-repos)"; \
+		exit 1; \
+	fi
+	@chmod +x fix-repositories.sh
+	@./fix-repositories.sh
 
 # Build full production ISO
 iso:
