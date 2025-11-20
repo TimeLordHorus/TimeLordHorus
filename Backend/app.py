@@ -72,23 +72,16 @@ def generate_model():
                 'error_code': 'INVALID_PROMPT'
             }), 400
 
-        # TODO: Implement actual Text-to-3D generation
-        # from services.text_to_3d import generate_model_shap_e
-        # result = generate_model_shap_e(prompt, quality, style)
+        # Generate model using Text-to-3D service
+        from services.text_to_3d import get_text_to_3d_service
 
-        # Placeholder response
-        response = {
-            'status': 'success',
-            'model_url': 'https://example.com/models/placeholder.glb',
-            'thumbnail_url': 'https://example.com/thumbnails/placeholder.jpg',
-            'generation_id': 'gen_placeholder123',
-            'estimated_polycount': 5000,
-            'created_at': '2025-11-19T12:00:00Z'
-        }
+        service = get_text_to_3d_service()
+        result = service.generate_model(prompt, quality, style)
 
         print(f"[API] Model generation request: {prompt} from user {user_id}")
+        print(f"[API] Generation result: {result['generation_id']} via {result.get('service', 'unknown')}")
 
-        return jsonify(response), 200
+        return jsonify(result), 200
 
     except Exception as e:
         print(f"[ERROR] Generation failed: {str(e)}")
@@ -115,22 +108,20 @@ def transcribe_audio():
         audio_file = request.files['audio_file']
         user_id = request.form.get('user_id')
 
-        # TODO: Implement actual transcription
-        # from services.whisper import transcribe
-        # result = transcribe(audio_file)
+        # Transcribe using Whisper service
+        from services.whisper_service import get_whisper_service
 
-        # Placeholder response
-        response = {
-            'status': 'success',
-            'transcription': 'Sample transcription text',
-            'confidence': 0.95,
-            'language_detected': 'en',
-            'duration_ms': 3000
-        }
+        whisper = get_whisper_service()
+        result = whisper.transcribe(audio_file)
 
         print(f"[API] Transcription request from user {user_id}")
 
-        return jsonify(response), 200
+        if result['status'] == 'success':
+            # Convert seconds to milliseconds
+            result['duration_ms'] = int(result.get('duration_seconds', 0) * 1000)
+            return jsonify(result), 200
+        else:
+            return jsonify(result), 400
 
     except Exception as e:
         print(f"[ERROR] Transcription failed: {str(e)}")

@@ -91,38 +91,65 @@ namespace Sanctuary.AI
 
         /// <summary>
         /// Load GLB file from URL using glTFast
-        /// NOTE: Requires glTFast package to be installed
         /// </summary>
         private async Task<GameObject> LoadGLBFromURL(string url)
         {
-            // This is a placeholder implementation
-            // When glTFast is installed, use this code:
-
-            /*
-            var gltf = new GLTFast.GltfImport();
-            bool success = await gltf.Load(url);
-
-            if (success)
+            try
             {
+                // Use glTFast for loading
+                var gltf = new GLTFast.GltfImport();
+
+                // Load the model from URL
+                bool success = await gltf.Load(url);
+
+                if (!success)
+                {
+                    Debug.LogError($"[ModelImporter] glTFast failed to load: {url}");
+                    return CreatePlaceholder();
+                }
+
+                // Create parent object
                 GameObject instantiatedModel = new GameObject("GeneratedModel");
                 instantiatedModel.transform.SetParent(spawnParent);
 
+                // Instantiate the loaded scene
                 bool instantiated = await gltf.InstantiateMainSceneAsync(instantiatedModel.transform);
 
                 if (instantiated)
                 {
+                    Debug.Log($"[ModelImporter] Model loaded successfully from {url}");
                     return instantiatedModel;
                 }
+                else
+                {
+                    Debug.LogError("[ModelImporter] Failed to instantiate model");
+                    Destroy(instantiatedModel);
+                    return CreatePlaceholder();
+                }
             }
-            */
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[ModelImporter] Exception during model load: {e.Message}");
+                return CreatePlaceholder();
+            }
+        }
 
-            // Temporary fallback: Create a placeholder cube
-            Debug.LogWarning("[ModelImporter] glTFast not available, creating placeholder");
+        /// <summary>
+        /// Create a placeholder cube when model loading fails
+        /// </summary>
+        private GameObject CreatePlaceholder()
+        {
+            Debug.LogWarning("[ModelImporter] Creating placeholder model");
             GameObject placeholder = GameObject.CreatePrimitive(PrimitiveType.Cube);
             placeholder.name = "PlaceholderModel";
             placeholder.transform.SetParent(spawnParent);
 
-            await Task.Delay(1000); // Simulate loading time
+            // Make it visually distinct
+            Renderer renderer = placeholder.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = new Color(0.8f, 0.2f, 0.2f, 0.5f);
+            }
 
             return placeholder;
         }

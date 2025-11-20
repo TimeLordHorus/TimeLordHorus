@@ -124,11 +124,13 @@ TimeLordHorus/
 
 **[View Phase 1 Documentation](Docs/Phase1_CoreSystems.md)**
 
-### Phase 2: AI Pipeline (Weeks 5-8) 🔄 **IN PROGRESS**
-- [ ] Flask server for AI requests
-- [ ] Text-to-3D API integration
-- [ ] Runtime GLB import with glTFast
-- [ ] Voice-to-text input system
+### Phase 2: AI Pipeline (Weeks 5-8) ✅ **COMPLETE**
+- [x] Flask server for AI requests (Text-to-3D + Whisper services)
+- [x] Text-to-3D API integration (Meshy AI, Shap-E via Replicate)
+- [x] Runtime GLB import with glTFast (async loading, VR interaction)
+- [x] Voice-to-text input system (Whisper backend ready)
+
+**[View Phase 2 Documentation](Docs/Phase2_AI_Pipeline.md)**
 
 ### Phase 3: Content & Biomes (Weeks 9-12)
 - [ ] Medusa jellyfish avatar system
