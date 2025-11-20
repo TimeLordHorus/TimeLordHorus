@@ -36,6 +36,36 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# Check for spaces in current directory path
+CURRENT_DIR="$(pwd)"
+if [[ "$CURRENT_DIR" =~ [[:space:]] ]]; then
+    echo -e "${RED}╔════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ERROR: Path contains spaces!                             ║${NC}"
+    echo -e "${RED}╚════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}Current directory:${NC} $CURRENT_DIR"
+    echo ""
+    echo -e "${YELLOW}The build process cannot handle spaces in the path.${NC}"
+    echo ""
+    echo "Please move the TL Linux directory to a path without spaces:"
+    echo ""
+    echo "  Good paths:"
+    echo "    /home/user/tl-linux"
+    echo "    /opt/tl-linux"
+    echo "    ~/Projects/tl-linux"
+    echo ""
+    echo "  Bad paths (contain spaces):"
+    echo "    /home/curtis/Desktop/TimeLordHorus-main (1)/tl-linux"
+    echo "    ~/My Documents/tl-linux"
+    echo ""
+    echo "Example fix:"
+    echo "  mv \"$CURRENT_DIR\" ~/tl-linux"
+    echo "  cd ~/tl-linux"
+    echo "  sudo ./build-iso.sh"
+    echo ""
+    exit 1
+fi
+
 # Check dependencies
 echo -e "${YELLOW}[1/8]${NC} Checking dependencies..."
 REQUIRED_PACKAGES=(
@@ -93,6 +123,19 @@ debootstrap \
     bookworm \
     "$ROOTFS_DIR" \
     http://deb.debian.org/debian/
+
+# Verify debootstrap completed successfully
+if [ ! -f "${ROOTFS_DIR}/bin/bash" ]; then
+    echo -e "${RED}✗ Debootstrap failed - /bin/bash not found${NC}"
+    exit 1
+fi
+
+# Verify dynamic linker exists
+if [ ! -f "${ROOTFS_DIR}/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2" ] && \
+   [ ! -f "${ROOTFS_DIR}/lib64/ld-linux-x86-64.so.2" ]; then
+    echo -e "${RED}✗ Dynamic linker missing - debootstrap incomplete${NC}"
+    exit 1
+fi
 
 echo -e "${GREEN}✓ Base system bootstrapped${NC}"
 
@@ -286,8 +329,39 @@ CHROOT_EOF
 
 chmod +x "${ROOTFS_DIR}/tmp/configure-system.sh"
 
+# Test chroot before running configuration
+echo "  Testing chroot environment..."
+if ! chroot "$ROOTFS_DIR" /bin/true 2>/dev/null; then
+    echo -e "${RED}✗ Chroot test failed!${NC}"
+    echo ""
+    echo "Common causes:"
+    echo "  1. Debootstrap didn't complete properly"
+    echo "  2. Missing dynamic linker"
+    echo "  3. Architecture mismatch"
+    echo ""
+    echo "Checking system..."
+    echo "  bash exists: $([ -f "${ROOTFS_DIR}/bin/bash" ] && echo 'YES' || echo 'NO')"
+    echo "  /lib exists: $([ -d "${ROOTFS_DIR}/lib" ] && echo 'YES' || echo 'NO')"
+    echo "  /lib64 exists: $([ -d "${ROOTFS_DIR}/lib64" ] && echo 'YES' || echo 'NO')"
+
+    if [ -d "${ROOTFS_DIR}/lib/x86_64-linux-gnu" ]; then
+        echo "  Dynamic linker: $([ -f "${ROOTFS_DIR}/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2" ] && echo 'YES' || echo 'NO')"
+    fi
+
+    echo ""
+    echo "Try running debootstrap manually to see detailed errors:"
+    echo "  sudo debootstrap --arch=amd64 bookworm ${ROOTFS_DIR} http://deb.debian.org/debian/"
+    exit 1
+fi
+echo "  Chroot test passed ✓"
+
 # Run configuration in chroot
-chroot "$ROOTFS_DIR" /tmp/configure-system.sh
+echo "  Running system configuration..."
+if ! chroot "$ROOTFS_DIR" /tmp/configure-system.sh; then
+    echo -e "${RED}✗ System configuration failed${NC}"
+    echo "Check ${ROOTFS_DIR}/tmp/configure-system.sh for errors"
+    exit 1
+fi
 
 # Copy TL Linux files
 echo "  Installing TL Linux applications..."
