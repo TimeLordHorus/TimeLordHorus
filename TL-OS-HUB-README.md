@@ -763,9 +763,71 @@ python3 tl-linux/system/cloud_sync.py
 
 ---
 
+## 🔗 System Integration Features
+
+### ⚡ Quick Access Toolbar
+The OS Hub now includes a quick access toolbar on the home screen with one-click access to:
+- 🎤 Voice Assistant
+- 🏆 Achievements/Gamification
+- 📔 Journaling
+- 🔒 Security Hub
+- ⚡ Hardware Optimizer
+- 🧘 Break Reminder
+
+### 🔄 Integration Coordinator
+**Location**: `tl-linux/system/integration_coordinator.py`
+
+Automatically syncs data between subsystems:
+- Wellbeing monitor stats → Gamification achievements
+- Triggers achievement awards based on wellbeing actions
+- Provides system health status across all components
+- Coordinates voice commands with system actions
+
+**Usage**:
+```bash
+# Sync wellbeing to achievements
+python3 tl-linux/system/integration_coordinator.py
+
+# Or import in Python
+from system.integration_coordinator import sync_wellbeing_achievements
+sync_wellbeing_achievements()
+```
+
+### 🚀 Auto-Start Script
+**Location**: `tl-linux/system/tl_autostart.sh`
+
+Automatically starts TL Linux services on login:
+- Wellbeing monitor (background, minimized)
+- Cloud sync (if configured)
+- Gamification system initialization
+
+**Setup**:
+```bash
+# Add to startup applications or .bashrc
+bash ~/tl-linux/system/tl_autostart.sh
+```
+
+### ⚙️ Unified Settings Manager
+**Location**: `tl-linux/system/unified_settings.py`
+
+Single interface to manage all TL Linux settings:
+- **General**: OS Hub preferences, system info
+- **Wellbeing**: Break intervals, eye care, hydration, posture
+- **Startup**: Auto-start configuration for all services
+- **Appearance**: Theme selection (Retro, Neon, Lightning, Splash)
+
+**Launch**:
+```bash
+python3 tl-linux/system/unified_settings.py
+```
+
+All settings are saved in `~/.config/tl-linux/` and persist across sessions.
+
+---
+
 **TL OS Hub** - Your portable, accessible, wellness-focused operating system. Take it anywhere. ⏰
 
 ---
 
 *Last Updated: 2025-11-21*
-*Version: 1.0.0*
+*Version: 1.0.0 (with System Integration)*
