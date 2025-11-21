@@ -15,11 +15,13 @@ namespace Sanctuary.Core
         [Header("References")]
         [SerializeField] private TextTo3DClient textTo3DClient;
         [SerializeField] private RuntimeModelImporter modelImporter;
+        [SerializeField] private FirebaseManager firebaseManager;
 
         [Header("User Settings")]
         [SerializeField] private string userId = "user_default";
         [SerializeField] private string defaultQuality = "medium";
         [SerializeField] private string defaultStyle = "realistic";
+        [SerializeField] private bool autoSaveToFirebase = true;
 
         [Header("Spawn Settings")]
         [SerializeField] private bool spawnInFrontOfPlayer = true;
@@ -69,6 +71,15 @@ namespace Sanctuary.Core
                     GameObject importerObj = new GameObject("RuntimeModelImporter");
                     importerObj.transform.SetParent(transform);
                     modelImporter = importerObj.AddComponent<RuntimeModelImporter>();
+                }
+            }
+
+            if (firebaseManager == null)
+            {
+                firebaseManager = FirebaseManager.Instance;
+                if (firebaseManager == null)
+                {
+                    Debug.LogWarning("[CreationManager] FirebaseManager not found - Firebase features disabled");
                 }
             }
         }
@@ -142,6 +153,26 @@ namespace Sanctuary.Core
 
                     Debug.Log($"[CreationManager] Model spawned successfully at {spawnPosition}");
                     OnModelSpawned?.Invoke(spawnedModel);
+
+                    // Auto-save to Firebase if enabled
+                    if (autoSaveToFirebase && firebaseManager != null && firebaseManager.IsSignedIn())
+                    {
+                        Creation creation = new Creation
+                        {
+                            generationId = response.generation_id,
+                            prompt = prompt,
+                            modelUrl = response.model_url,
+                            thumbnailUrl = response.thumbnail_url,
+                            createdAt = response.created_at,
+                            polycount = response.estimated_polycount,
+                            isPublic = false
+                        };
+
+                        _ = firebaseManager.SaveCreation(creation);
+                        _ = firebaseManager.AddXP(25, "created 3D model");
+
+                        Debug.Log("[CreationManager] Creation saved to Firebase");
+                    }
 
                     return spawnedModel;
                 }

@@ -202,6 +202,183 @@ def get_user_creations(user_id):
         }), 500
 
 
+# ========== Archive.org API Endpoints ==========
+
+@app.route('/api/v1/archive/search/books', methods=['GET'])
+@require_auth
+def archive_search_books():
+    """Search for books on Archive.org"""
+    try:
+        query = request.args.get('query')
+        limit = int(request.args.get('limit', 20))
+        page = int(request.args.get('page', 1))
+
+        if not query:
+            return jsonify({
+                'error': 'Missing query parameter',
+                'error_code': 'INVALID_REQUEST'
+            }), 400
+
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        result = archive.search_books(query, limit, page)
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(f"[ERROR] Archive book search failed: {str(e)}")
+        return jsonify({
+            'error': 'Archive search failed',
+            'error_code': 'ARCHIVE_ERROR',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/v1/archive/search/audio', methods=['GET'])
+@require_auth
+def archive_search_audio():
+    """Search for audio content on Archive.org"""
+    try:
+        query = request.args.get('query')
+        limit = int(request.args.get('limit', 20))
+        page = int(request.args.get('page', 1))
+
+        if not query:
+            return jsonify({
+                'error': 'Missing query parameter',
+                'error_code': 'INVALID_REQUEST'
+            }), 400
+
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        result = archive.search_audio(query, limit, page)
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(f"[ERROR] Archive audio search failed: {str(e)}")
+        return jsonify({
+            'error': 'Archive audio search failed',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
+@app.route('/api/v1/archive/item/<identifier>', methods=['GET'])
+@require_auth
+def archive_get_item(identifier):
+    """Get metadata for a specific Archive.org item"""
+    try:
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        metadata = archive.get_item_metadata(identifier)
+
+        if not metadata:
+            return jsonify({
+                'error': 'Item not found',
+                'error_code': 'ITEM_NOT_FOUND'
+            }), 404
+
+        return jsonify(metadata), 200
+
+    except Exception as e:
+        print(f"[ERROR] Archive metadata fetch failed: {str(e)}")
+        return jsonify({
+            'error': 'Failed to get item metadata',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
+@app.route('/api/v1/archive/collections/walden', methods=['GET'])
+@require_auth
+def archive_walden_collection():
+    """Get Thoreau's Walden collection"""
+    try:
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        result = archive.get_walden_collection()
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(f"[ERROR] Walden collection fetch failed: {str(e)}")
+        return jsonify({
+            'error': 'Failed to get Walden collection',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
+@app.route('/api/v1/archive/collections/spinoza', methods=['GET'])
+@require_auth
+def archive_spinoza_collection():
+    """Get Spinoza's Ethics collection"""
+    try:
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        result = archive.get_spinoza_collection()
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(f"[ERROR] Spinoza collection fetch failed: {str(e)}")
+        return jsonify({
+            'error': 'Failed to get Spinoza collection',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
+@app.route('/api/v1/archive/collections/muir', methods=['GET'])
+@require_auth
+def archive_muir_collection():
+    """Get John Muir's collection"""
+    try:
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        result = archive.get_muir_collection()
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(f"[ERROR] Muir collection fetch failed: {str(e)}")
+        return jsonify({
+            'error': 'Failed to get Muir collection',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
+@app.route('/api/v1/archive/text/<identifier>', methods=['GET'])
+@require_auth
+def archive_get_text(identifier):
+    """Get plain text content from an Archive.org item"""
+    try:
+        max_chars = int(request.args.get('max_chars', 50000))
+
+        from services.archive_service import get_archive_service
+
+        archive = get_archive_service()
+        text = archive.get_text_content(identifier, max_chars)
+
+        if not text:
+            return jsonify({
+                'error': 'Text content not available',
+                'error_code': 'TEXT_NOT_FOUND'
+            }), 404
+
+        return text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    except Exception as e:
+        print(f"[ERROR] Text content fetch failed: {str(e)}")
+        return jsonify({
+            'error': 'Failed to get text content',
+            'error_code': 'ARCHIVE_ERROR'
+        }), 500
+
+
 # Error handlers
 @app.errorhandler(404)
 def not_found(error):
