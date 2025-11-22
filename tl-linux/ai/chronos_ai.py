@@ -14,18 +14,30 @@ Features:
 - Privacy-focused (all learning local)
 """
 
-import tkinter as tk
-from tkinter import scrolledtext, ttk
 import json
 from pathlib import Path
 from datetime import datetime, timedelta
 from collections import defaultdict
 import random
 
+# Conditional tkinter import (only for GUI mode)
+try:
+    import tkinter as tk
+    from tkinter import scrolledtext, ttk
+    HAS_TKINTER = True
+except ImportError:
+    HAS_TKINTER = False
+    print("Warning: tkinter not available - GUI mode disabled")
+
 class ChronosAI:
     """Chronos - The friendly TL Linux AI agent"""
 
     def __init__(self, root=None, headless=False):
+        # Force headless mode if tkinter is not available
+        if not HAS_TKINTER and not headless:
+            print("Warning: Forcing headless mode - tkinter not available")
+            headless = True
+
         self.headless = headless
 
         if not headless:

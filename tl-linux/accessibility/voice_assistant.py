@@ -14,8 +14,6 @@ Features:
 - Chronos AI integration for conversational queries
 """
 
-import tkinter as tk
-from tkinter import scrolledtext
 import subprocess
 import threading
 import queue
@@ -25,15 +23,24 @@ from datetime import datetime
 import re
 import sys
 
+# Conditional tkinter import
+try:
+    import tkinter as tk
+    from tkinter import scrolledtext
+    HAS_TKINTER = True
+except ImportError:
+    HAS_TKINTER = False
+    print("Warning: tkinter not available - GUI mode disabled")
+
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 try:
     from ai.chronos_ai import ChronosAI
     CHRONOS_AVAILABLE = True
-except ImportError:
+except ImportError as e:
     CHRONOS_AVAILABLE = False
-    print("Warning: Chronos AI not available")
+    print(f"Warning: Chronos AI not available: {e}")
 
 class VoiceAssistant:
     """AI-powered voice assistant for TL Linux"""
