@@ -547,10 +547,12 @@ Chronos is a friendly AI agent that learns from your interactions and provides p
 **Features:**
 - **Learning & Memory**: Learns your patterns, preferences, and frequently used features
 - **Conversational AI**: Natural, friendly conversations with context awareness
+- **Document Upload & Knowledge Base**: Upload PDFs, TXT, MD, DOCX, HTML files for private storage
+- **Self-Contained LLM**: Acts as local knowledge base, searches uploaded documents
 - **Pattern Recognition**: Tracks usage times, favorite apps, and habits
 - **Personalized Suggestions**: Proactive tips based on learned patterns
 - **Voice Integration**: Seamlessly integrated with Voice Assistant
-- **Privacy-First**: All learning stored locally, no cloud/telemetry
+- **Privacy-First**: All learning and documents stored locally, no cloud/telemetry
 
 **Personality Traits:**
 - Friendliness: 90% (warm and approachable)
@@ -605,6 +607,77 @@ Chronos: "Here's a tip: Take regular breaks every 25-50 minutes.
 
 User: "My name is Alex"
 Chronos: "Nice to meet you, Alex! I'll remember that. 😊"
+```
+
+#### 📚 Knowledge Base - Document Upload
+
+**NEW FEATURE**: Chronos now supports document upload and acts as a self-contained knowledge base!
+
+**Supported Formats:**
+- PDF files (.pdf)
+- Text files (.txt)
+- Markdown (.md)
+- Word documents (.docx)
+- HTML files (.html)
+
+**How It Works:**
+1. **Upload Documents**: Go to the Documents tab in Chronos AI
+2. **Click "Choose File"**: Select your document to upload
+3. **Automatic Processing**: Chronos extracts and indexes the content
+4. **Ask Questions**: Chat with Chronos about your uploaded documents
+
+**Example:**
+```
+# Upload a document about Python programming
+
+User: "What is Python used for?"
+Chronos: "📚 I found this in my knowledge base:
+
+**Document: python_intro.txt**
+Python is widely used for:
+- Web development (Django, Flask)
+- Data science and machine learning
+- Automation and scripting
+- Scientific computing
+- Artificial intelligence
+
+💡 You can upload more documents in the Documents tab to expand my knowledge!"
+```
+
+**Features:**
+- **Private Storage**: All documents stored locally in `~/.config/tl-linux/chronos-ai/knowledge-base`
+- **Smart Search**: Keyword extraction and semantic search
+- **No Cloud**: Complete privacy, nothing leaves your device
+- **Multiple Documents**: Build your own personal knowledge library
+- **Fast Indexing**: Automatic keyword extraction and indexing
+
+**Dependencies (Optional):**
+```bash
+# For PDF support
+pip3 install PyPDF2
+
+# For DOCX support
+pip3 install python-docx
+
+# For HTML parsing
+pip3 install beautifulsoup4
+```
+
+**Storage Location:**
+```
+~/.config/tl-linux/chronos-ai/knowledge-base/
+├── documents/          # Processed document content
+├── index/             # Search index
+│   └── document_index.json
+```
+
+**Test It:**
+```bash
+# Run the knowledge base test
+python3 test_knowledge_base.py
+
+# This creates test documents and uploads them
+# Then you can ask Chronos questions about them!
 ```
 
 ---

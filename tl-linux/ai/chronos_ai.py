@@ -19,15 +19,30 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from collections import defaultdict
 import random
+import sys
 
 # Conditional tkinter import (only for GUI mode)
 try:
     import tkinter as tk
-    from tkinter import scrolledtext, ttk
+    from tkinter import scrolledtext, ttk, filedialog, messagebox
     HAS_TKINTER = True
 except ImportError:
     HAS_TKINTER = False
     print("Warning: tkinter not available - GUI mode disabled")
+
+# Import knowledge base
+try:
+    from chronos_knowledge import ChronosKnowledgeBase
+    HAS_KNOWLEDGE_BASE = True
+except ImportError:
+    # Try relative import
+    try:
+        sys.path.insert(0, str(Path(__file__).parent))
+        from chronos_knowledge import ChronosKnowledgeBase
+        HAS_KNOWLEDGE_BASE = True
+    except ImportError:
+        HAS_KNOWLEDGE_BASE = False
+        print("Warning: Knowledge base not available")
 
 class ChronosAI:
     """Chronos - The friendly TL Linux AI agent"""
@@ -66,6 +81,17 @@ class ChronosAI:
         self.load_memory()
         self.load_patterns()
         self.load_preferences()
+
+        # Initialize knowledge base
+        if HAS_KNOWLEDGE_BASE:
+            try:
+                self.knowledge_base = ChronosKnowledgeBase()
+                print(f"✓ Knowledge base initialized: {self.knowledge_base.index['stats']['total_documents']} documents")
+            except Exception as e:
+                print(f"Warning: Failed to initialize knowledge base: {e}")
+                self.knowledge_base = None
+        else:
+            self.knowledge_base = None
 
         # Personality traits
         self.personality = {
@@ -184,17 +210,20 @@ class ChronosAI:
         self.chat_tab = tk.Frame(tab_container, bg='#0d1117')
         self.insights_tab = tk.Frame(tab_container, bg='#0d1117')
         self.learning_tab = tk.Frame(tab_container, bg='#0d1117')
+        self.documents_tab = tk.Frame(tab_container, bg='#0d1117')
         self.settings_tab = tk.Frame(tab_container, bg='#0d1117')
 
         tab_container.add(self.chat_tab, text='💬 Chat')
         tab_container.add(self.insights_tab, text='💡 Insights')
         tab_container.add(self.learning_tab, text='🧠 Learning')
+        tab_container.add(self.documents_tab, text='📚 Documents')
         tab_container.add(self.settings_tab, text='⚙️ Settings')
 
         # Setup tabs
         self.setup_chat_tab()
         self.setup_insights_tab()
         self.setup_learning_tab()
+        self.setup_documents_tab()
         self.setup_settings_tab()
 
     def setup_chat_tab(self):
@@ -382,6 +411,237 @@ class ChronosAI:
 
         # Initial display
         self.display_learning()
+
+    def setup_documents_tab(self):
+        """Setup documents/knowledge base tab"""
+        container = tk.Frame(self.documents_tab, bg='#0d1117')
+        container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+        # Header
+        tk.Label(
+            container,
+            text="📚 Knowledge Base - Private Document Storage",
+            font=('Arial', 18, 'bold'),
+            bg='#0d1117',
+            fg='#00d4ff'
+        ).pack(pady=10)
+
+        if not self.knowledge_base:
+            tk.Label(
+                container,
+                text="❌ Knowledge base not available\nInstall required libraries to enable document upload.",
+                font=('Arial', 12),
+                bg='#0d1117',
+                fg='#f85149',
+                justify=tk.CENTER
+            ).pack(pady=50)
+            return
+
+        # Stats frame
+        stats_frame = tk.Frame(container, bg='#161b22', relief=tk.RAISED, borderwidth=2)
+        stats_frame.pack(fill=tk.X, pady=(0, 15))
+
+        stats = self.knowledge_base.get_stats()
+
+        stats_info = f"""
+📊 Knowledge Base Statistics:
+   • Total Documents: {stats['total_documents']}
+   • Total Words: {stats['total_words']:,}
+   • Last Updated: {stats['last_updated'] or 'Never'}
+   • Storage: {self.knowledge_base.storage_path}
+        """.strip()
+
+        tk.Label(
+            stats_frame,
+            text=stats_info,
+            font=('Courier', 10),
+            bg='#161b22',
+            fg='#c9d1d9',
+            justify=tk.LEFT
+        ).pack(padx=15, pady=15)
+
+        # Upload section
+        upload_frame = tk.LabelFrame(
+            container,
+            text="Upload Documents",
+            font=('Arial', 12, 'bold'),
+            bg='#0d1117',
+            fg='white',
+            padx=15,
+            pady=15
+        )
+        upload_frame.pack(fill=tk.X, pady=(0, 15))
+
+        tk.Label(
+            upload_frame,
+            text="Supported formats: PDF, TXT, MD, DOCX, HTML",
+            font=('Arial', 9),
+            bg='#0d1117',
+            fg='#8b949e'
+        ).pack(pady=(0, 10))
+
+        upload_btn_frame = tk.Frame(upload_frame, bg='#0d1117')
+        upload_btn_frame.pack()
+
+        tk.Button(
+            upload_btn_frame,
+            text="📁 Choose File",
+            font=('Arial', 11),
+            bg='#238636',
+            fg='white',
+            command=self.upload_document,
+            padx=20,
+            pady=8
+        ).pack(side=tk.LEFT, padx=5)
+
+        tk.Button(
+            upload_btn_frame,
+            text="🗑️ Clear All Documents",
+            font=('Arial', 11),
+            bg='#da3633',
+            fg='white',
+            command=self.clear_documents,
+            padx=20,
+            pady=8
+        ).pack(side=tk.LEFT, padx=5)
+
+        # Documents list
+        list_frame = tk.LabelFrame(
+            container,
+            text="Uploaded Documents",
+            font=('Arial', 12, 'bold'),
+            bg='#0d1117',
+            fg='white',
+            padx=15,
+            pady=15
+        )
+        list_frame.pack(fill=tk.BOTH, expand=True)
+
+        # Documents display with scrollbar
+        self.docs_display = scrolledtext.ScrolledText(
+            list_frame,
+            font=('Courier', 9),
+            bg='#161b22',
+            fg='#c9d1d9',
+            wrap=tk.WORD,
+            height=12
+        )
+        self.docs_display.pack(fill=tk.BOTH, expand=True)
+
+        # Button frame
+        docs_btn_frame = tk.Frame(list_frame, bg='#0d1117')
+        docs_btn_frame.pack(fill=tk.X, pady=(10, 0))
+
+        tk.Button(
+            docs_btn_frame,
+            text="🔄 Refresh List",
+            font=('Arial', 10),
+            bg='#1f6feb',
+            fg='white',
+            command=self.refresh_documents_list,
+            padx=15,
+            pady=6
+        ).pack(side=tk.LEFT, padx=5)
+
+        tk.Button(
+            docs_btn_frame,
+            text="📖 View Document",
+            font=('Arial', 10),
+            bg='#1f6feb',
+            fg='white',
+            command=self.view_document,
+            padx=15,
+            pady=6
+        ).pack(side=tk.LEFT, padx=5)
+
+        # Initial display
+        self.refresh_documents_list()
+
+    def upload_document(self):
+        """Upload a document to knowledge base"""
+        if not self.knowledge_base:
+            return
+
+        file_path = filedialog.askopenfilename(
+            title="Select Document to Upload",
+            filetypes=[
+                ("All Supported", "*.pdf *.txt *.md *.docx *.html *.htm"),
+                ("PDF files", "*.pdf"),
+                ("Text files", "*.txt"),
+                ("Markdown files", "*.md"),
+                ("Word files", "*.docx"),
+                ("HTML files", "*.html *.htm"),
+                ("All files", "*.*")
+            ]
+        )
+
+        if not file_path:
+            return
+
+        # Show progress
+        self.add_chat_message("Chronos", f"📤 Uploading {Path(file_path).name}...")
+
+        result = self.knowledge_base.upload_document(file_path)
+
+        if result['success']:
+            self.add_chat_message(
+                "Chronos",
+                f"✅ Successfully uploaded!\n"
+                f"Document: {result['metadata']['filename']}\n"
+                f"Words: {result['metadata']['word_count']:,}\n"
+                f"Keywords: {len(result['metadata']['keywords'])}"
+            )
+            self.refresh_documents_list()
+        else:
+            self.add_chat_message("Chronos", f"❌ Error: {result['error']}")
+
+    def refresh_documents_list(self):
+        """Refresh the documents list"""
+        if not self.knowledge_base:
+            return
+
+        self.docs_display.delete('1.0', tk.END)
+
+        docs = self.knowledge_base.list_documents()
+
+        if not docs:
+            self.docs_display.insert(tk.END, "No documents uploaded yet.\n\n")
+            self.docs_display.insert(tk.END, "Click 'Choose File' to upload your first document!")
+            return
+
+        self.docs_display.insert(tk.END, f"📚 {len(docs)} Document(s) in Knowledge Base:\n")
+        self.docs_display.insert(tk.END, "=" * 70 + "\n\n")
+
+        for doc in sorted(docs, key=lambda x: x['upload_date'], reverse=True):
+            self.docs_display.insert(tk.END, f"📄 {doc['filename']}\n")
+            self.docs_display.insert(tk.END, f"   ID: {doc['id']}\n")
+            self.docs_display.insert(tk.END, f"   Uploaded: {doc['upload_date'][:19]}\n")
+            self.docs_display.insert(tk.END, f"   Size: {doc['file_size']:,} bytes\n")
+            self.docs_display.insert(tk.END, f"   Words: {doc['word_count']:,}\n")
+            self.docs_display.insert(tk.END, f"   Keywords: {', '.join(doc['keywords'][:10])}...\n")
+            self.docs_display.insert(tk.END, "-" * 70 + "\n\n")
+
+    def view_document(self):
+        """View a document (placeholder - could open in viewer)"""
+        self.add_chat_message("Chronos", "To view a document, ask me questions about it! I'll search my knowledge base and provide answers. 📚")
+
+    def clear_documents(self):
+        """Clear all documents from knowledge base"""
+        if not self.knowledge_base:
+            return
+
+        if not tk.messagebox.askyesno(
+            "Clear All Documents",
+            "Are you sure you want to delete ALL documents from the knowledge base?\n\nThis cannot be undone!"
+        ):
+            return
+
+        docs = self.knowledge_base.list_documents()
+        for doc in docs:
+            self.knowledge_base.delete_document(doc['id'])
+
+        self.add_chat_message("Chronos", "🗑️ All documents have been removed from the knowledge base.")
+        self.refresh_documents_list()
 
     def setup_settings_tab(self):
         """Setup AI settings"""
@@ -578,6 +838,12 @@ class ChronosAI:
         if any(word in message_lower for word in ['tired', 'stressed', 'overwhelmed']):
             return self.generate_wellbeing_response(message_lower)
 
+        # Knowledge base search for questions
+        if self.knowledge_base and any(word in message_lower for word in ['what', 'how', 'why', 'when', 'where', 'who', 'tell me about', 'explain', 'describe']):
+            kb_response = self.search_knowledge_base(message)
+            if kb_response:
+                return kb_response
+
         # Default: conversational response
         return self.generate_conversational_response(message)
 
@@ -718,6 +984,30 @@ class ChronosAI:
 • "Help me focus"
 
 I learn more about you with each interaction, so I get better at helping over time! 💙"""
+
+    def search_knowledge_base(self, query):
+        """Search knowledge base and generate response"""
+        if not self.knowledge_base:
+            return None
+
+        results = self.knowledge_base.search(query, max_results=3)
+
+        if not results:
+            return None
+
+        # Build response from search results
+        response = "📚 I found this in my knowledge base:\n\n"
+
+        for i, result in enumerate(results, 1):
+            response += f"**Document {i}: {result['filename']}**\n"
+            response += f"{result['snippet']}\n\n"
+
+            if i < len(results):
+                response += "---\n\n"
+
+        response += "\n💡 You can upload more documents in the Documents tab to expand my knowledge!"
+
+        return response
 
     def generate_conversational_response(self, message):
         """Generate a conversational response"""
