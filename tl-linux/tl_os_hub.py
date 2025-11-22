@@ -181,6 +181,7 @@ class TLOSHub:
         # Quick access buttons
         quick_actions = [
             ("🎤", "Voice", self.launch_voice_assistant),
+            ("🤖", "Chronos", self.launch_chronos_ai),
             ("🏆", "Achievements", self.launch_gamification),
             ("📔", "Journal", self.launch_mindfulness_journal),
             ("🔒", "Security", self.launch_security_hub),
@@ -410,6 +411,7 @@ class TLOSHub:
             ("🎯 Focus Mode", "Eliminate distractions", self.launch_focus_mode),
             ("👥 Body Doubling", "Virtual co-working", self.launch_body_doubling),
             ("🧘 Break Timer", "Mindful work breaks", self.launch_break_timer),
+            ("🤖 Chronos AI", "Your AI learning companion (NEW!)", self.launch_chronos_ai),
             ("🏆 Wellbeing Games", "Achievement system (NEW!)", self.launch_gamification),
             ("📔 Journal & Mood", "Daily journaling (NEW!)", self.launch_mindfulness_journal),
         ]
@@ -686,6 +688,11 @@ class TLOSHub:
         """Launch mindfulness journal"""
         journal_path = Path(__file__).parent / 'wellness' / 'mindfulness_journal.py'
         self.launch_app("Mindfulness Journal", str(journal_path))
+
+    def launch_chronos_ai(self):
+        """Launch Chronos AI agent"""
+        chronos_path = Path(__file__).parent / 'ai' / 'chronos_ai.py'
+        self.launch_app("Chronos AI Agent", str(chronos_path))
 
     def launch_meditation(self):
         """Launch meditation (same as mindfulness journal)"""

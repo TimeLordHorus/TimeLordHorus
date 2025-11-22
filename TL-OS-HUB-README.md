@@ -538,6 +538,77 @@ sudo apt install espeak
 
 ---
 
+### 🤖 Chronos AI - Your Learning Companion
+
+**Location**: `tl-linux/ai/chronos_ai.py`
+
+Chronos is a friendly AI agent that learns from your interactions and provides personalized assistance:
+
+**Features:**
+- **Learning & Memory**: Learns your patterns, preferences, and frequently used features
+- **Conversational AI**: Natural, friendly conversations with context awareness
+- **Pattern Recognition**: Tracks usage times, favorite apps, and habits
+- **Personalized Suggestions**: Proactive tips based on learned patterns
+- **Voice Integration**: Seamlessly integrated with Voice Assistant
+- **Privacy-First**: All learning stored locally, no cloud/telemetry
+
+**Personality Traits:**
+- Friendliness: 90% (warm and approachable)
+- Helpfulness: 95% (eager to assist)
+- Humor: 70% (light-hearted)
+- Formality: 30% (casual and relaxed)
+- Enthusiasm: 80% (energetic and positive)
+
+**Capabilities:**
+- Greetings and name learning
+- Progress tracking and achievement summaries
+- Wellbeing tips and advice
+- Focus and productivity assistance
+- Motivation and encouragement
+- Jokes and light humor
+- Context-aware responses
+
+**Voice Commands:**
+- "Talk to Chronos about..." - Direct conversation
+- "Ask Chronos..." - Specific queries
+- Natural questions automatically routed to Chronos
+
+**Learning Features:**
+- Remembers your name and preferences
+- Tracks frequently asked topics
+- Learns your active hours and patterns
+- Adapts responses to your mood
+- Celebrates achievements with you
+
+**Quick Start:**
+```bash
+# Launch standalone
+python3 tl-linux/ai/chronos_ai.py
+
+# Or access via Voice Assistant
+# Just say: "Hey TL, talk to Chronos"
+```
+
+**Example Interactions:**
+```
+User: "Hello!"
+Chronos: "Hey! How's it going? 😊"
+
+User: "How am I doing?"
+Chronos: "You're doing great! You're at Level 5 with 850 XP!
+         You've unlocked 12 achievements and taken 45 breaks.
+         Keep up the awesome work!"
+
+User: "Give me a tip"
+Chronos: "Here's a tip: Take regular breaks every 25-50 minutes.
+         It helps maintain focus and prevents burnout!"
+
+User: "My name is Alex"
+Chronos: "Nice to meet you, Alex! I'll remember that. 😊"
+```
+
+---
+
 ### 🏆 Wellbeing Gamification
 
 **Location**: `tl-linux/wellbeing/wellbeing_gamification.py`
@@ -747,6 +818,7 @@ python3 tl-linux/system/cloud_sync.py
 ### ✅ Completed Features (Latest Update)
 
 - [x] **Voice Assistant Integration** - AI-powered voice control with natural language commands
+- [x] **Chronos AI Learning Agent** - Friendly AI companion that learns your patterns and provides personalized assistance
 - [x] **Gamification of Wellbeing** - Achievement system, XP, levels, and challenges
 - [x] **Additional Therapy Tools** - Mindfulness meditation, journaling, mood tracking
 - [x] **Hardware Acceleration Optimization** - GPU acceleration, CPU governor management
@@ -757,7 +829,7 @@ python3 tl-linux/system/cloud_sync.py
 
 - [ ] Mobile device support (tablets)
 - [ ] Improved emulation support
-- [ ] Advanced AI features
+- [x] **Advanced AI features** - Chronos AI with learning and conversational capabilities ✅
 - [ ] More therapy modalities
 - [ ] Enhanced accessibility tools
 
@@ -768,6 +840,7 @@ python3 tl-linux/system/cloud_sync.py
 ### ⚡ Quick Access Toolbar
 The OS Hub now includes a quick access toolbar on the home screen with one-click access to:
 - 🎤 Voice Assistant
+- 🤖 Chronos AI
 - 🏆 Achievements/Gamification
 - 📔 Journaling
 - 🔒 Security Hub
