@@ -118,9 +118,12 @@ class TLOSHub:
         )
         subtitle.pack()
 
+        # Quick Access Toolbar
+        self.create_quick_access_toolbar()
+
         # Main portal grid
         portals_frame = tk.Frame(self.main_container, bg='#0a0e27')
-        portals_frame.pack(expand=True, fill=tk.BOTH, padx=50, pady=50)
+        portals_frame.pack(expand=True, fill=tk.BOTH, padx=50, pady=30)
 
         # Configure grid
         portals_frame.grid_columnconfigure(0, weight=1)
@@ -160,6 +163,51 @@ class TLOSHub:
 
         # Footer with system info and controls
         self.create_footer()
+
+    def create_quick_access_toolbar(self):
+        """Create quick access toolbar for frequently used features"""
+        toolbar = tk.Frame(self.main_container, bg='#16213e', height=60)
+        toolbar.pack(fill=tk.X, pady=(10, 0))
+
+        # Toolbar label
+        tk.Label(
+            toolbar,
+            text="⚡ Quick Access:",
+            font=('Arial', 11, 'bold'),
+            bg='#16213e',
+            fg='#66ffff'
+        ).pack(side=tk.LEFT, padx=20)
+
+        # Quick access buttons
+        quick_actions = [
+            ("🎤", "Voice", self.launch_voice_assistant),
+            ("🤖", "Chronos", self.launch_chronos_ai),
+            ("🏆", "Achievements", self.launch_gamification),
+            ("📔", "Journal", self.launch_mindfulness_journal),
+            ("🔒", "Security", self.launch_security_hub),
+            ("⚡", "Optimize", self.launch_hardware_optimizer),
+            ("🧘", "Break", self.show_break_reminder),
+        ]
+
+        for icon, label, command in quick_actions:
+            btn = tk.Button(
+                toolbar,
+                text=f"{icon}\n{label}",
+                font=('Arial', 9),
+                bg='#2a2e47',
+                fg='white',
+                activebackground='#3a3e57',
+                command=command,
+                relief=tk.FLAT,
+                padx=8,
+                pady=5,
+                cursor='hand2'
+            )
+            btn.pack(side=tk.LEFT, padx=3)
+
+            # Hover effect
+            btn.bind('<Enter>', lambda e, b=btn: b.config(bg='#3a3e57'))
+            btn.bind('<Leave>', lambda e, b=btn: b.config(bg='#2a2e47'))
 
     def create_portal_card(self, parent, title, description, color, command, row, col):
         """Create a portal card button"""
@@ -306,7 +354,7 @@ class TLOSHub:
         # Configure grid
         for i in range(3):
             options_frame.grid_columnconfigure(i, weight=1)
-        for i in range(2):
+        for i in range(4):  # Updated for more items
             options_frame.grid_rowconfigure(i, weight=1)
 
         # Desktop options
@@ -317,6 +365,11 @@ class TLOSHub:
             ("⚙️ System Settings", "Configure system preferences", self.launch_system_settings),
             ("🔧 Terminal", "Access command line", self.launch_terminal),
             ("📊 System Monitor", "View system resources", self.launch_system_monitor),
+            ("🎤 Voice Assistant", "AI voice control (NEW!)", self.launch_voice_assistant),
+            ("🔒 Security Hub", "Encryption & security tools", self.launch_security_hub),
+            ("⚡ Hardware Optimizer", "GPU/CPU optimization (NEW!)", self.launch_hardware_optimizer),
+            ("🔐 Biometric Auth", "Fingerprint & face login (NEW!)", self.launch_biometric_auth),
+            ("☁️ Cloud Sync", "Optional encrypted sync (NEW!)", self.launch_cloud_sync),
         ]
 
         for idx, (title, desc, cmd) in enumerate(desktop_options):
@@ -344,7 +397,7 @@ class TLOSHub:
         # Configure grid
         for i in range(3):
             options_frame.grid_columnconfigure(i, weight=1)
-        for i in range(3):
+        for i in range(4):  # Updated for more items
             options_frame.grid_rowconfigure(i, weight=1)
 
         # Workspace options
@@ -358,6 +411,9 @@ class TLOSHub:
             ("🎯 Focus Mode", "Eliminate distractions", self.launch_focus_mode),
             ("👥 Body Doubling", "Virtual co-working", self.launch_body_doubling),
             ("🧘 Break Timer", "Mindful work breaks", self.launch_break_timer),
+            ("🤖 Chronos AI", "Your AI learning companion (NEW!)", self.launch_chronos_ai),
+            ("🏆 Wellbeing Games", "Achievement system (NEW!)", self.launch_gamification),
+            ("📔 Journal & Mood", "Daily journaling (NEW!)", self.launch_mindfulness_journal),
         ]
 
         for idx, (title, desc, cmd) in enumerate(workspace_options):
@@ -385,7 +441,7 @@ class TLOSHub:
         # Configure grid
         for i in range(3):
             options_frame.grid_columnconfigure(i, weight=1)
-        for i in range(3):
+        for i in range(4):  # Updated for more items
             options_frame.grid_rowconfigure(i, weight=1)
 
         # Entertainment options
@@ -394,11 +450,12 @@ class TLOSHub:
             ("🎬 Video Player", "Watch videos and movies", self.launch_video_player),
             ("🖼️ Image Viewer", "Photo gallery", self.launch_image_viewer),
             ("🎮 Emulator Hub", "Classic gaming", self.launch_emulator_hub),
-            ("🧘 Meditation & CBT", "Mental wellness tools", self.launch_wellness_hub),
+            ("🧘 Wellness Hub", "CBT & therapy tools", self.launch_wellness_hub),
             ("📚 Reading Mode", "E-books and documents", self.launch_pdf_viewer),
             ("🎨 Creative Tools", "Art and image editing", self.launch_image_editor),
             ("🌐 Web Browser", "Browse the internet", self.launch_browser),
             ("🎯 Casual Games", "Quick relaxing games", self.launch_casual_games),
+            ("🧘 Meditation", "Guided meditation (NEW!)", self.launch_meditation),
         ]
 
         for idx, (title, desc, cmd) in enumerate(entertainment_options):
@@ -595,6 +652,51 @@ class TLOSHub:
     def launch_casual_games(self):
         """Launch casual games"""
         messagebox.showinfo("Games", "Casual games collection coming soon!\nCheck Emulator Hub for classic games.")
+
+    # NEW: Roadmap feature launchers
+    def launch_voice_assistant(self):
+        """Launch voice assistant"""
+        va_path = Path(__file__).parent / 'accessibility' / 'voice_assistant.py'
+        self.launch_app("Voice Assistant", str(va_path))
+
+    def launch_security_hub(self):
+        """Launch security hub"""
+        sec_path = Path(__file__).parent / 'security' / 'security_hub.py'
+        self.launch_app("Security Hub", str(sec_path))
+
+    def launch_hardware_optimizer(self):
+        """Launch hardware optimizer"""
+        hw_path = Path(__file__).parent / 'system' / 'hardware_optimizer.py'
+        self.launch_app("Hardware Optimizer", str(hw_path))
+
+    def launch_biometric_auth(self):
+        """Launch biometric authentication"""
+        bio_path = Path(__file__).parent / 'security' / 'biometric_auth.py'
+        self.launch_app("Biometric Auth", str(bio_path))
+
+    def launch_cloud_sync(self):
+        """Launch cloud sync"""
+        cloud_path = Path(__file__).parent / 'system' / 'cloud_sync.py'
+        self.launch_app("Cloud Sync", str(cloud_path))
+
+    def launch_gamification(self):
+        """Launch wellbeing gamification"""
+        game_path = Path(__file__).parent / 'wellbeing' / 'wellbeing_gamification.py'
+        self.launch_app("Wellbeing Gamification", str(game_path))
+
+    def launch_mindfulness_journal(self):
+        """Launch mindfulness journal"""
+        journal_path = Path(__file__).parent / 'wellness' / 'mindfulness_journal.py'
+        self.launch_app("Mindfulness Journal", str(journal_path))
+
+    def launch_chronos_ai(self):
+        """Launch Chronos AI agent"""
+        chronos_path = Path(__file__).parent / 'ai' / 'chronos_ai.py'
+        self.launch_app("Chronos AI Agent", str(chronos_path))
+
+    def launch_meditation(self):
+        """Launch meditation (same as mindfulness journal)"""
+        self.launch_mindfulness_journal()
 
     # Wellbeing features
     def start_wellbeing_monitor(self):

@@ -11,10 +11,9 @@ Features:
 - Accessibility-focused design
 - Offline operation (privacy-focused)
 - Integration with OS Hub portals
+- Chronos AI integration for conversational queries
 """
 
-import tkinter as tk
-from tkinter import scrolledtext
 import subprocess
 import threading
 import queue
@@ -22,6 +21,26 @@ import json
 from pathlib import Path
 from datetime import datetime
 import re
+import sys
+
+# Conditional tkinter import
+try:
+    import tkinter as tk
+    from tkinter import scrolledtext
+    HAS_TKINTER = True
+except ImportError:
+    HAS_TKINTER = False
+    print("Warning: tkinter not available - GUI mode disabled")
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+try:
+    from ai.chronos_ai import ChronosAI
+    CHRONOS_AVAILABLE = True
+except ImportError as e:
+    CHRONOS_AVAILABLE = False
+    print(f"Warning: Chronos AI not available: {e}")
 
 class VoiceAssistant:
     """AI-powered voice assistant for TL Linux"""
@@ -46,6 +65,15 @@ class VoiceAssistant:
         self.wake_word_active = False
         self.command_queue = queue.Queue()
         self.conversation_history = []
+
+        # Initialize Chronos AI (headless mode for integration)
+        self.chronos = None
+        if CHRONOS_AVAILABLE:
+            try:
+                self.chronos = ChronosAI(headless=True)
+                print("Chronos AI initialized successfully")
+            except Exception as e:
+                print(f"Error initializing Chronos AI: {e}")
 
         # Load configuration
         self.load_config()
@@ -467,9 +495,28 @@ class VoiceAssistant:
         elif 'help' in command or 'what can you do' in command:
             response = self.get_help_text()
 
-        # Default response
+        # Chronos AI - Personal assistant queries
+        elif any(phrase in command for phrase in ['chronos', 'talk to chronos', 'ask chronos']):
+            # Remove trigger words
+            query = command.replace('chronos', '').replace('talk to', '').replace('ask', '').strip()
+            if query:
+                response = self.ask_chronos(query)
+            else:
+                response = "Hi! I'm Chronos, your AI companion. What would you like to talk about?"
+
+        # Default response - try Chronos for conversational queries
         else:
-            response = f"I heard '{command}' but I'm not sure how to help with that. Try saying 'help' for available commands."
+            # Check if command seems conversational (questions, personal queries)
+            is_conversational = any(word in command for word in [
+                'how', 'what', 'when', 'where', 'why', 'who',
+                'tell me', 'do you', 'can you', 'would you',
+                'i am', 'i feel', 'my', 'advice', 'tip'
+            ])
+
+            if is_conversational and self.chronos:
+                response = self.ask_chronos(command)
+            else:
+                response = f"I heard '{command}' but I'm not sure how to help with that. Try saying 'help' for available commands."
 
         # Display and speak response
         if response:
@@ -521,6 +568,19 @@ class VoiceAssistant:
         except Exception as e:
             self.add_to_conversation("System", f"Error: {e}", 'system')
 
+    def ask_chronos(self, message):
+        """Ask Chronos AI a question"""
+        if not self.chronos:
+            return "Chronos AI is not available at the moment."
+
+        try:
+            # Get response from Chronos
+            response = self.chronos.process_message(message)
+            return response
+        except Exception as e:
+            print(f"Error asking Chronos: {e}")
+            return "Sorry, I had trouble processing that. Could you try again?"
+
     def get_system_info(self):
         """Get system information"""
         try:
@@ -559,6 +619,7 @@ class VoiceAssistant:
 • System: "System information" "Battery status"
 • Volume: "Volume up/down" "Mute/unmute"
 • Security: "Lock screen" "Open security"
+• AI Companion: "Talk to Chronos" or ask questions naturally
 Just speak naturally and I'll do my best to help!"""
 
     def speak(self, text):

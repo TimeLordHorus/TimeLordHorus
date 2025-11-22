@@ -538,6 +538,150 @@ sudo apt install espeak
 
 ---
 
+### 🤖 Chronos AI - Your Learning Companion
+
+**Location**: `tl-linux/ai/chronos_ai.py`
+
+Chronos is a friendly AI agent that learns from your interactions and provides personalized assistance:
+
+**Features:**
+- **Learning & Memory**: Learns your patterns, preferences, and frequently used features
+- **Conversational AI**: Natural, friendly conversations with context awareness
+- **Document Upload & Knowledge Base**: Upload PDFs, TXT, MD, DOCX, HTML files for private storage
+- **Self-Contained LLM**: Acts as local knowledge base, searches uploaded documents
+- **Pattern Recognition**: Tracks usage times, favorite apps, and habits
+- **Personalized Suggestions**: Proactive tips based on learned patterns
+- **Voice Integration**: Seamlessly integrated with Voice Assistant
+- **Privacy-First**: All learning and documents stored locally, no cloud/telemetry
+
+**Personality Traits:**
+- Friendliness: 90% (warm and approachable)
+- Helpfulness: 95% (eager to assist)
+- Humor: 70% (light-hearted)
+- Formality: 30% (casual and relaxed)
+- Enthusiasm: 80% (energetic and positive)
+
+**Capabilities:**
+- Greetings and name learning
+- Progress tracking and achievement summaries
+- Wellbeing tips and advice
+- Focus and productivity assistance
+- Motivation and encouragement
+- Jokes and light humor
+- Context-aware responses
+
+**Voice Commands:**
+- "Talk to Chronos about..." - Direct conversation
+- "Ask Chronos..." - Specific queries
+- Natural questions automatically routed to Chronos
+
+**Learning Features:**
+- Remembers your name and preferences
+- Tracks frequently asked topics
+- Learns your active hours and patterns
+- Adapts responses to your mood
+- Celebrates achievements with you
+
+**Quick Start:**
+```bash
+# Launch standalone
+python3 tl-linux/ai/chronos_ai.py
+
+# Or access via Voice Assistant
+# Just say: "Hey TL, talk to Chronos"
+```
+
+**Example Interactions:**
+```
+User: "Hello!"
+Chronos: "Hey! How's it going? 😊"
+
+User: "How am I doing?"
+Chronos: "You're doing great! You're at Level 5 with 850 XP!
+         You've unlocked 12 achievements and taken 45 breaks.
+         Keep up the awesome work!"
+
+User: "Give me a tip"
+Chronos: "Here's a tip: Take regular breaks every 25-50 minutes.
+         It helps maintain focus and prevents burnout!"
+
+User: "My name is Alex"
+Chronos: "Nice to meet you, Alex! I'll remember that. 😊"
+```
+
+#### 📚 Knowledge Base - Document Upload
+
+**NEW FEATURE**: Chronos now supports document upload and acts as a self-contained knowledge base!
+
+**Supported Formats:**
+- PDF files (.pdf)
+- Text files (.txt)
+- Markdown (.md)
+- Word documents (.docx)
+- HTML files (.html)
+
+**How It Works:**
+1. **Upload Documents**: Go to the Documents tab in Chronos AI
+2. **Click "Choose File"**: Select your document to upload
+3. **Automatic Processing**: Chronos extracts and indexes the content
+4. **Ask Questions**: Chat with Chronos about your uploaded documents
+
+**Example:**
+```
+# Upload a document about Python programming
+
+User: "What is Python used for?"
+Chronos: "📚 I found this in my knowledge base:
+
+**Document: python_intro.txt**
+Python is widely used for:
+- Web development (Django, Flask)
+- Data science and machine learning
+- Automation and scripting
+- Scientific computing
+- Artificial intelligence
+
+💡 You can upload more documents in the Documents tab to expand my knowledge!"
+```
+
+**Features:**
+- **Private Storage**: All documents stored locally in `~/.config/tl-linux/chronos-ai/knowledge-base`
+- **Smart Search**: Keyword extraction and semantic search
+- **No Cloud**: Complete privacy, nothing leaves your device
+- **Multiple Documents**: Build your own personal knowledge library
+- **Fast Indexing**: Automatic keyword extraction and indexing
+
+**Dependencies (Optional):**
+```bash
+# For PDF support
+pip3 install PyPDF2
+
+# For DOCX support
+pip3 install python-docx
+
+# For HTML parsing
+pip3 install beautifulsoup4
+```
+
+**Storage Location:**
+```
+~/.config/tl-linux/chronos-ai/knowledge-base/
+├── documents/          # Processed document content
+├── index/             # Search index
+│   └── document_index.json
+```
+
+**Test It:**
+```bash
+# Run the knowledge base test
+python3 test_knowledge_base.py
+
+# This creates test documents and uploads them
+# Then you can ask Chronos questions about them!
+```
+
+---
+
 ### 🏆 Wellbeing Gamification
 
 **Location**: `tl-linux/wellbeing/wellbeing_gamification.py`
@@ -747,6 +891,7 @@ python3 tl-linux/system/cloud_sync.py
 ### ✅ Completed Features (Latest Update)
 
 - [x] **Voice Assistant Integration** - AI-powered voice control with natural language commands
+- [x] **Chronos AI Learning Agent** - Friendly AI companion that learns your patterns and provides personalized assistance
 - [x] **Gamification of Wellbeing** - Achievement system, XP, levels, and challenges
 - [x] **Additional Therapy Tools** - Mindfulness meditation, journaling, mood tracking
 - [x] **Hardware Acceleration Optimization** - GPU acceleration, CPU governor management
@@ -757,9 +902,72 @@ python3 tl-linux/system/cloud_sync.py
 
 - [ ] Mobile device support (tablets)
 - [ ] Improved emulation support
-- [ ] Advanced AI features
+- [x] **Advanced AI features** - Chronos AI with learning and conversational capabilities ✅
 - [ ] More therapy modalities
 - [ ] Enhanced accessibility tools
+
+---
+
+## 🔗 System Integration Features
+
+### ⚡ Quick Access Toolbar
+The OS Hub now includes a quick access toolbar on the home screen with one-click access to:
+- 🎤 Voice Assistant
+- 🤖 Chronos AI
+- 🏆 Achievements/Gamification
+- 📔 Journaling
+- 🔒 Security Hub
+- ⚡ Hardware Optimizer
+- 🧘 Break Reminder
+
+### 🔄 Integration Coordinator
+**Location**: `tl-linux/system/integration_coordinator.py`
+
+Automatically syncs data between subsystems:
+- Wellbeing monitor stats → Gamification achievements
+- Triggers achievement awards based on wellbeing actions
+- Provides system health status across all components
+- Coordinates voice commands with system actions
+
+**Usage**:
+```bash
+# Sync wellbeing to achievements
+python3 tl-linux/system/integration_coordinator.py
+
+# Or import in Python
+from system.integration_coordinator import sync_wellbeing_achievements
+sync_wellbeing_achievements()
+```
+
+### 🚀 Auto-Start Script
+**Location**: `tl-linux/system/tl_autostart.sh`
+
+Automatically starts TL Linux services on login:
+- Wellbeing monitor (background, minimized)
+- Cloud sync (if configured)
+- Gamification system initialization
+
+**Setup**:
+```bash
+# Add to startup applications or .bashrc
+bash ~/tl-linux/system/tl_autostart.sh
+```
+
+### ⚙️ Unified Settings Manager
+**Location**: `tl-linux/system/unified_settings.py`
+
+Single interface to manage all TL Linux settings:
+- **General**: OS Hub preferences, system info
+- **Wellbeing**: Break intervals, eye care, hydration, posture
+- **Startup**: Auto-start configuration for all services
+- **Appearance**: Theme selection (Retro, Neon, Lightning, Splash)
+
+**Launch**:
+```bash
+python3 tl-linux/system/unified_settings.py
+```
+
+All settings are saved in `~/.config/tl-linux/` and persist across sessions.
 
 ---
 
@@ -768,4 +976,4 @@ python3 tl-linux/system/cloud_sync.py
 ---
 
 *Last Updated: 2025-11-21*
-*Version: 1.0.0*
+*Version: 1.0.0 (with System Integration)*
