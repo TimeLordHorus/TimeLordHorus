@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  sanctuary-app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: sanctuary-beta
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - DATABASE_URL=jdbc:postgresql://sanctuary-db:5432/sanctuary
+      - DATABASE_USERNAME=sanctuary
+      - DATABASE_PASSWORD=${DB_PASSWORD:-sanctuary_pass}
+      - JWT_SECRET=${JWT_SECRET:-change_this_in_production}
+    depends_on:
+      - sanctuary-db
+    networks:
+      - sanctuary-network
+    restart: unless-stopped
+
+  sanctuary-db:
+    image: postgres:15-alpine
+    container_name: sanctuary-db
+    environment:
+      - POSTGRES_DB=sanctuary
+      - POSTGRES_USER=sanctuary
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-sanctuary_pass}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - sanctuary-network
+    restart: unless-stopped
+
+  # Optional: AI Backend (Python Flask)
+  sanctuary-ai:
+    image: python:3.11-slim
+    container_name: sanctuary-ai
+    working_dir: /app
+    volumes:
+      - ../../Backend:/app
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             python app.py"
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://sanctuary:${DB_PASSWORD:-sanctuary_pass}@sanctuary-db:5432/sanctuary
+    networks:
+      - sanctuary-network
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+
+networks:
+  sanctuary-network:
+    driver: bridge

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanctuary - Character HUD</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/brutalist-victorian.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Three.js for VR Background -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+</head>
+<body class="hud-active">
+
+    <!-- HUD Container -->
+    <div class="hud-container">
+
+        <!-- Top Bar -->
+        <div class="hud-top-bar riveted">
+            <div style="flex: 1;">
+                <h1 class="brutalist-heading" style="margin: 0; font-size: 1.2rem; border: none; padding: 0;">
+                    SANCTUARY
+                </h1>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div class="stat-block" style="padding: 8px 16px; display: inline-block;">
+                    <span class="technical-label">Essence</span>
+                    <span class="stat-value" id="essence-display" style="font-size: 1rem;">0</span>
+                </div>
+                <div class="stat-block" style="padding: 8px 16px; display: inline-block;">
+                    <span class="technical-label">Tokens</span>
+                    <span class="stat-value" id="tokens-display" style="font-size: 1rem;">0</span>
+                </div>
+                <button class="industrial-button" id="btn-toggle-vr" style="padding: 8px 16px;">
+                    Enter VR
+                </button>
+            </div>
+        </div>
+
+        <!-- Left Panel - Character Profile & Stats -->
+        <div class="hud-left-panel">
+
+            <!-- Profile Card -->
+            <div class="profile-card concrete-panel victorian-frame">
+                <div class="profile-avatar" id="avatar-image">
+                    <div style="width: 100%; height: 100%; background: radial-gradient(circle, #00ffff, #008080); display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                        🪼
+                    </div>
+                </div>
+                <h2 class="profile-name" id="character-name">Seeker</h2>
+                <div class="profile-level">
+                    <span class="technical-label">Level</span>
+                    <span id="character-level" style="color: var(--brass-bright); font-size: 1.2rem;">1</span>
+                </div>
+                <div class="progress-container" style="margin-top: 16px;">
+                    <div class="progress-bar" id="xp-bar" style="width: 0%;"></div>
+                    <div class="progress-label" id="xp-label">0 / 100 XP</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="brutalist-tabs">
+                <button class="tab-button active" data-tab="stats">Stats</button>
+                <button class="tab-button" data-tab="inventory">Inventory</button>
+                <button class="tab-button" data-tab="skills">Skills</button>
+                <button class="tab-button" data-tab="spells">Spells</button>
+            </div>
+
+            <!-- Stats Tab -->
+            <div id="tab-stats" class="tab-content">
+                <div class="concrete-panel riveted">
+                    <h3 class="brutalist-heading" style="font-size: 0.9rem;">Core Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-block">
+                            <div class="stat-label">Enlightenment</div>
+                            <div class="stat-value" id="stat-enlightenment">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value" id="stat-wisdom">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-label">Creativity</div>
+                            <div class="stat-value" id="stat-creativity">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-label">Harmony</div>
+                            <div class="stat-value" id="stat-harmony">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-label">Knowledge</div>
+                            <div class="stat-value" id="stat-knowledge">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-label">Creations</div>
+                            <div class="stat-value" id="stat-creations">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concrete-panel riveted" style="margin-top: 16px;">
+                    <h3 class="brutalist-heading" style="font-size: 0.9rem;">Spiritual Journey</h3>
+                    <div class="stat-block" style="margin-bottom: 8px;">
+                        <div class="stat-label">Meditation Time</div>
+                        <div class="stat-value" id="meditation-time" style="font-size: 1.2rem;">0 min</div>
+                    </div>
+                    <div class="stat-block" style="margin-bottom: 8px;">
+                        <div class="stat-label">Biomes Visited</div>
+                        <div class="stat-value" id="biomes-visited" style="font-size: 1.2rem;">0 / 3</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-label">Texts Read</div>
+                        <div class="stat-value" id="texts-read" style="font-size: 1.2rem;">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Tab -->
+            <div id="tab-inventory" class="tab-content" style="display: none;">
+                <div class="concrete-panel riveted">
+                    <h3 class="brutalist-heading" style="font-size: 0.9rem;">Inventory</h3>
+                    <div class="inventory-grid" id="inventory-container">
+                        <!-- Inventory slots generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="tab-skills" class="tab-content" style="display: none;">
+                <div class="concrete-panel riveted">
+                    <h3 class="brutalist-heading" style="font-size: 0.9rem;">Skills</h3>
+                    <div class="skill-tree" id="skills-container">
+                        <!-- Skills generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spells Tab -->
+            <div id="tab-spells" class="tab-content" style="display: none;">
+                <div class="spell-grimoire">
+                    <h3 class="victorian-title" style="font-size: 1.2rem;">Grimoire of Abilities</h3>
+                    <div id="spells-container">
+                        <!-- Spells generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Panel - Knowledge & Credentials -->
+        <div class="hud-right-panel">
+
+            <!-- Credentials -->
+            <div class="concrete-panel riveted" style="margin-bottom: 16px;">
+                <h3 class="brutalist-heading" style="font-size: 0.9rem;">Credentials</h3>
+                <div id="credentials-container">
+                    <!-- Credentials generated by JavaScript -->
+                    <div style="text-align: center; padding: 32px; color: var(--steel-gray); font-family: var(--font-victorian); font-style: italic;">
+                        No credentials yet.
+                        <br><br>
+                        Upload real-world certificates to unlock benefits.
+                    </div>
+                </div>
+                <button class="industrial-button" id="btn-add-credential" style="width: 100%; margin-top: 16px;">
+                    + Add Credential
+                </button>
+            </div>
+
+            <!-- Knowledge Library -->
+            <div class="concrete-panel riveted">
+                <h3 class="brutalist-heading" style="font-size: 0.9rem;">Knowledge</h3>
+                <div class="knowledge-library" id="knowledge-container">
+                    <!-- Knowledge entries generated by JavaScript -->
+                    <div style="text-align: center; padding: 32px; color: var(--steel-gray); font-family: var(--font-victorian); font-style: italic;">
+                        Begin your journey to acquire wisdom.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Bar - Quick Actions -->
+        <div class="hud-bottom-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 0 32px;">
+            <div style="display: flex; gap: 16px;">
+                <button class="industrial-button" id="btn-meditate">
+                    Meditate
+                </button>
+                <button class="industrial-button" id="btn-create">
+                    Create
+                </button>
+                <button class="industrial-button" id="btn-explore">
+                    Explore Biomes
+                </button>
+            </div>
+            <div style="display: flex; gap: 16px;">
+                <button class="industrial-button" id="btn-archive">
+                    Archives
+                </button>
+                <button class="industrial-button" id="btn-settings">
+                    Settings
+                </button>
+                <button class="industrial-button" id="btn-help">
+                    Help
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Credential Upload Modal -->
+    <div id="credential-modal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000;">
+        <div class="concrete-panel victorian-frame" style="width: 500px; max-width: 90vw;">
+            <h3 class="victorian-title">Add Credential</h3>
+            <div style="margin: 24px 0;">
+                <label class="technical-label" style="display: block; margin-bottom: 8px;">Credential Title</label>
+                <input type="text" id="cred-title" class="industrial-input" style="width: 100%; padding: 12px; background: var(--concrete-medium); border: 2px solid var(--brass-dark); color: var(--concrete-light); font-family: var(--font-brutalist);" placeholder="e.g., Bachelor of Science">
+
+                <label class="technical-label" style="display: block; margin: 16px 0 8px;">Type</label>
+                <select id="cred-type" class="industrial-input" style="width: 100%; padding: 12px; background: var(--concrete-medium); border: 2px solid var(--brass-dark); color: var(--concrete-light); font-family: var(--font-brutalist);">
+                    <option value="UNIVERSITY_DEGREE">University Degree</option>
+                    <option value="CERTIFICATION">Professional Certification</option>
+                    <option value="LICENSE">Professional License</option>
+                    <option value="DIPLOMA">Academic Diploma</option>
+                    <option value="COURSE_COMPLETION">Course Completion</option>
+                    <option value="AWARD">Award or Recognition</option>
+                </select>
+
+                <label class="technical-label" style="display: block; margin: 16px 0 8px;">Issuing Organization</label>
+                <input type="text" id="cred-org" class="industrial-input" style="width: 100%; padding: 12px; background: var(--concrete-medium); border: 2px solid var(--brass-dark); color: var(--concrete-light); font-family: var(--font-brutalist);" placeholder="e.g., University Name">
+
+                <label class="technical-label" style="display: block; margin: 16px 0 8px;">Document Upload</label>
+                <input type="file" id="cred-file" accept=".pdf,.jpg,.jpeg,.png" style="width: 100%; padding: 12px; background: var(--concrete-medium); border: 2px solid var(--brass-dark); color: var(--concrete-light); font-family: var(--font-brutalist);">
+
+                <div style="font-size: 0.75rem; color: var(--steel-gray); margin-top: 8px; font-family: var(--font-victorian); font-style: italic;">
+                    Documents are encrypted and used for verification only. Your privacy is protected.
+                </div>
+            </div>
+            <div style="display: flex; gap: 16px; justify-content: flex-end;">
+                <button class="industrial-button" id="btn-cancel-credential">
+                    Cancel
+                </button>
+                <button class="industrial-button" id="btn-submit-credential">
+                    Submit for Verification
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/character-hud.js"></script>
+
+</body>
+</html>

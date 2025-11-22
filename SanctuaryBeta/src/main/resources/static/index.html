@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sanctuary VR Metaverse - A Web-based VR Experience">
+    <meta name="theme-color" content="#000000">
+
+    <title>Sanctuary VR - Beta</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-512.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/brutalist-victorian.css">
+
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+    <!-- GLTFLoader for 3D models -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- VRButton for WebXR -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/webxr/VRButton.js"></script>
+
+    <!-- XR Hand Tracking (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/webxr/XRHandModelFactory.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <h1>SANCTUARY</h1>
+            <p>VR Metaverse</p>
+            <div class="spinner"></div>
+            <p id="loading-status">Initializing WebXR...</p>
+        </div>
+    </div>
+
+    <!-- 2D UI Overlay -->
+    <div id="ui-overlay" style="display:none;">
+        <div id="menu-panel">
+            <h2>Sanctuary Menu</h2>
+            <button id="btn-character-hud" onclick="window.location.href='/hud.html'">
+                Character HUD
+            </button>
+            <button id="btn-create">Create 3D Object</button>
+            <button id="btn-biomes">Visit Biomes</button>
+            <button id="btn-gallery">My Gallery</button>
+            <button id="btn-settings">Settings</button>
+        </div>
+
+        <!-- Creation Modal -->
+        <div id="creation-modal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h3>Create 3D Object</h3>
+                <input type="text" id="prompt-input" placeholder="Describe your creation..." maxlength="500">
+                <select id="quality-select">
+                    <option value="low">Low Quality</option>
+                    <option value="medium" selected>Medium Quality</option>
+                    <option value="high">High Quality</option>
+                </select>
+                <select id="style-select">
+                    <option value="realistic" selected>Realistic</option>
+                    <option value="stylized">Stylized</option>
+                    <option value="abstract">Abstract</option>
+                </select>
+                <button id="btn-generate">Generate</button>
+                <button id="btn-cancel">Cancel</button>
+                <div id="generation-status"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WebXR Scene Container -->
+    <div id="vr-container"></div>
+
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/medusa-avatar.js"></script>
+    <script src="/js/biome-controller.js"></script>
+    <script src="/js/creation-manager.js"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('ServiceWorker registered:', registration.scope))
+                    .catch(error => console.log('ServiceWorker registration failed:', error));
+            });
+        }
+    </script>
+</body>
+</html>

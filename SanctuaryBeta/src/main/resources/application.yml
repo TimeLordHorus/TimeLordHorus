@@ -1,0 +1,132 @@
+# Sanctuary VR Beta - Application Configuration
+
+spring:
+  application:
+    name: sanctuary-beta
+
+  # Database Configuration
+  datasource:
+    url: jdbc:h2:mem:sanctuarydb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+  # WebSocket Configuration
+  websocket:
+    allowed-origins: "*"
+
+  # File Upload Configuration
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  # Cache Configuration
+  cache:
+    type: simple
+
+# Server Configuration
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+
+# Sanctuary Configuration
+sanctuary:
+  # AI Service Configuration
+  ai:
+    text-to-3d:
+      enabled: false
+      api-url: ${TEXT_TO_3D_API_URL:http://localhost:5000/api/v1}
+      api-key: ${TEXT_TO_3D_API_KEY:dev_key_12345}
+      timeout: 60000
+
+    whisper:
+      enabled: false
+      api-url: ${WHISPER_API_URL:http://localhost:5000/api/v1}
+      api-key: ${WHISPER_API_KEY:dev_key_12345}
+
+  # Security Configuration
+  security:
+    jwt:
+      secret: ${JWT_SECRET:sanctuary_jwt_secret_key_change_in_production}
+      expiration: 86400000 # 24 hours
+
+    age-verification:
+      enabled: true
+      minimum-age: 18
+
+  # Storage Configuration
+  storage:
+    type: local # local, s3, cloudinary
+    local-path: ./uploads
+    max-size: 52428800 # 50MB
+
+  # WebXR Configuration
+  webxr:
+    default-spawn-point:
+      x: 0
+      y: 1.6
+      z: 5
+    max-users-per-room: 20
+
+  # Rate Limiting
+  rate-limit:
+    enabled: true
+    requests-per-minute: 60
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.sanctuary: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: WARN
+
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# API Documentation
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: production
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/sanctuary}
+    username: ${DATABASE_USERNAME:sanctuary}
+    password: ${DATABASE_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.sanctuary: INFO
