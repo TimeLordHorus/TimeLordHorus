@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TimeLord Browser - A lightweight, feature-rich PWA browser">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>TimeLord Browser</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌐</text></svg>">
+</head>
+<body>
+    <div class="browser-container">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="browser-name">
+                <span class="logo">🌐</span>
+                <span class="name">TimeLord Browser</span>
+            </div>
+            <div class="header-controls">
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">🌓</button>
+                <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+            </div>
+        </header>
+
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+            <div class="tabs-container" id="tabsContainer"></div>
+            <button id="newTabBtn" class="new-tab-btn" title="New Tab">+</button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <div class="nav-controls">
+                <button id="backBtn" class="nav-btn" title="Back" disabled>◀</button>
+                <button id="forwardBtn" class="nav-btn" title="Forward" disabled>▶</button>
+                <button id="refreshBtn" class="nav-btn" title="Refresh">↻</button>
+                <button id="homeBtn" class="nav-btn" title="Home">🏠</button>
+            </div>
+
+            <div class="address-bar-container">
+                <span class="protocol-indicator" id="protocolIndicator">🔒</span>
+                <input type="text" id="addressBar" class="address-bar" placeholder="Enter URL or search...">
+                <button id="goBtn" class="go-btn">Go</button>
+            </div>
+
+            <div class="action-controls">
+                <button id="dashboardBtn" class="action-btn" title="Dashboard - All Features">🏠</button>
+                <button id="bookmarkBtn" class="action-btn" title="Bookmark this page">⭐</button>
+                <button id="historyBtn" class="action-btn" title="History">📜</button>
+                <button id="archivesBtn" class="action-btn" title="Free Internet Archives">📚</button>
+                <button id="editorsBtn" class="action-btn" title="Document Editors">📝</button>
+                <button id="blueDropBtn" class="action-btn" title="BlueDrop - Share via Bluetooth">📡</button>
+                <button id="fileManagerBtn" class="action-btn" title="File Manager & Cloud Storage">📁</button>
+                <button id="splitViewBtn" class="action-btn" title="Split View">⚡</button>
+                <button id="codeRunnerBtn" class="action-btn" title="Code Runner VM">💻</button>
+                <button id="downloadsBtn" class="action-btn" title="Downloads & Manager">💾</button>
+                <button id="moreToolsBtn" class="action-btn" title="More Tools">🔧</button>
+            </div>
+
+            <!-- More Tools Dropdown -->
+            <div class="more-tools-dropdown" id="moreToolsDropdown" style="display: none;">
+                <button class="tool-item" id="tabGroupsBtn">
+                    <span class="tool-icon">📑</span>
+                    <span class="tool-name">Tab Groups</span>
+                </button>
+                <button class="tool-item" id="readingModeBtn">
+                    <span class="tool-icon">📖</span>
+                    <span class="tool-name">Reading Mode</span>
+                </button>
+                <button class="tool-item" id="screenshotBtn">
+                    <span class="tool-icon">📸</span>
+                    <span class="tool-name">Screenshot</span>
+                </button>
+                <button class="tool-item" id="qrCodeBtn">
+                    <span class="tool-icon">📱</span>
+                    <span class="tool-name">QR Code</span>
+                </button>
+                <button class="tool-item" id="adBlockerBtn">
+                    <span class="tool-icon">🛡️</span>
+                    <span class="tool-name">Ad Blocker</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Tabs will be dynamically inserted here -->
+        </main>
+
+        <!-- Sidebar (for bookmarks, history, etc.) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 id="sidebarTitle">Bookmarks</h3>
+                <button class="close-sidebar" id="closeSidebar">✕</button>
+            </div>
+            <div class="sidebar-content" id="sidebarContent"></div>
+        </aside>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2>Settings</h2>
+                    <button class="close-settings" id="closeSettings">✕</button>
+                </div>
+
+                <div class="settings-body">
+                    <div class="setting-group">
+                        <h3>General</h3>
+                        <div class="setting-item">
+                            <label for="homePageInput">Home Page URL:</label>
+                            <input type="text" id="homePageInput" placeholder="https://example.com">
+                            <button id="saveHomePage" class="small-btn">Save</button>
+                        </div>
+                        <div class="setting-item">
+                            <label for="searchEngineSelect">Default Search Engine:</label>
+                            <select id="searchEngineSelect">
+                                <option value="google">Google</option>
+                                <option value="duckduckgo">DuckDuckGo</option>
+                                <option value="bing">Bing</option>
+                                <option value="brave">Brave Search</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Privacy</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="saveHistory">
+                                Save browsing history
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <button id="clearHistoryBtn" class="danger-btn">Clear History</button>
+                            <button id="clearBookmarksBtn" class="danger-btn">Clear Bookmarks</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>🔒 End-to-End Encryption</h3>
+                        <p class="setting-description">
+                            Protect your browsing data from host browser collection using AES-256 encryption.
+                            All bookmarks, history, and settings are encrypted before storage.
+                        </p>
+
+                        <div class="setting-item encryption-status-item">
+                            <label>Encryption Status:</label>
+                            <span class="status-badge status-inactive" id="encryptionStatus">Disabled</span>
+                        </div>
+
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="privacyModeToggle">
+                                Enable Privacy Mode (auto-encrypt all data)
+                            </label>
+                        </div>
+
+                        <div class="encryption-controls">
+                            <button id="enableEncryptionBtn" class="primary-btn">
+                                🔐 Enable Encryption
+                            </button>
+                            <button id="disableEncryptionBtn" class="danger-btn" style="display: none;">
+                                🔓 Disable Encryption
+                            </button>
+                            <button id="changePasswordBtn" class="secondary-btn" style="display: none;">
+                                🔑 Change Password
+                            </button>
+                        </div>
+
+                        <div class="encryption-info">
+                            <p><strong>⚡ Features:</strong></p>
+                            <ul>
+                                <li>AES-256-GCM encryption (military grade)</li>
+                                <li>Password-based key derivation (PBKDF2, 100,000 iterations)</li>
+                                <li>Zero-knowledge architecture (password never stored)</li>
+                                <li>Encrypted bookmarks, history, and settings</li>
+                                <li>Protection from host browser data collection</li>
+                            </ul>
+                            <p class="warning-text">
+                                ⚠️ <strong>Important:</strong> If you forget your password, your encrypted data cannot be recovered. Keep your password safe!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Appearance</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="autoTheme">
+                                Auto theme based on system preference
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>About</h3>
+                        <p class="about-text">
+                            <strong>TimeLord Browser v2.0.0</strong><br>
+                            A lightweight, feature-rich Progressive Web App browser.<br>
+                            Now with BlueDrop, File Manager, Code Runner VM, and Split View!<br>
+                            Built with vanilla JavaScript for optimal performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Dashboard -->
+        <div class="dashboard-panel" id="dashboardPanel">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>🏠 TimeLord Dashboard</h1>
+                    <p class="dashboard-subtitle">Quick access to all features and tools</p>
+                    <button class="close-dashboard" id="closeDashboard">✕</button>
+                </div>
+
+                <!-- Dashboard Search -->
+                <div class="dashboard-search">
+                    <input type="text" id="dashboardSearch" placeholder="Search features, tools, and resources..." class="dashboard-search-input">
+                </div>
+
+                <!-- Dashboard Stats -->
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statBookmarks">0</div>
+                            <div class="stat-label">Bookmarks</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📜</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statHistory">0</div>
+                            <div class="stat-label">History Items</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💾</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statDownloads">0</div>
+                            <div class="stat-label">Downloads</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📑</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="statTabs">1</div>
+                            <div class="stat-label">Active Tabs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Categories -->
+                <div class="dashboard-content">
+
+                    <!-- Productivity Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📝 Productivity Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="editors">
+                                <div class="feature-icon">📝</div>
+                                <h3 class="feature-name">Document Editors</h3>
+                                <p class="feature-desc">Edit 12 file formats with live preview</p>
+                                <button class="feature-action">Open Editor</button>
+                            </div>
+                            <div class="feature-card" data-feature="coderunner">
+                                <div class="feature-icon">💻</div>
+                                <h3 class="feature-name">Code Runner VM</h3>
+                                <p class="feature-desc">Run JavaScript, Python, HTML, TypeScript</p>
+                                <button class="feature-action">Launch VM</button>
+                            </div>
+                            <div class="feature-card" data-feature="tabgroups">
+                                <div class="feature-icon">📑</div>
+                                <h3 class="feature-name">Tab Groups</h3>
+                                <p class="feature-desc">Organize tabs into custom groups</p>
+                                <button class="feature-action">Manage Groups</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File & Storage -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📁 File & Storage</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="filemanager">
+                                <div class="feature-icon">📁</div>
+                                <h3 class="feature-name">File Manager</h3>
+                                <p class="feature-desc">Local and cloud storage management</p>
+                                <button class="feature-action">Open Files</button>
+                            </div>
+                            <div class="feature-card" data-feature="downloads">
+                                <div class="feature-icon">💾</div>
+                                <h3 class="feature-name">Download Manager</h3>
+                                <p class="feature-desc">Track and manage downloads</p>
+                                <button class="feature-action">View Downloads</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Communication & Sharing -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📡 Communication</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="bluedrop">
+                                <div class="feature-icon">📡</div>
+                                <h3 class="feature-name">BlueDrop</h3>
+                                <p class="feature-desc">Share files via Bluetooth & Web Share</p>
+                                <button class="feature-action">Start Sharing</button>
+                            </div>
+                            <div class="feature-card" data-feature="qrcode">
+                                <div class="feature-icon">📱</div>
+                                <h3 class="feature-name">QR Code Generator</h3>
+                                <p class="feature-desc">Generate QR codes for URLs and text</p>
+                                <button class="feature-action">Generate QR</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Browsing Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">🌐 Browsing Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="splitview">
+                                <div class="feature-icon">⚡</div>
+                                <h3 class="feature-name">Split View</h3>
+                                <p class="feature-desc">Browse multiple pages side-by-side</p>
+                                <button class="feature-action">Enable Split</button>
+                            </div>
+                            <div class="feature-card" data-feature="reading">
+                                <div class="feature-icon">📖</div>
+                                <h3 class="feature-name">Reading Mode</h3>
+                                <p class="feature-desc">Distraction-free article reading</p>
+                                <button class="feature-action">Activate</button>
+                            </div>
+                            <div class="feature-card" data-feature="adblocker">
+                                <div class="feature-icon">🛡️</div>
+                                <h3 class="feature-name">Ad Blocker</h3>
+                                <p class="feature-desc">Block ads and trackers</p>
+                                <button class="feature-action">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Archives & Resources -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">📚 Archives & Resources</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="archives">
+                                <div class="feature-icon">📚</div>
+                                <h3 class="feature-name">Internet Archives</h3>
+                                <p class="feature-desc">16 free archives - books, research, media</p>
+                                <button class="feature-action">Browse Archives</button>
+                            </div>
+                            <div class="feature-card" data-feature="bookmarks">
+                                <div class="feature-icon">⭐</div>
+                                <h3 class="feature-name">Bookmarks</h3>
+                                <p class="feature-desc">Manage your saved pages</p>
+                                <button class="feature-action">View All</button>
+                            </div>
+                            <div class="feature-card" data-feature="history">
+                                <div class="feature-icon">📜</div>
+                                <h3 class="feature-name">History</h3>
+                                <p class="feature-desc">Browse your browsing history</p>
+                                <button class="feature-action">View History</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Tools -->
+                    <div class="dashboard-category">
+                        <h2 class="category-title">🔧 Advanced Tools</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card" data-feature="screenshot">
+                                <div class="feature-icon">📸</div>
+                                <h3 class="feature-name">Screenshot Tool</h3>
+                                <p class="feature-desc">Capture visible area or full page</p>
+                                <button class="feature-action">Take Screenshot</button>
+                            </div>
+                            <div class="feature-card" data-feature="encryption">
+                                <div class="feature-icon">🔒</div>
+                                <h3 class="feature-name">Encryption</h3>
+                                <p class="feature-desc">AES-256 data protection</p>
+                                <button class="feature-action">Settings</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+                <h1>🌐 Welcome to TimeLord Browser</h1>
+                <p class="tagline">A lightweight, powerful browsing experience</p>
+
+                <div class="quick-links">
+                    <h3>Quick Links</h3>
+                    <div class="links-grid">
+                        <a href="https://www.wikipedia.org" class="quick-link" data-url="https://www.wikipedia.org">
+                            <span class="link-icon">📚</span>
+                            <span class="link-name">Wikipedia</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>🚀 Lightweight and fast</li>
+                        <li>📑 Multi-tab browsing</li>
+                        <li>⭐ Bookmark management</li>
+                        <li>📜 History tracking</li>
+                        <li>📡 BlueDrop Bluetooth sharing</li>
+                        <li>📁 File Manager with cloud storage</li>
+                        <li>💻 Built-in Code Runner VM</li>
+                        <li>⚡ Split view browsing</li>
+                        <li>🌓 Dark/Light theme</li>
+                        <li>📱 Works offline (PWA)</li>
+                        <li>🔒 Privacy-focused</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BlueDrop Panel -->
+        <div class="bluedrop-panel" id="blueDropPanel">
+            <div class="bluedrop-content">
+                <div class="bluedrop-header">
+                    <h2>📡 BlueDrop</h2>
+                    <button class="close-bluedrop" id="closeBlueDrop">✕</button>
+                </div>
+
+                <div class="bluedrop-body">
+                    <!-- Status Section -->
+                    <div class="bluedrop-section">
+                        <div class="bluedrop-status" id="blueDropStatus">
+                            <span class="status-indicator" id="statusIndicator">⚫</span>
+                            <span class="status-text" id="statusText">Bluetooth disconnected</span>
+                        </div>
+                        <button id="toggleBluetoothBtn" class="primary-btn">Enable Bluetooth</button>
+                    </div>
+
+                    <!-- Share Section -->
+                    <div class="bluedrop-section" id="shareSection" style="display: none;">
+                        <h3>Share Content</h3>
+
+                        <div class="share-options">
+                            <div class="share-option">
+                                <button id="shareCurrentPageBtn" class="share-btn">
+                                    <span class="share-icon">🔗</span>
+                                    <span class="share-label">Share Current Page</span>
+                                </button>
+                            </div>
+
+                            <div class="share-option">
+                                <label for="fileInput" class="share-btn file-share-btn">
+                                    <span class="share-icon">📁</span>
+                                    <span class="share-label">Share File</span>
+                                </label>
+                                <input type="file" id="fileInput" style="display: none;" multiple>
+                            </div>
+
+                            <div class="share-option">
+                                <button id="shareTextBtn" class="share-btn">
+                                    <span class="share-icon">📝</span>
+                                    <span class="share-label">Share Text</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device Discovery Section -->
+                    <div class="bluedrop-section" id="deviceSection" style="display: none;">
+                        <h3>Nearby Devices</h3>
+                        <button id="scanDevicesBtn" class="secondary-btn">Scan for Devices</button>
+                        <div class="device-list" id="deviceList">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📡</div>
+                                <div class="empty-state-text">No devices found. Click "Scan for Devices" to search.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Progress Section -->
+                    <div class="bluedrop-section" id="transferSection" style="display: none;">
+                        <h3>Transfer Progress</h3>
+                        <div class="transfer-item">
+                            <div class="transfer-info">
+                                <span class="transfer-name" id="transferName">-</span>
+                                <span class="transfer-size" id="transferSize">-</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="transfer-status" id="transferStatus">Ready</div>
+                        </div>
+                    </div>
+
+                    <!-- Share History Section -->
+                    <div class="bluedrop-section">
+                        <div class="section-header">
+                            <h3>Recent Shares</h3>
+                            <button id="clearShareHistoryBtn" class="text-btn">Clear</button>
+                        </div>
+                        <div class="share-history" id="shareHistory">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📤</div>
+                                <div class="empty-state-text">No recent shares</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="bluedrop-section bluedrop-info">
+                        <p><strong>About BlueDrop:</strong></p>
+                        <ul>
+                            <li>Share files, links, and text wirelessly</li>
+                            <li>Uses Web Bluetooth API for device communication</li>
+                            <li>Secure peer-to-peer transfers</li>
+                            <li>Works with compatible Bluetooth devices</li>
+                        </ul>
+                        <p class="info-note">
+                            <strong>Note:</strong> Your browser must support Web Bluetooth API.
+                            Make sure Bluetooth is enabled on your device.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Share Modal -->
+        <div class="modal" id="textShareModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Share Text</h3>
+                    <button class="close-modal" id="closeTextModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="shareTextArea" placeholder="Enter text to share..." rows="6"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelTextShare" class="secondary-btn">Cancel</button>
+                    <button id="confirmTextShare" class="primary-btn">Share</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Manager Panel -->
+        <div class="file-manager-panel" id="fileManagerPanel">
+            <div class="file-manager-content">
+                <div class="file-manager-header">
+                    <h2>📁 File Manager & Cloud Storage</h2>
+                    <button class="close-file-manager" id="closeFileManager">✕</button>
+                </div>
+
+                <div class="file-manager-body">
+                    <!-- Storage Provider Selection -->
+                    <div class="fm-section">
+                        <h3>Storage Providers</h3>
+                        <div class="storage-providers">
+                            <button class="provider-btn active" data-provider="local">
+                                <span class="provider-icon">💾</span>
+                                <span class="provider-name">Local Files</span>
+                            </button>
+                            <button class="provider-btn" data-provider="google">
+                                <span class="provider-icon">📊</span>
+                                <span class="provider-name">Google Drive</span>
+                            </button>
+                            <button class="provider-btn" data-provider="dropbox">
+                                <span class="provider-icon">📦</span>
+                                <span class="provider-name">Dropbox</span>
+                            </button>
+                            <button class="provider-btn" data-provider="onedrive">
+                                <span class="provider-icon">☁️</span>
+                                <span class="provider-name">OneDrive</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File Operations Toolbar -->
+                    <div class="fm-section">
+                        <div class="file-operations">
+                            <button id="uploadFileBtn" class="fm-btn" title="Upload File">
+                                <span>⬆️ Upload</span>
+                            </button>
+                            <button id="newFolderBtn" class="fm-btn" title="New Folder">
+                                <span>📂 New Folder</span>
+                            </button>
+                            <button id="refreshFilesBtn" class="fm-btn" title="Refresh">
+                                <span>↻ Refresh</span>
+                            </button>
+                            <input type="file" id="fileUploadInput" style="display: none;" multiple>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumb Navigation -->
+                    <div class="fm-section">
+                        <div class="breadcrumb" id="breadcrumb">
+                            <span class="breadcrumb-item active">📁 Root</span>
+                        </div>
+                    </div>
+
+                    <!-- File List -->
+                    <div class="fm-section">
+                        <div class="file-list" id="fileList">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📂</div>
+                                <div class="empty-state-text">No files yet. Upload files or connect to cloud storage.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Storage Info -->
+                    <div class="fm-section">
+                        <div class="storage-info">
+                            <div class="storage-bar">
+                                <div class="storage-used" id="storageUsed" style="width: 0%"></div>
+                            </div>
+                            <div class="storage-text" id="storageText">0 MB / 0 MB used</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Runner VM Panel -->
+        <div class="code-runner-panel" id="codeRunnerPanel">
+            <div class="code-runner-content">
+                <div class="code-runner-header">
+                    <h2>💻 Code Runner VM</h2>
+                    <button class="close-code-runner" id="closeCodeRunner">✕</button>
+                </div>
+
+                <div class="code-runner-body">
+                    <!-- Language Selection -->
+                    <div class="cr-section">
+                        <div class="language-selector">
+                            <label>Language:</label>
+                            <select id="languageSelect" class="language-select">
+                                <option value="javascript">JavaScript</option>
+                                <option value="html">HTML/CSS</option>
+                                <option value="python">Python (Pyodide)</option>
+                                <option value="typescript">TypeScript</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Code Editor -->
+                    <div class="cr-section">
+                        <div class="editor-toolbar">
+                            <button id="runCodeBtn" class="run-btn">▶️ Run Code</button>
+                            <button id="clearCodeBtn" class="cr-btn">🗑️ Clear</button>
+                            <button id="saveCodeBtn" class="cr-btn">💾 Save</button>
+                            <button id="loadCodeBtn" class="cr-btn">📂 Load</button>
+                            <button id="importCodeBtn" class="cr-btn">📥 Import</button>
+                        </div>
+                        <textarea id="codeEditor" class="code-editor" placeholder="Enter your code here...">// Write your code here
+console.log('Hello from TimeLord Browser VM!');</textarea>
+                    </div>
+
+                    <!-- Output Console -->
+                    <div class="cr-section">
+                        <div class="console-header">
+                            <h4>Console Output</h4>
+                            <button id="clearConsoleBtn" class="text-btn">Clear</button>
+                        </div>
+                        <div id="codeOutput" class="code-output">
+                            <div class="console-line console-info">Ready to execute code...</div>
+                        </div>
+                    </div>
+
+                    <!-- Code Snippets -->
+                    <div class="cr-section">
+                        <div class="section-header">
+                            <h4>Saved Snippets</h4>
+                            <button id="clearSnippetsBtn" class="text-btn">Clear All</button>
+                        </div>
+                        <div id="snippetsList" class="snippets-list">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📝</div>
+                                <div class="empty-state-text">No saved snippets</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="cr-section cr-info">
+                        <p><strong>Supported Features:</strong></p>
+                        <ul>
+                            <li><strong>JavaScript:</strong> Full ES6+ support with console output</li>
+                            <li><strong>HTML/CSS:</strong> Live preview in iframe</li>
+                            <li><strong>Python:</strong> Pyodide WASM interpreter (loading on demand)</li>
+                            <li><strong>TypeScript:</strong> Transpiled to JavaScript</li>
+                        </ul>
+                        <p class="info-note">Code runs in a sandboxed environment for security.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Split View Controls -->
+        <div class="split-view-controls" id="splitViewControls" style="display: none;">
+            <button id="splitHorizontalBtn" class="split-btn" title="Split Horizontal">
+                <span>⬌</span>
+            </button>
+            <button id="splitVerticalBtn" class="split-btn" title="Split Vertical">
+                <span>⬍</span>
+            </button>
+            <button id="closeSplitBtn" class="split-btn" title="Close Split">
+                <span>✕</span>
+            </button>
+        </div>
+
+        <!-- Download Manager Panel -->
+        <div class="download-manager-panel" id="downloadManagerPanel">
+            <div class="download-manager-content">
+                <div class="panel-header">
+                    <h2>💾 Download Manager</h2>
+                    <button class="close-panel" id="closeDownloadManager">✕</button>
+                </div>
+                <div class="panel-body">
+                    <div class="downloads-list" id="downloadsList">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💾</div>
+                            <div class="empty-state-text">No downloads yet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reading Mode Panel -->
+        <div class="reading-mode-panel" id="readingModePanel" style="display: none;">
+            <div class="reading-mode-content">
+                <div class="reading-header">
+                    <button id="closeReadingMode" class="reading-close">✕</button>
+                    <div class="reading-controls">
+                        <button id="decreaseFontSize" class="reading-btn">A-</button>
+                        <button id="increaseFontSize" class="reading-btn">A+</button>
+                        <button id="toggleReadingTheme" class="reading-btn">🌓</button>
+                    </div>
+                </div>
+                <article id="readingContent" class="reading-article"></article>
+            </div>
+        </div>
+
+        <!-- QR Code Generator Panel -->
+        <div class="modal" id="qrCodeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📱 QR Code Generator</h3>
+                    <button class="close-modal" id="closeQRModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-input-section">
+                        <label>Generate QR Code for:</label>
+                        <select id="qrType" class="qr-select">
+                            <option value="current">Current Page URL</option>
+                            <option value="custom">Custom Text/URL</option>
+                        </select>
+                        <textarea id="qrCustomText" placeholder="Enter custom text or URL..." rows="3" style="display: none;"></textarea>
+                    </div>
+                    <div class="qr-display" id="qrDisplay">
+                        <canvas id="qrCanvas"></canvas>
+                    </div>
+                    <div class="qr-actions">
+                        <button id="generateQRBtn" class="primary-btn">Generate QR Code</button>
+                        <button id="downloadQRBtn" class="secondary-btn">Download PNG</button>
+                        <button id="shareQRBtn" class="secondary-btn">Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screenshot Tool Panel -->
+        <div class="modal" id="screenshotModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📸 Screenshot Tool</h3>
+                    <button class="close-modal" id="closeScreenshotModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="screenshot-options">
+                        <button id="captureVisibleBtn" class="primary-btn">📸 Capture Visible Area</button>
+                        <button id="captureFullPageBtn" class="secondary-btn">📄 Full Page</button>
+                        <button id="captureSelectionBtn" class="secondary-btn">✂️ Selection</button>
+                    </div>
+                    <div class="screenshot-preview" id="screenshotPreview" style="display: none;">
+                        <img id="screenshotImg" alt="Screenshot preview">
+                        <div class="screenshot-actions">
+                            <button id="downloadScreenshotBtn" class="primary-btn">Download</button>
+                            <button id="copyScreenshotBtn" class="secondary-btn">Copy to Clipboard</button>
+                            <button id="shareScreenshotBtn" class="secondary-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Groups Panel -->
+        <div class="tab-groups-panel" id="tabGroupsPanel">
+            <div class="panel-content">
+                <div class="panel-header">
+                    <h3>📑 Tab Groups</h3>
+                    <button class="close-panel" id="closeTabGroups">✕</button>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-groups-controls">
+                        <button id="createGroupBtn" class="primary-btn">+ Create Group</button>
+                    </div>
+                    <div class="groups-list" id="groupsList">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📑</div>
+                            <div class="empty-state-text">No tab groups yet. Create one to organize your tabs!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Blocker Settings Panel -->
+        <div class="modal" id="adBlockerModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🛡️ Ad Blocker Settings</h3>
+                    <button class="close-modal" id="closeAdBlockerModal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="adblocker-section">
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableAdBlocker">
+                                Enable Ad Blocker
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Blocked Ads: <span id="blockedCount">0</span></h4>
+                        </div>
+                        <div class="setting-item">
+                            <label>Custom Filter Rules:</label>
+                            <textarea id="customFilters" placeholder="Enter custom filter rules (one per line)..." rows="5"></textarea>
+                            <button id="saveFiltersBtn" class="primary-btn">Save Filters</button>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Default Filter Lists:</h4>
+                            <label>
+                                <input type="checkbox" id="easyList" checked>
+                                EasyList (General ads)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="easyPrivacy" checked>
+                                EasyPrivacy (Tracking)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Editors Panel -->
+    <div class="editors-panel" id="editorsPanel">
+        <div class="editors-container">
+            <div class="editors-header">
+                <h2>📝 Document Editors</h2>
+                <button class="close-editors" id="closeEditors">✕</button>
+            </div>
+
+            <div class="editors-body">
+                <!-- Editor Type Selector -->
+                <div class="editor-selector">
+                    <label for="editorTypeSelect">Document Type:</label>
+                    <select id="editorTypeSelect" class="editor-type-select">
+                        <option value="text">Plain Text (.txt)</option>
+                        <option value="markdown">Markdown (.md)</option>
+                        <option value="html">HTML (.html)</option>
+                        <option value="css">CSS (.css)</option>
+                        <option value="javascript">JavaScript (.js)</option>
+                        <option value="json">JSON (.json)</option>
+                        <option value="xml">XML (.xml)</option>
+                        <option value="csv">CSV (.csv)</option>
+                        <option value="python">Python (.py)</option>
+                        <option value="java">Java (.java)</option>
+                        <option value="cpp">C++ (.cpp)</option>
+                        <option value="sql">SQL (.sql)</option>
+                    </select>
+                </div>
+
+                <!-- File Operations -->
+                <div class="editor-operations">
+                    <button id="newDocBtn" class="editor-btn" title="New Document">
+                        🆕 New
+                    </button>
+                    <button id="loadDocBtn" class="editor-btn" title="Load Document">
+                        📂 Load
+                    </button>
+                    <button id="saveDocBtn" class="editor-btn" title="Save Document">
+                        💾 Save
+                    </button>
+                    <button id="downloadDocBtn" class="editor-btn" title="Download Document">
+                        ⬇️ Download
+                    </button>
+                    <button id="previewDocBtn" class="editor-btn" title="Preview" style="display: none;">
+                        👁️ Preview
+                    </button>
+                    <input type="file" id="loadDocInput" style="display: none;" accept=".txt,.md,.html,.css,.js,.json,.xml,.csv,.py,.java,.cpp,.sql">
+                </div>
+
+                <!-- Filename Input -->
+                <div class="editor-filename">
+                    <label for="docFilename">Filename:</label>
+                    <input type="text" id="docFilename" placeholder="untitled.txt" class="filename-input">
+                </div>
+
+                <!-- Editor Stats -->
+                <div class="editor-stats">
+                    <span class="stat-item">Lines: <span id="editorLines">0</span></span>
+                    <span class="stat-item">Words: <span id="editorWords">0</span></span>
+                    <span class="stat-item">Characters: <span id="editorChars">0</span></span>
+                </div>
+
+                <!-- Main Editor Area -->
+                <div class="editor-main">
+                    <textarea id="documentEditor" class="document-editor" placeholder="Start typing your document here..." spellcheck="true"></textarea>
+                </div>
+
+                <!-- Preview Area (for HTML/Markdown) -->
+                <div class="editor-preview" id="editorPreview" style="display: none;">
+                    <div class="preview-header">Preview</div>
+                    <div class="preview-content" id="previewContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Internet Archives Panel -->
+    <div class="archives-panel" id="archivesPanel">
+        <div class="archives-container">
+            <div class="archives-header">
+                <h2>📚 Free Internet Archives</h2>
+                <button class="close-archives" id="closeArchives">✕</button>
+            </div>
+
+            <div class="archives-body">
+                <div class="archives-search">
+                    <input type="text" id="archivesSearch" placeholder="Search archives..." class="archives-search-input">
+                </div>
+
+                <div class="archives-categories">
+                    <!-- Web Archives -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🌐 Web Archives</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🏛️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive</div>
+                                    <div class="link-desc">Digital library of websites, books, movies, and more</div>
+                                </div>
+                            </a>
+                            <a href="https://web.archive.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">⏪</span>
+                                <div class="link-details">
+                                    <div class="link-name">Wayback Machine</div>
+                                    <div class="link-desc">Browse archived versions of websites</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Books & Literature -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📖 Books & Literature</h3>
+                        <div class="archive-links">
+                            <a href="https://www.gutenberg.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">📚</span>
+                                <div class="link-details">
+                                    <div class="link-name">Project Gutenberg</div>
+                                    <div class="link-desc">70,000+ free eBooks</div>
+                                </div>
+                            </a>
+                            <a href="https://openlibrary.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">📕</span>
+                                <div class="link-details">
+                                    <div class="link-name">Open Library</div>
+                                    <div class="link-desc">Millions of books, borrow and read</div>
+                                </div>
+                            </a>
+                            <a href="https://www.fadedpage.com" data-navigate="true" class="archive-link">
+                                <span class="link-icon">📘</span>
+                                <div class="link-details">
+                                    <div class="link-name">FadedPage</div>
+                                    <div class="link-desc">Canadian public domain eBooks</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Academic & Research -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎓 Academic & Research</h3>
+                        <div class="archive-links">
+                            <a href="https://core.ac.uk" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🌍</span>
+                                <div class="link-details">
+                                    <div class="link-name">CORE</div>
+                                    <div class="link-desc">Millions of open access research papers</div>
+                                </div>
+                            </a>
+                            <a href="https://www.base-search.net" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🔍</span>
+                                <div class="link-details">
+                                    <div class="link-name">BASE</div>
+                                    <div class="link-desc">Academic web resources search</div>
+                                </div>
+                            </a>
+                            <a href="https://doaj.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">📰</span>
+                                <div class="link-details">
+                                    <div class="link-name">DOAJ</div>
+                                    <div class="link-desc">Directory of Open Access Journals</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Media & Entertainment -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎬 Media & Entertainment</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/movies" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🎥</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Movies</div>
+                                    <div class="link-desc">Free classic movies and videos</div>
+                                </div>
+                            </a>
+                            <a href="https://commons.wikimedia.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🖼️</span>
+                                <div class="link-details">
+                                    <div class="link-name">Wikimedia Commons</div>
+                                    <div class="link-desc">Free media files repository</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Music & Audio -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎵 Music & Audio</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/audio" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🎧</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Audio</div>
+                                    <div class="link-desc">Free music, podcasts, and audio</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Software & Games -->
+                    <div class="archive-category">
+                        <h3 class="category-title">💾 Software & Games</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/software" data-navigate="true" class="archive-link">
+                                <span class="link-icon">💻</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Software</div>
+                                    <div class="link-desc">Historical software collection</div>
+                                </div>
+                            </a>
+                            <a href="https://www.myabandonware.com" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🎮</span>
+                                <div class="link-details">
+                                    <div class="link-name">My Abandonware</div>
+                                    <div class="link-desc">Classic PC games archive</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Educational Resources -->
+                    <div class="archive-category">
+                        <h3 class="category-title">🎓 Educational Resources</h3>
+                        <div class="archive-links">
+                            <a href="https://ocw.mit.edu" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🎯</span>
+                                <div class="link-details">
+                                    <div class="link-name">MIT OpenCourseWare</div>
+                                    <div class="link-desc">Free MIT course materials</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- News & Magazines -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📰 News & Magazines</h3>
+                        <div class="archive-links">
+                            <a href="https://archive.org/details/magazines" data-navigate="true" class="archive-link">
+                                <span class="link-icon">📖</span>
+                                <div class="link-details">
+                                    <div class="link-name">Internet Archive Magazines</div>
+                                    <div class="link-desc">Historical magazine collection</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Data & Statistics -->
+                    <div class="archive-category">
+                        <h3 class="category-title">📊 Data & Statistics</h3>
+                        <div class="archive-links">
+                            <a href="https://ourworldindata.org" data-navigate="true" class="archive-link">
+                                <span class="link-icon">🌍</span>
+                                <div class="link-details">
+                                    <div class="link-name">Our World in Data</div>
+                                    <div class="link-desc">Research and data on global issues</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="encryption.js"></script>
+    <script src="app.js"></script>
+    <script src="bluedrop.js"></script>
+    <script src="filemanager.js"></script>
+    <script src="coderunner.js"></script>
+    <script src="splitview.js"></script>
+    <script src="downloadmanager.js"></script>
+    <script src="advancedtools.js"></script>
+    <script src="documenteditor.js"></script>
+</body>
+</html>
