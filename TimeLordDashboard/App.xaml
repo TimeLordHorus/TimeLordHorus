@@ -11,6 +11,9 @@
 
             <!-- Converters -->
             <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+            <helpers:FileSizeConverter x:Key="FileSizeConverter"/>
+            <helpers:RelativeDateTimeConverter x:Key="RelativeDateTimeConverter"/>
+            <helpers:FriendlyDateTimeConverter x:Key="FriendlyDateTimeConverter"/>
 
             <!-- Color Palette for Fluent Design -->
             <SolidColorBrush x:Key="PrimaryBrush" Color="#0078D4" />
