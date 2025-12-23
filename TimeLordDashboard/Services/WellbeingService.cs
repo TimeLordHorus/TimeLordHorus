@@ -222,7 +222,8 @@ namespace TimeLordDashboard.Services
 
                 if (timeSinceLastTrigger >= reminder.Interval)
                 {
-                    // TODO: Show notification
+                    // Show Windows notification
+                    NotificationService.Instance.ShowReminderNotification(reminder);
                     reminder.LastTriggered = DateTime.Now;
                     System.Diagnostics.Debug.WriteLine($"Reminder triggered: {reminder.Title}");
                 }

@@ -22,12 +22,10 @@
                 <TextBlock Text="Time Period:"
                           FontSize="16"
                           VerticalAlignment="Center"/>
-                <ComboBox SelectedIndex="1" MinWidth="150">
-                    <ComboBoxItem Content="Today"/>
-                    <ComboBoxItem Content="This Week"/>
-                    <ComboBoxItem Content="This Month"/>
-                    <ComboBoxItem Content="Last 3 Months"/>
-                </ComboBox>
+                <ComboBox ItemsSource="{x:Bind ViewModel.TimePeriods, Mode=OneWay}"
+                         SelectedItem="{x:Bind ViewModel.SelectedTimePeriod, Mode=TwoWay}"
+                         MinWidth="150"
+                         SelectionChanged="TimePeriod_SelectionChanged"/>
             </StackPanel>
 
             <!-- Summary Cards -->
@@ -47,12 +45,15 @@
                         <TextBlock Text="Total Screen Time"
                                   FontSize="14"
                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                        <TextBlock Text="32.5 hrs"
-                                  FontSize="28"
-                                  FontWeight="SemiBold"/>
+                        <TextBlock FontSize="28" FontWeight="SemiBold">
+                            <Run Text="{x:Bind ViewModel.TotalScreenTime, Mode=OneWay}"/>
+                            <Run Text=" hrs"/>
+                        </TextBlock>
                         <TextBlock Foreground="{StaticResource SuccessBrush}">
-                            <Run Text="↓ 12%"/>
-                            <Run Text="vs last week" FontSize="12"/>
+                            <Run Text="↓"/>
+                            <Run Text="{x:Bind ViewModel.ScreenTimeChange, Mode=OneWay}"/>
+                            <Run Text="%"/>
+                            <Run Text=" vs last week" FontSize="12"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>
@@ -65,12 +66,14 @@
                         <TextBlock Text="Breaks Taken"
                                   FontSize="14"
                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                        <TextBlock Text="42"
+                        <TextBlock Text="{x:Bind ViewModel.TotalBreaks, Mode=OneWay}"
                                   FontSize="28"
                                   FontWeight="SemiBold"/>
                         <TextBlock Foreground="{StaticResource SuccessBrush}">
-                            <Run Text="↑ 8%"/>
-                            <Run Text="vs last week" FontSize="12"/>
+                            <Run Text="↑"/>
+                            <Run Text="{x:Bind ViewModel.BreaksChange, Mode=OneWay}"/>
+                            <Run Text="%"/>
+                            <Run Text=" vs last week" FontSize="12"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>
@@ -122,12 +125,9 @@
                        CornerRadius="{StaticResource CardCornerRadius}"
                        Padding="24"
                        Height="300">
-                    <TextBlock Text="Chart: Screen time over the last 7 days will be displayed here"
-                             FontSize="16"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                    <!-- LiveCharts will be integrated here -->
+                    <lvc:CartesianChart Series="{x:Bind ViewModel.ScreenTimeSeries, Mode=OneWay}"
+                                       XAxes="{x:Bind ViewModel.XAxes, Mode=OneWay}"
+                                       YAxes="{x:Bind ViewModel.YAxes, Mode=OneWay}"/>
                 </Border>
             </StackPanel>
 
@@ -141,12 +141,8 @@
                        CornerRadius="{StaticResource CardCornerRadius}"
                        Padding="24"
                        Height="300">
-                    <TextBlock Text="Chart: Multi-line graph showing different wellbeing metrics over time"
-                             FontSize="16"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                    <!-- LiveCharts will be integrated here -->
+                    <lvc:CartesianChart Series="{x:Bind ViewModel.WellbeingMetricsSeries, Mode=OneWay}"
+                                       XAxes="{x:Bind ViewModel.XAxes, Mode=OneWay}"/>
                 </Border>
             </StackPanel>
 
