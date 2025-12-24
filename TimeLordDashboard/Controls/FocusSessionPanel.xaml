@@ -1,0 +1,90 @@
+<UserControl
+    x:Class="TimeLordDashboard.Controls.FocusSessionPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="20"
+            MinHeight="200">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,16">
+                <TextBlock Text="Focus Session"
+                          FontSize="16"
+                          FontWeight="SemiBold"/>
+                <TextBlock x:Name="SessionTypeText"
+                          FontSize="12"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+
+            <!-- Timer Display -->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" Spacing="12">
+                <TextBlock x:Name="TimerText"
+                          Text="25:00"
+                          FontSize="48"
+                          FontWeight="Bold"
+                          TextAlignment="Center"
+                          Foreground="{StaticResource PrimaryBrush}"/>
+
+                <TextBlock x:Name="StatusText"
+                          Text="Ready to focus"
+                          FontSize="14"
+                          TextAlignment="Center"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+
+            <!-- Control Buttons -->
+            <StackPanel Grid.Row="2" Spacing="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="StartButton"
+                           Grid.Column="0"
+                           Content="Start"
+                           Click="StartButton_Click"
+                           Style="{StaticResource AccentButtonStyle}"
+                           HorizontalAlignment="Stretch"
+                           Margin="0,0,4,0">
+                        <Button.Icon>
+                            <FontIcon Glyph="&#xE768;"/>
+                        </Button.Icon>
+                    </Button>
+
+                    <Button x:Name="StopButton"
+                           Grid.Column="1"
+                           Content="Stop"
+                           Click="StopButton_Click"
+                           HorizontalAlignment="Stretch"
+                           Margin="4,0,0,0"
+                           IsEnabled="False">
+                        <Button.Icon>
+                            <FontIcon Glyph="&#xE71A;"/>
+                        </Button.Icon>
+                    </Button>
+                </Grid>
+
+                <!-- Session Type Selector -->
+                <ComboBox x:Name="SessionTypeComboBox"
+                         Header="Session Type"
+                         SelectedIndex="0"
+                         HorizontalAlignment="Stretch"
+                         SelectionChanged="SessionType_SelectionChanged">
+                    <ComboBoxItem Content="Focus (25 min)" Tag="25"/>
+                    <ComboBoxItem Content="Short Break (5 min)" Tag="5"/>
+                    <ComboBoxItem Content="Long Break (15 min)" Tag="15"/>
+                    <ComboBoxItem Content="Deep Work (90 min)" Tag="90"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

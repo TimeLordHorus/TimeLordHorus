@@ -1,0 +1,105 @@
+<UserControl
+    x:Class="TimeLordDashboard.Controls.ProductivityScorePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="20"
+            MinHeight="180">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+                <TextBlock Text="Productivity Score"
+                          FontSize="16"
+                          FontWeight="SemiBold"/>
+                <TextBlock x:Name="SubtitleText"
+                          FontSize="12"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+
+            <!-- Score Circle -->
+            <Viewbox Grid.Row="1" MaxHeight="100" MaxWidth="100">
+                <Grid Width="120" Height="120">
+                    <!-- Background Circle -->
+                    <Ellipse Stroke="{ThemeResource CardStrokeColorDefaultBrush}"
+                            StrokeThickness="8"
+                            Fill="Transparent"/>
+
+                    <!-- Progress Arc -->
+                    <Grid x:Name="ProgressArc">
+                        <!-- This would be a custom progress ring in production -->
+                        <Ellipse x:Name="ProgressRing"
+                                Stroke="{StaticResource SuccessBrush}"
+                                StrokeThickness="8"
+                                Fill="Transparent"/>
+                    </Grid>
+
+                    <!-- Score Text -->
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="ScoreText"
+                                  FontSize="36"
+                                  FontWeight="Bold"
+                                  TextAlignment="Center"
+                                  Foreground="{StaticResource SuccessBrush}"/>
+                        <TextBlock Text="/100"
+                                  FontSize="14"
+                                  TextAlignment="Center"
+                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    </StackPanel>
+                </Grid>
+            </Viewbox>
+
+            <!-- Stats Grid -->
+            <Grid Grid.Row="2" Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Tasks -->
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock x:Name="TasksCompletedText"
+                              FontSize="18"
+                              FontWeight="SemiBold"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="Tasks"
+                              FontSize="11"
+                              TextAlignment="Center"
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+
+                <!-- Sessions -->
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock x:Name="SessionsCompletedText"
+                              FontSize="18"
+                              FontWeight="SemiBold"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="Sessions"
+                              FontSize="11"
+                              TextAlignment="Center"
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+
+                <!-- Focus Time -->
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock x:Name="FocusTimeText"
+                              FontSize="18"
+                              FontWeight="SemiBold"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="Minutes"
+                              FontSize="11"
+                              TextAlignment="Center"
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

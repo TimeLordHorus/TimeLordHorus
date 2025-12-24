@@ -11,12 +11,25 @@ namespace TimeLordDashboard.ViewModels
     {
         private readonly FileManagementService _fileService;
         private readonly WellbeingService _wellbeingService;
+        private readonly ProductivityService _productivityService;
 
         [ObservableProperty]
         private ObservableCollection<FileContainer> recentContainers;
 
         [ObservableProperty]
         private ObservableCollection<WellbeingMetric> activeMetrics;
+
+        [ObservableProperty]
+        private ObservableCollection<ProductivityTask> todayTasks;
+
+        [ObservableProperty]
+        private ObservableCollection<ProductivityGoal> activeGoals;
+
+        [ObservableProperty]
+        private ProductivitySummary? todaySummary;
+
+        [ObservableProperty]
+        private ProductivityStreak? currentStreak;
 
         [ObservableProperty]
         private string greetingMessage;
@@ -30,16 +43,32 @@ namespace TimeLordDashboard.ViewModels
         [ObservableProperty]
         private double todayHydration;
 
+        [ObservableProperty]
+        private double productivityScore;
+
+        [ObservableProperty]
+        private int tasksCompleted;
+
+        [ObservableProperty]
+        private int totalTasks;
+
+        [ObservableProperty]
+        private int focusSessionsToday;
+
         public DashboardViewModel()
         {
             _fileService = FileManagementService.Instance;
             _wellbeingService = WellbeingService.Instance;
+            _productivityService = ProductivityService.Instance;
 
             recentContainers = new ObservableCollection<FileContainer>(
                 _fileService.Containers.Take(4));
 
             activeMetrics = new ObservableCollection<WellbeingMetric>(
                 _wellbeingService.Metrics.Take(6));
+
+            todayTasks = _productivityService.TodayTasks;
+            activeGoals = _productivityService.ActiveGoals;
 
             greetingMessage = GetGreetingMessage();
             UpdateDashboardStats();
@@ -59,6 +88,7 @@ namespace TimeLordDashboard.ViewModels
 
         private void UpdateDashboardStats()
         {
+            // Wellbeing stats
             var screenTimeMetric = _wellbeingService.Metrics.FirstOrDefault(m => m.Type == MetricType.ScreenTime);
             if (screenTimeMetric != null)
             {
@@ -76,6 +106,15 @@ namespace TimeLordDashboard.ViewModels
             {
                 TodayHydration = hydrationMetric.CurrentValue;
             }
+
+            // Productivity stats
+            TodaySummary = _productivityService.GetTodaySummary();
+            CurrentStreak = _productivityService.GetCurrentStreak();
+
+            ProductivityScore = TodaySummary.ProductivityScore;
+            TasksCompleted = TodaySummary.TasksCompleted;
+            TotalTasks = TodaySummary.TasksCreated;
+            FocusSessionsToday = TodaySummary.FocusSessionsCompleted;
         }
 
         [RelayCommand]
@@ -97,6 +136,23 @@ namespace TimeLordDashboard.ViewModels
         {
             _wellbeingService.UpdateMetric(MetricType.Hydration, TodayHydration + 1);
             UpdateDashboardStats();
+        }
+
+        [RelayCommand]
+        private void CompleteTask(ProductivityTask task)
+        {
+            _productivityService.CompleteTask(task.Id);
+            UpdateDashboardStats();
+        }
+
+        [RelayCommand]
+        private void AddQuickTask(string title)
+        {
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                _productivityService.AddTask(title, TaskPriority.Medium);
+                UpdateDashboardStats();
+            }
         }
     }
 }
