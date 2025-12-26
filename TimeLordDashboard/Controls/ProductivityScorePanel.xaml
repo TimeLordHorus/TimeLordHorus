@@ -1,0 +1,129 @@
+<UserControl
+    x:Class="TimeLordDashboard.Controls.ProductivityScorePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Style="{StaticResource GlowingCardStyle}"
+            Padding="20"
+            MinHeight="180">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+                <TextBlock Text="⚡ PRODUCTIVITY SCORE"
+                          FontSize="14"
+                          FontFamily="Consolas"
+                          FontWeight="SemiBold"
+                          Foreground="{StaticResource CyberWarningBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FFB800" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock x:Name="SubtitleText"
+                          FontSize="11"
+                          FontFamily="Consolas"
+                          Foreground="#8A9BA8"/>
+            </StackPanel>
+
+            <!-- Score Circle -->
+            <Viewbox Grid.Row="1" MaxHeight="100" MaxWidth="100">
+                <Grid Width="120" Height="120">
+                    <!-- Background Circle -->
+                    <Ellipse Stroke="#2A2F3A"
+                            StrokeThickness="10"
+                            Fill="Transparent"/>
+
+                    <!-- Progress Arc -->
+                    <Grid x:Name="ProgressArc">
+                        <Ellipse x:Name="ProgressRing"
+                                Stroke="{StaticResource CyberSuccessBrush}"
+                                StrokeThickness="10"
+                                Fill="Transparent">
+                            <Ellipse.Effect>
+                                <DropShadowEffect Color="#00FF41" BlurRadius="20" ShadowDepth="0" Opacity="0.8"/>
+                            </Ellipse.Effect>
+                        </Ellipse>
+                    </Grid>
+
+                    <!-- Score Text -->
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="ScoreText"
+                                  FontSize="40"
+                                  FontWeight="Bold"
+                                  FontFamily="Consolas"
+                                  TextAlignment="Center"
+                                  Foreground="#00FF41">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#00FF41" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="/100"
+                                  FontSize="14"
+                                  FontFamily="Consolas"
+                                  TextAlignment="Center"
+                                  Foreground="#8A9BA8"/>
+                    </StackPanel>
+                </Grid>
+            </Viewbox>
+
+            <!-- Stats Grid -->
+            <Grid Grid.Row="2" Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Tasks -->
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock x:Name="TasksCompletedText"
+                              FontSize="18"
+                              FontWeight="Bold"
+                              FontFamily="Consolas"
+                              Foreground="#00F0FF"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="TASKS"
+                              FontSize="10"
+                              FontFamily="Consolas"
+                              TextAlignment="Center"
+                              Foreground="#8A9BA8"/>
+                </StackPanel>
+
+                <!-- Sessions -->
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock x:Name="SessionsCompletedText"
+                              FontSize="18"
+                              FontWeight="Bold"
+                              FontFamily="Consolas"
+                              Foreground="#00F0FF"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="SESSIONS"
+                              FontSize="10"
+                              FontFamily="Consolas"
+                              TextAlignment="Center"
+                              Foreground="#8A9BA8"/>
+                </StackPanel>
+
+                <!-- Focus Time -->
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock x:Name="FocusTimeText"
+                              FontSize="18"
+                              FontWeight="Bold"
+                              FontFamily="Consolas"
+                              Foreground="#00F0FF"
+                              TextAlignment="Center"/>
+                    <TextBlock Text="MINUTES"
+                              FontSize="10"
+                              FontFamily="Consolas"
+                              TextAlignment="Center"
+                              Foreground="#8A9BA8"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
