@@ -4,18 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:local="using:TimeLordDashboard.Controls"
-    Background="{ThemeResource LayerFillColorDefaultBrush}">
+    Background="#0A0E14">
 
     <ScrollViewer>
         <StackPanel Padding="24" Spacing="24">
-            <!-- Greeting Header -->
+            <!-- Cybersteam Greeting Header -->
             <StackPanel Spacing="8">
                 <TextBlock Text="{x:Bind ViewModel.GreetingMessage, Mode=OneWay}"
                           FontSize="32"
-                          FontWeight="SemiBold"/>
-                <TextBlock Text="Welcome to your personal productivity and wellbeing hub"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberPrimaryBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="⚡ PRODUCTIVITY AND WELLBEING COMMAND CENTER ⚡"
                           FontSize="14"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberSecondaryBrush}"
+                          Opacity="0.8"/>
             </StackPanel>
 
             <!-- Quick Stats -->
@@ -29,15 +37,19 @@
 
                 <!-- Screen Time Card -->
                 <Border Grid.Column="0" Margin="0,0,12,0"
-                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                       CornerRadius="{StaticResource CardCornerRadius}"
+                       Style="{StaticResource CyberCardStyle}"
                        Padding="20">
                     <StackPanel Spacing="8">
-                        <FontIcon Glyph="&#xE7F4;" FontSize="24" Foreground="{StaticResource PrimaryBrush}"/>
-                        <TextBlock Text="Screen Time"
-                                  FontSize="14"
-                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                        <TextBlock FontSize="28" FontWeight="SemiBold">
+                        <FontIcon Glyph="&#xE7F4;" FontSize="24" Foreground="{StaticResource CyberPrimaryBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="SCREEN TIME"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
+                        <TextBlock FontSize="28" FontWeight="Bold" FontFamily="Consolas" Foreground="#00F0FF">
                             <Run Text="{x:Bind ViewModel.TodayScreenTime, Mode=OneWay}"/>
                             <Run Text="min" FontSize="16"/>
                         </TextBlock>
@@ -46,52 +58,64 @@
 
                 <!-- Breaks Card -->
                 <Border Grid.Column="1" Margin="0,0,12,0"
-                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                       CornerRadius="{StaticResource CardCornerRadius}"
+                       Style="{StaticResource CyberCardStyle}"
                        Padding="20">
                     <StackPanel Spacing="8">
-                        <FontIcon Glyph="&#xE823;" FontSize="24" Foreground="{StaticResource SuccessBrush}"/>
-                        <TextBlock Text="Breaks Taken"
-                                  FontSize="14"
-                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <FontIcon Glyph="&#xE823;" FontSize="24" Foreground="{StaticResource CyberSuccessBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#00FF41" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="BREAKS TAKEN"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
                         <TextBlock Text="{x:Bind ViewModel.TodayBreaks, Mode=OneWay}"
                                   FontSize="28"
-                                  FontWeight="SemiBold"/>
+                                  FontWeight="Bold"
+                                  FontFamily="Consolas"
+                                  Foreground="#00FF41"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Hydration Card -->
                 <Border Grid.Column="2" Margin="0,0,12,0"
-                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                       CornerRadius="{StaticResource CardCornerRadius}"
+                       Style="{StaticResource CyberCardStyle}"
                        Padding="20">
                     <StackPanel Spacing="8">
-                        <FontIcon Glyph="&#xE7B8;" FontSize="24" Foreground="{StaticResource AccentBrush}"/>
-                        <TextBlock Text="Water Intake"
-                                  FontSize="14"
-                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                        <TextBlock FontSize="28" FontWeight="SemiBold">
+                        <FontIcon Glyph="&#xE7B8;" FontSize="24" Foreground="{StaticResource CyberAccentBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#9D00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="WATER INTAKE"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
+                        <TextBlock FontSize="28" FontWeight="Bold" FontFamily="Consolas" Foreground="#9D00FF">
                             <Run Text="{x:Bind ViewModel.TodayHydration, Mode=OneWay}"/>
-                            <Run Text="/ 8" FontSize="16" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                            <Run Text="/ 8" FontSize="16" Foreground="#8A9BA8"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
                 <!-- Quick Actions Card -->
                 <Border Grid.Column="3"
-                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                       CornerRadius="{StaticResource CardCornerRadius}"
+                       Style="{StaticResource CyberCardStyle}"
                        Padding="20">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Quick Actions"
-                                  FontSize="14"
-                                  FontWeight="SemiBold"/>
-                        <Button Content="Take Break"
+                        <TextBlock Text="QUICK ACTIONS"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  FontWeight="SemiBold"
+                                  Foreground="{StaticResource CyberPrimaryBrush}"/>
+                        <Button Content="⚡ TAKE BREAK"
                                Command="{x:Bind ViewModel.QuickBreakCommand}"
-                               Style="{StaticResource AccentButtonStyle}"
+                               Style="{StaticResource CyberButtonStyle}"
                                HorizontalAlignment="Stretch"/>
-                        <Button Content="Log Water"
+                        <Button Content="💧 LOG WATER"
                                Command="{x:Bind ViewModel.LogWaterIntakeCommand}"
+                               Style="{StaticResource CyberButtonStyle}"
                                HorizontalAlignment="Stretch"/>
                     </StackPanel>
                 </Border>
@@ -99,9 +123,15 @@
 
             <!-- Productivity Section -->
             <StackPanel Spacing="16">
-                <TextBlock Text="Today's Productivity"
+                <TextBlock Text="⚡ TODAY'S PRODUCTIVITY"
                           FontSize="20"
-                          FontWeight="SemiBold"/>
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberWarningBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FFB800" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -121,30 +151,38 @@
 
                     <!-- Productivity Streak & Goals -->
                     <Border Grid.Column="2"
-                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                           CornerRadius="{StaticResource CardCornerRadius}"
+                           Style="{StaticResource CyberCardStyle}"
                            Padding="20">
                         <StackPanel Spacing="16">
-                            <TextBlock Text="Streak & Goals"
-                                     FontSize="16"
-                                     FontWeight="SemiBold"/>
+                            <TextBlock Text="STREAK & GOALS"
+                                     FontSize="14"
+                                     FontFamily="Consolas"
+                                     FontWeight="SemiBold"
+                                     Foreground="{StaticResource CyberWarningBrush}"/>
 
                             <!-- Streak Info -->
                             <StackPanel Spacing="8">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <FontIcon Glyph="&#xE73E;"
                                             FontSize="24"
-                                            Foreground="{StaticResource WarningBrush}"/>
+                                            Foreground="{StaticResource CyberWarningBrush}">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="#FFB800" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
                                     <TextBlock VerticalAlignment="Center">
                                         <Run Text="{x:Bind ViewModel.CurrentStreak.CurrentStreak, Mode=OneWay}"
                                              FontSize="32"
                                              FontWeight="Bold"
-                                             Foreground="{StaticResource WarningBrush}"/>
+                                             FontFamily="Consolas"
+                                             Foreground="#FFB800"/>
                                         <Run Text=" day streak"
-                                             FontSize="14"/>
+                                             FontSize="14"
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8"/>
                                     </TextBlock>
                                 </StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                <TextBlock FontFamily="Consolas" Foreground="#8A9BA8">
                                     <Run Text="Best: "/>
                                     <Run Text="{x:Bind ViewModel.CurrentStreak.LongestStreak, Mode=OneWay}"/>
                                     <Run Text=" days"/>
@@ -159,13 +197,16 @@
                                         <StackPanel Spacing="4" Margin="0,0,0,12">
                                             <TextBlock Text="{Binding Title}"
                                                      FontSize="13"
+                                                     FontFamily="Consolas"
+                                                     Foreground="#00F0FF"
                                                      TextWrapping="Wrap"/>
                                             <ProgressBar Value="{Binding CurrentValue}"
                                                        Maximum="{Binding TargetValue}"
-                                                       Foreground="{StaticResource AccentBrush}"
+                                                       Foreground="{StaticResource CyberAccentBrush}"
                                                        Height="6"/>
                                             <TextBlock FontSize="11"
-                                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                                     FontFamily="Consolas"
+                                                     Foreground="#8A9BA8">
                                                 <Run Text="{Binding CurrentValue}"/>
                                                 <Run Text=" / "/>
                                                 <Run Text="{Binding TargetValue}"/>
@@ -184,14 +225,21 @@
             <!-- Today's Tasks -->
             <StackPanel Spacing="16">
                 <Grid>
-                    <TextBlock Text="Today's Tasks"
+                    <TextBlock Text="📋 TODAY'S TASKS"
                               FontSize="20"
-                              FontWeight="SemiBold"
-                              VerticalAlignment="Center"/>
+                              FontWeight="Bold"
+                              FontFamily="Consolas"
+                              Foreground="{StaticResource CyberSecondaryBrush}"
+                              VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#FF00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
                     <TextBlock HorizontalAlignment="Right"
                               VerticalAlignment="Center"
-                              Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                        <Run Text="{x:Bind ViewModel.TasksCompleted, Mode=OneWay}"/>
+                              FontFamily="Consolas"
+                              Foreground="#8A9BA8">
+                        <Run Text="{x:Bind ViewModel.TasksCompleted, Mode=OneWay}" Foreground="#00FF41"/>
                         <Run Text=" of "/>
                         <Run Text="{x:Bind ViewModel.TotalTasks, Mode=OneWay}"/>
                         <Run Text=" completed"/>
@@ -201,8 +249,7 @@
                 <ItemsRepeater ItemsSource="{x:Bind ViewModel.TodayTasks, Mode=OneWay}">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                   CornerRadius="{StaticResource CardCornerRadius}"
+                            <Border Style="{StaticResource CyberCardStyle}"
                                    Padding="16"
                                    Margin="0,0,0,8">
                                 <Grid>
@@ -219,25 +266,31 @@
                                     <StackPanel Grid.Column="1" Spacing="4">
                                         <TextBlock Text="{Binding Title}"
                                                  FontSize="15"
-                                                 FontWeight="SemiBold"/>
+                                                 FontFamily="Consolas"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#00F0FF"/>
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <Border Background="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"
-                                                   CornerRadius="4"
+                                                   CornerRadius="0"
+                                                   BorderBrush="#00F0FF"
+                                                   BorderThickness="1"
                                                    Padding="8,4">
                                                 <TextBlock Text="{Binding Priority}"
                                                          FontSize="11"
+                                                         FontFamily="Consolas"
                                                          Foreground="White"/>
                                             </Border>
                                             <TextBlock Text="{Binding Category}"
                                                      FontSize="12"
-                                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                                     FontFamily="Consolas"
+                                                     Foreground="#8A9BA8"/>
                                         </StackPanel>
                                     </StackPanel>
 
                                     <FontIcon Grid.Column="2"
                                             Glyph="&#xE8FB;"
                                             FontSize="16"
-                                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"/>
+                                            Foreground="{StaticResource CyberPrimaryBrush}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -247,31 +300,43 @@
 
             <!-- Recent Containers Section -->
             <StackPanel Spacing="16">
-                <TextBlock Text="Recent Containers"
+                <TextBlock Text="📦 FILE VAULT"
                           FontSize="20"
-                          FontWeight="SemiBold"/>
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberAccentBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#9D00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
 
                 <GridView ItemsSource="{x:Bind ViewModel.RecentContainers, Mode=OneWay}"
                          SelectionMode="None">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                   CornerRadius="{StaticResource CardCornerRadius}"
+                            <Border Style="{StaticResource GlowingCardStyle}"
                                    Width="200"
                                    Height="140"
                                    Padding="16">
                                 <StackPanel Spacing="12">
                                     <FontIcon Glyph="{Binding IconGlyph}"
                                             FontSize="32"
-                                            Foreground="{Binding Color}"/>
+                                            Foreground="{Binding Color}">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="{Binding Color}" BlurRadius="15" ShadowDepth="0" Opacity="0.8"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
                                     <TextBlock Text="{Binding Name}"
                                              FontSize="16"
+                                             FontFamily="Consolas"
                                              FontWeight="SemiBold"
+                                             Foreground="#00F0FF"
                                              TextTrimming="CharacterEllipsis"/>
                                     <TextBlock FontSize="12"
-                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8">
                                         <Run Text="{Binding Items.Count}"/>
-                                        <Run Text="items"/>
+                                        <Run Text=" items"/>
                                     </TextBlock>
                                 </StackPanel>
                             </Border>
@@ -282,15 +347,20 @@
 
             <!-- Wellbeing Metrics Overview -->
             <StackPanel Spacing="16">
-                <TextBlock Text="Wellbeing Overview"
+                <TextBlock Text="💚 WELLBEING METRICS"
                           FontSize="20"
-                          FontWeight="SemiBold"/>
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberSuccessBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00FF41" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
 
                 <ItemsRepeater ItemsSource="{x:Bind ViewModel.ActiveMetrics, Mode=OneWay}">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                   CornerRadius="{StaticResource CardCornerRadius}"
+                            <Border Style="{StaticResource CyberCardStyle}"
                                    Padding="20"
                                    Margin="0,0,0,12">
                                 <Grid>
@@ -304,12 +374,18 @@
                                             Glyph="{Binding IconGlyph}"
                                             FontSize="24"
                                             Foreground="{Binding Color}"
-                                            Margin="0,0,16,0"/>
+                                            Margin="0,0,16,0">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="{Binding Color}" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
 
                                     <StackPanel Grid.Column="1" Spacing="8">
                                         <TextBlock Text="{Binding Name}"
                                                  FontSize="16"
-                                                 FontWeight="SemiBold"/>
+                                                 FontFamily="Consolas"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#00F0FF"/>
                                         <ProgressBar Value="{Binding CurrentValue}"
                                                    Maximum="{Binding MaxValue}"
                                                    Foreground="{Binding Color}"
@@ -321,10 +397,13 @@
                                              Margin="16,0,0,0">
                                         <Run Text="{Binding CurrentValue}"
                                              FontSize="20"
-                                             FontWeight="SemiBold"/>
+                                             FontFamily="Consolas"
+                                             FontWeight="Bold"
+                                             Foreground="{Binding Color}"/>
                                         <Run Text="{Binding Unit}"
                                              FontSize="14"
-                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8"/>
                                     </TextBlock>
                                 </Grid>
                             </Border>

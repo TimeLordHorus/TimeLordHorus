@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="Themes/CybersteamTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Converters -->
@@ -15,13 +16,13 @@
             <helpers:RelativeDateTimeConverter x:Key="RelativeDateTimeConverter"/>
             <helpers:FriendlyDateTimeConverter x:Key="FriendlyDateTimeConverter"/>
 
-            <!-- Color Palette for Fluent Design -->
-            <SolidColorBrush x:Key="PrimaryBrush" Color="#0078D4" />
-            <SolidColorBrush x:Key="SecondaryBrush" Color="#005A9E" />
-            <SolidColorBrush x:Key="AccentBrush" Color="#00B7C3" />
-            <SolidColorBrush x:Key="SuccessBrush" Color="#107C10" />
-            <SolidColorBrush x:Key="WarningBrush" Color="#FCE100" />
-            <SolidColorBrush x:Key="ErrorBrush" Color="#E81123" />
+            <!-- Color Palette - Cybersteam Theme -->
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#00F0FF" /> <!-- Neon Cyan -->
+            <SolidColorBrush x:Key="SecondaryBrush" Color="#FF00FF" /> <!-- Neon Magenta -->
+            <SolidColorBrush x:Key="AccentBrush" Color="#9D00FF" /> <!-- Neon Purple -->
+            <SolidColorBrush x:Key="SuccessBrush" Color="#00FF41" /> <!-- Neon Green -->
+            <SolidColorBrush x:Key="WarningBrush" Color="#FFE600" /> <!-- Neon Yellow -->
+            <SolidColorBrush x:Key="ErrorBrush" Color="#FF0040" /> <!-- Plasma Red -->
 
             <!-- Spacing and Sizing -->
             <x:Double x:Key="SmallSpacing">8</x:Double>
@@ -29,8 +30,8 @@
             <x:Double x:Key="LargeSpacing">24</x:Double>
             <x:Double x:Key="ExtraLargeSpacing">32</x:Double>
 
-            <CornerRadius x:Key="ControlCornerRadius">8</CornerRadius>
-            <CornerRadius x:Key="CardCornerRadius">12</CornerRadius>
+            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius> <!-- Sharp edges for cyber aesthetic -->
+            <CornerRadius x:Key="CardCornerRadius">0</CornerRadius> <!-- Sharp edges for cyber aesthetic -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>
