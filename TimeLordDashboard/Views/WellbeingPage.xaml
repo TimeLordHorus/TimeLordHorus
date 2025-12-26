@@ -2,23 +2,29 @@
     x:Class="TimeLordDashboard.Views.WellbeingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Background="{ThemeResource LayerFillColorDefaultBrush}">
+    Background="#0A0E14">
 
     <ScrollViewer>
         <StackPanel Padding="24" Spacing="24">
             <!-- Page Header -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Wellbeing Center"
+                <TextBlock Text="💚 WELLBEING COMMAND CENTER"
                           FontSize="32"
-                          FontWeight="SemiBold"/>
-                <TextBlock Text="Monitor your health metrics and practice mindfulness"
+                          FontFamily="Consolas"
+                          FontWeight="Bold"
+                          Foreground="{StaticResource CyberSuccessBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00FF41" BlurRadius="15" ShadowDepth="0" Opacity="0.7"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="⚡ MONITOR HEALTH METRICS AND PRACTICE MINDFULNESS ⚡"
                           FontSize="14"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                          FontFamily="Consolas"
+                          Foreground="#8A9BA8"/>
             </StackPanel>
 
             <!-- Breathing Exercise Card -->
-            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                   CornerRadius="{StaticResource CardCornerRadius}"
+            <Border Style="{StaticResource GlowingCardStyle}"
                    Padding="24">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -28,25 +34,35 @@
 
                     <StackPanel Grid.Column="0" Spacing="16">
                         <StackPanel Spacing="8">
-                            <TextBlock Text="Breathing Exercise"
-                                     FontSize="24"
-                                     FontWeight="SemiBold"/>
-                            <TextBlock Text="Practice mindful breathing to reduce stress and improve focus"
-                                     FontSize="14"
-                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Text="🌊 BREATHING EXERCISE"
+                                     FontSize="22"
+                                     FontFamily="Consolas"
+                                     FontWeight="SemiBold"
+                                     Foreground="{StaticResource CyberPrimaryBrush}">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="Practice mindful breathing to reduce stress"
+                                     FontSize="13"
+                                     FontFamily="Consolas"
+                                     Foreground="#8A9BA8"/>
                         </StackPanel>
 
                         <TextBlock Text="{x:Bind ViewModel.BreathingInstruction, Mode=OneWay}"
-                                 FontSize="20"
-                                 Foreground="{StaticResource AccentBrush}"/>
+                                 FontSize="18"
+                                 FontFamily="Consolas"
+                                 FontWeight="SemiBold"
+                                 Foreground="{StaticResource CyberAccentBrush}"/>
 
                         <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button Content="Start Exercise"
+                            <Button Content="▶ START"
                                    Command="{x:Bind ViewModel.StartBreathingExerciseCommand}"
-                                   Style="{StaticResource AccentButtonStyle}"
+                                   Style="{StaticResource CyberButtonStyle}"
                                    IsEnabled="{x:Bind ViewModel.IsBreathingExerciseActive, Mode=OneWay, Converter={StaticResource InverseBooleanConverter}}"/>
-                            <Button Content="Stop"
+                            <Button Content="⏹ STOP"
                                    Command="{x:Bind ViewModel.StopBreathingExerciseCommand}"
+                                   Style="{StaticResource CyberButtonStyle}"
                                    IsEnabled="{x:Bind ViewModel.IsBreathingExerciseActive, Mode=OneWay}"/>
                         </StackPanel>
                     </StackPanel>
@@ -59,23 +75,38 @@
                         <Grid>
                             <Ellipse Width="160"
                                    Height="160"
-                                   Fill="{StaticResource AccentBrush}"
-                                   Opacity="0.2"/>
+                                   Fill="{StaticResource CyberAccentBrush}"
+                                   Opacity="0.3">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect Color="#9D00FF" BlurRadius="30" ShadowDepth="0" Opacity="0.8"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
                             <TextBlock Text="{x:Bind ViewModel.BreathingCountdown, Mode=OneWay}"
                                      FontSize="72"
+                                     FontFamily="Consolas"
                                      FontWeight="Bold"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Foreground="{StaticResource AccentBrush}"/>
+                                     Foreground="#9D00FF">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#9D00FF" BlurRadius="15" ShadowDepth="0" Opacity="0.9"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
                         </Grid>
                     </Viewbox>
                 </Grid>
             </Border>
 
             <!-- Metrics Grid -->
-            <TextBlock Text="Your Metrics"
+            <TextBlock Text="📊 YOUR METRICS"
                       FontSize="20"
-                      FontWeight="SemiBold"/>
+                      FontFamily="Consolas"
+                      FontWeight="Bold"
+                      Foreground="{StaticResource CyberSecondaryBrush}">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#FF00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                </TextBlock.Effect>
+            </TextBlock>
 
             <GridView ItemsSource="{x:Bind ViewModel.Metrics, Mode=OneWay}"
                      SelectionMode="None">
