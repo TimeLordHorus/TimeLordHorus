@@ -15,6 +15,8 @@
             <helpers:FileSizeConverter x:Key="FileSizeConverter"/>
             <helpers:RelativeDateTimeConverter x:Key="RelativeDateTimeConverter"/>
             <helpers:FriendlyDateTimeConverter x:Key="FriendlyDateTimeConverter"/>
+            <helpers:TaskStatusToBoolConverter x:Key="TaskStatusToBoolConverter"/>
+            <helpers:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
 
             <!-- Color Palette - Cybersteam Theme -->
             <SolidColorBrush x:Key="PrimaryBrush" Color="#00F0FF" /> <!-- Neon Cyan -->
