@@ -24,6 +24,9 @@
     <Color x:Key="ShadowBlack">#0D0F12</Color>
     <Color x:Key="CharcoalGray">#1E2127</Color>
 
+    <!-- Warning/Gold Color -->
+    <Color x:Key="NeonGold">#FFB800</Color>
+
     <!-- Accent Colors -->
     <Color x:Key="ElectricBlue">#0080FF</Color>
     <Color x:Key="ToxicGreen">#39FF14</Color>
@@ -37,7 +40,7 @@
     <SolidColorBrush x:Key="CyberSecondaryBrush" Color="{StaticResource NeonMagenta}"/>
     <SolidColorBrush x:Key="CyberAccentBrush" Color="{StaticResource NeonPurple}"/>
     <SolidColorBrush x:Key="CyberSuccessBrush" Color="{StaticResource NeonGreen}"/>
-    <SolidColorBrush x:Key="CyberWarningBrush" Color="{StaticResource NeonOrange}"/>
+    <SolidColorBrush x:Key="CyberWarningBrush" Color="{StaticResource NeonGold}"/>
     <SolidColorBrush x:Key="CyberErrorBrush" Color="{StaticResource PlasmaRed}"/>
 
     <SolidColorBrush x:Key="SteamBrassBrush" Color="{StaticResource BrassGold}"/>
