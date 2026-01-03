@@ -1,0 +1,309 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- CYBERSTEAM COLOR PALETTE -->
+
+    <!-- Primary Neon Colors -->
+    <Color x:Key="NeonCyan">#00F0FF</Color>
+    <Color x:Key="NeonMagenta">#FF00FF</Color>
+    <Color x:Key="NeonPurple">#9D00FF</Color>
+    <Color x:Key="NeonGreen">#00FF41</Color>
+    <Color x:Key="NeonOrange">#FF6B00</Color>
+    <Color x:Key="NeonYellow">#FFE600</Color>
+
+    <!-- Steampunk Metallics -->
+    <Color x:Key="BrassGold">#B5A642</Color>
+    <Color x:Key="CopperOrange">#CB6D51</Color>
+    <Color x:Key="IronGray">#71797E</Color>
+    <Color x:Key="BronzeBrown">#CD7F32</Color>
+
+    <!-- Dark Backgrounds -->
+    <Color x:Key="DeepVoid">#0A0E14</Color>
+    <Color x:Key="DarkMetal">#1A1D23</Color>
+    <Color x:Key="ShadowBlack">#0D0F12</Color>
+    <Color x:Key="CharcoalGray">#1E2127</Color>
+
+    <!-- Warning/Gold Color -->
+    <Color x:Key="NeonGold">#FFB800</Color>
+
+    <!-- Accent Colors -->
+    <Color x:Key="ElectricBlue">#0080FF</Color>
+    <Color x:Key="ToxicGreen">#39FF14</Color>
+    <Color x:Key="PlasmaRed">#FF0040</Color>
+    <Color x:Key="HologramPurple">#B026FF</Color>
+
+    <!-- BRUSHES -->
+
+    <!-- Solid Color Brushes -->
+    <SolidColorBrush x:Key="CyberPrimaryBrush" Color="{StaticResource NeonCyan}"/>
+    <SolidColorBrush x:Key="CyberSecondaryBrush" Color="{StaticResource NeonMagenta}"/>
+    <SolidColorBrush x:Key="CyberAccentBrush" Color="{StaticResource NeonPurple}"/>
+    <SolidColorBrush x:Key="CyberSuccessBrush" Color="{StaticResource NeonGreen}"/>
+    <SolidColorBrush x:Key="CyberWarningBrush" Color="{StaticResource NeonGold}"/>
+    <SolidColorBrush x:Key="CyberErrorBrush" Color="{StaticResource PlasmaRed}"/>
+
+    <SolidColorBrush x:Key="SteamBrassBrush" Color="{StaticResource BrassGold}"/>
+    <SolidColorBrush x:Key="SteamCopperBrush" Color="{StaticResource CopperOrange}"/>
+    <SolidColorBrush x:Key="SteamIronBrush" Color="{StaticResource IronGray}"/>
+
+    <SolidColorBrush x:Key="BackgroundVoidBrush" Color="{StaticResource DeepVoid}"/>
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource DarkMetal}"/>
+    <SolidColorBrush x:Key="BackgroundShadowBrush" Color="{StaticResource ShadowBlack}"/>
+    <SolidColorBrush x:Key="BackgroundCharcoalBrush" Color="{StaticResource CharcoalGray}"/>
+
+    <!-- Gradient Brushes -->
+    <LinearGradientBrush x:Key="CyberGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource NeonCyan}" Offset="0"/>
+        <GradientStop Color="{StaticResource NeonPurple}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource NeonMagenta}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="SteamGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BrassGold}" Offset="0"/>
+        <GradientStop Color="{StaticResource CopperOrange}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource BronzeBrown}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="DarkGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource DarkMetal}" Offset="0"/>
+        <GradientStop Color="{StaticResource ShadowBlack}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- TYPOGRAPHY -->
+    <FontFamily x:Key="CyberFontFamily">Consolas, Courier New, monospace</FontFamily>
+    <FontFamily x:Key="TitleFontFamily">Segoe UI, Arial</FontFamily>
+
+    <!-- CARD STYLE -->
+    <Style x:Key="CyberCardStyle" TargetType="Border">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.95">
+                    <GradientStop Color="#1A1D23" Offset="0"/>
+                    <GradientStop Color="#0D0F12" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource CyberPrimaryBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource NeonCyan}"
+                                BlurRadius="20"
+                                ShadowDepth="0"
+                                Opacity="0.6"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- GLOWING CARD STYLE -->
+    <Style x:Key="GlowingCardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}"/>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="{StaticResource NeonCyan}" Offset="0"/>
+                    <GradientStop Color="{StaticResource NeonMagenta}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource NeonPurple}"
+                                BlurRadius="30"
+                                ShadowDepth="0"
+                                Opacity="0.8"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STEAMPUNK CARD STYLE -->
+    <Style x:Key="SteamCardStyle" TargetType="Border">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2A1810" Offset="0"/>
+                    <GradientStop Color="#1A0E08" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource SteamBrassBrush}"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource BrassGold}"
+                                BlurRadius="15"
+                                ShadowDepth="3"
+                                Opacity="0.4"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- CYBER BUTTON STYLE -->
+    <Style x:Key="CyberButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource CyberPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CyberPrimaryBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="FontFamily" Value="{StaticResource CyberFontFamily}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource NeonCyan}"
+                                BlurRadius="15"
+                                ShadowDepth="0"
+                                Opacity="0.5"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="RootBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0">
+                        <Grid>
+                            <!-- Corner Accents -->
+                            <Rectangle Width="8" Height="8"
+                                     Fill="{StaticResource CyberPrimaryBrush}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"/>
+                            <Rectangle Width="8" Height="8"
+                                     Fill="{StaticResource CyberPrimaryBrush}"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"/>
+                            <Rectangle Width="8" Height="8"
+                                     Fill="{StaticResource CyberPrimaryBrush}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom"/>
+                            <Rectangle Width="8" Height="8"
+                                     Fill="{StaticResource CyberPrimaryBrush}"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom"/>
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- CYBER ACCENT BUTTON (Filled) -->
+    <Style x:Key="CyberAccentButtonStyle" TargetType="Button" BasedOn="{StaticResource CyberButtonStyle}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource NeonCyan}" Offset="0"/>
+                    <GradientStop Color="{StaticResource NeonPurple}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#000000"/>
+    </Style>
+
+    <!-- GLOWING TEXT STYLE -->
+    <Style x:Key="GlowingTextStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource CyberPrimaryBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource CyberFontFamily}"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource NeonCyan}"
+                                BlurRadius="10"
+                                ShadowDepth="0"
+                                Opacity="0.8"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- NEON TITLE STYLE -->
+    <Style x:Key="NeonTitleStyle" TargetType="TextBlock">
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="{StaticResource NeonCyan}" Offset="0"/>
+                    <GradientStop Color="{StaticResource NeonMagenta}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="{StaticResource TitleFontFamily}"/>
+        <Setter Property="FontWeight" Value="Black"/>
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource NeonPurple}"
+                                BlurRadius="20"
+                                ShadowDepth="0"
+                                Opacity="1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- PROGRESS BAR STYLE -->
+    <Style x:Key="CyberProgressBarStyle" TargetType="ProgressBar">
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Color="{StaticResource NeonCyan}" Offset="0"/>
+                    <GradientStop Color="{StaticResource NeonMagenta}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="#1A1D23"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CyberPrimaryBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Height" Value="8"/>
+    </Style>
+
+    <!-- HEXAGONAL CLIP GEOMETRY -->
+    <PathGeometry x:Key="HexagonGeometry">
+        M 50,0 L 93.3,25 L 93.3,75 L 50,100 L 6.7,75 L 6.7,25 Z
+    </PathGeometry>
+
+    <!-- CIRCUIT PATTERN BRUSH -->
+    <DrawingBrush x:Key="CircuitPatternBrush"
+                  TileMode="Tile"
+                  Viewport="0,0,100,100"
+                  ViewportUnits="Absolute"
+                  Opacity="0.1">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="{StaticResource CyberPrimaryBrush}">
+                <GeometryDrawing.Geometry>
+                    <GeometryGroup>
+                        <LineGeometry StartPoint="0,0" EndPoint="100,0"/>
+                        <LineGeometry StartPoint="0,0" EndPoint="0,100"/>
+                        <EllipseGeometry Center="50,50" RadiusX="5" RadiusY="5"/>
+                    </GeometryGroup>
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- SCANLINE EFFECT BRUSH -->
+    <DrawingBrush x:Key="ScanlineBrush"
+                  TileMode="Tile"
+                  Viewport="0,0,1,4"
+                  ViewportUnits="Absolute"
+                  Opacity="0.05">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="#00F0FF">
+                <GeometryDrawing.Geometry>
+                    <RectangleGeometry Rect="0,0,1,2"/>
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+</ResourceDictionary>

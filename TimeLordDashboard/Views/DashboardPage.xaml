@@ -1,0 +1,416 @@
+<Page
+    x:Class="TimeLordDashboard.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:local="using:TimeLordDashboard.Controls"
+    Background="#0A0E14">
+
+    <ScrollViewer>
+        <StackPanel Padding="24" Spacing="24">
+            <!-- Cybersteam Greeting Header -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ViewModel.GreetingMessage, Mode=OneWay}"
+                          FontSize="32"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberPrimaryBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="⚡ PRODUCTIVITY AND WELLBEING COMMAND CENTER ⚡"
+                          FontSize="14"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberSecondaryBrush}"
+                          Opacity="0.8"/>
+            </StackPanel>
+
+            <!-- Quick Stats -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Screen Time Card -->
+                <Border Grid.Column="0" Margin="0,0,12,0"
+                       Style="{StaticResource CyberCardStyle}"
+                       Padding="20">
+                    <StackPanel Spacing="8">
+                        <FontIcon Glyph="&#xE7F4;" FontSize="24" Foreground="{StaticResource CyberPrimaryBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="SCREEN TIME"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
+                        <TextBlock FontSize="28" FontWeight="Bold" FontFamily="Consolas" Foreground="#00F0FF">
+                            <Run Text="{x:Bind ViewModel.TodayScreenTime, Mode=OneWay}"/>
+                            <Run Text="min" FontSize="16"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Breaks Card -->
+                <Border Grid.Column="1" Margin="0,0,12,0"
+                       Style="{StaticResource CyberCardStyle}"
+                       Padding="20">
+                    <StackPanel Spacing="8">
+                        <FontIcon Glyph="&#xE823;" FontSize="24" Foreground="{StaticResource CyberSuccessBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#00FF41" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="BREAKS TAKEN"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
+                        <TextBlock Text="{x:Bind ViewModel.TodayBreaks, Mode=OneWay}"
+                                  FontSize="28"
+                                  FontWeight="Bold"
+                                  FontFamily="Consolas"
+                                  Foreground="#00FF41"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Hydration Card -->
+                <Border Grid.Column="2" Margin="0,0,12,0"
+                       Style="{StaticResource CyberCardStyle}"
+                       Padding="20">
+                    <StackPanel Spacing="8">
+                        <FontIcon Glyph="&#xE7B8;" FontSize="24" Foreground="{StaticResource CyberAccentBrush}">
+                            <FontIcon.Effect>
+                                <DropShadowEffect Color="#9D00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                            </FontIcon.Effect>
+                        </FontIcon>
+                        <TextBlock Text="WATER INTAKE"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  Foreground="#8A9BA8"/>
+                        <TextBlock FontSize="28" FontWeight="Bold" FontFamily="Consolas" Foreground="#9D00FF">
+                            <Run Text="{x:Bind ViewModel.TodayHydration, Mode=OneWay}"/>
+                            <Run Text="/ 8" FontSize="16" Foreground="#8A9BA8"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Quick Actions Card -->
+                <Border Grid.Column="3"
+                       Style="{StaticResource CyberCardStyle}"
+                       Padding="20">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="QUICK ACTIONS"
+                                  FontSize="12"
+                                  FontFamily="Consolas"
+                                  FontWeight="SemiBold"
+                                  Foreground="{StaticResource CyberPrimaryBrush}"/>
+                        <Button Content="⚡ TAKE BREAK"
+                               Command="{x:Bind ViewModel.QuickBreakCommand}"
+                               Style="{StaticResource CyberButtonStyle}"
+                               HorizontalAlignment="Stretch"/>
+                        <Button Content="💧 LOG WATER"
+                               Command="{x:Bind ViewModel.LogWaterIntakeCommand}"
+                               Style="{StaticResource CyberButtonStyle}"
+                               HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Productivity Section -->
+            <StackPanel Spacing="16">
+                <TextBlock Text="⚡ TODAY'S PRODUCTIVITY"
+                          FontSize="20"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberWarningBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FFB800" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Productivity Score Panel -->
+                    <local:ProductivityScorePanel Grid.Column="0"
+                                                 Summary="{x:Bind ViewModel.TodaySummary, Mode=OneWay}"
+                                                 Margin="0,0,12,0"/>
+
+                    <!-- Focus Session Panel -->
+                    <local:FocusSessionPanel Grid.Column="1"
+                                           Margin="0,0,12,0"/>
+
+                    <!-- Productivity Streak & Goals -->
+                    <Border Grid.Column="2"
+                           Style="{StaticResource CyberCardStyle}"
+                           Padding="20">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="STREAK &amp; GOALS"
+                                     FontSize="14"
+                                     FontFamily="Consolas"
+                                     FontWeight="SemiBold"
+                                     Foreground="{StaticResource CyberWarningBrush}"/>
+
+                            <!-- Streak Info -->
+                            <StackPanel Spacing="8">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE73E;"
+                                            FontSize="24"
+                                            Foreground="{StaticResource CyberWarningBrush}">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="#FFB800" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
+                                    <TextBlock VerticalAlignment="Center">
+                                        <Run Text="{x:Bind ViewModel.CurrentStreak.CurrentStreak, Mode=OneWay}"
+                                             FontSize="32"
+                                             FontWeight="Bold"
+                                             FontFamily="Consolas"
+                                             Foreground="#FFB800"/>
+                                        <Run Text=" day streak"
+                                             FontSize="14"
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock FontFamily="Consolas" Foreground="#8A9BA8">
+                                    <Run Text="Best: "/>
+                                    <Run Text="{x:Bind ViewModel.CurrentStreak.LongestStreak, Mode=OneWay}"/>
+                                    <Run Text=" days"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <!-- Active Goals -->
+                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.ActiveGoals, Mode=OneWay}"
+                                         MaxWidth="280">
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Spacing="4" Margin="0,0,0,12">
+                                            <TextBlock Text="{Binding Title}"
+                                                     FontSize="13"
+                                                     FontFamily="Consolas"
+                                                     Foreground="#00F0FF"
+                                                     TextWrapping="Wrap"/>
+                                            <ProgressBar Value="{Binding CurrentValue}"
+                                                       Maximum="{Binding TargetValue}"
+                                                       Foreground="{StaticResource CyberAccentBrush}"
+                                                       Height="6"/>
+                                            <TextBlock FontSize="11"
+                                                     FontFamily="Consolas"
+                                                     Foreground="#8A9BA8">
+                                                <Run Text="{Binding CurrentValue}"/>
+                                                <Run Text=" / "/>
+                                                <Run Text="{Binding TargetValue}"/>
+                                                <Run Text=" "/>
+                                                <Run Text="{Binding Unit}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <!-- Today's Tasks -->
+            <StackPanel Spacing="16">
+                <Grid>
+                    <TextBlock Text="📋 TODAY'S TASKS"
+                              FontSize="20"
+                              FontWeight="Bold"
+                              FontFamily="Consolas"
+                              Foreground="{StaticResource CyberSecondaryBrush}"
+                              VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#FF00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              FontFamily="Consolas"
+                              Foreground="#8A9BA8">
+                        <Run Text="{x:Bind ViewModel.TasksCompleted, Mode=OneWay}" Foreground="#00FF41"/>
+                        <Run Text=" of "/>
+                        <Run Text="{x:Bind ViewModel.TotalTasks, Mode=OneWay}"/>
+                        <Run Text=" completed"/>
+                    </TextBlock>
+                </Grid>
+
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.TodayTasks, Mode=OneWay}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CyberCardStyle}"
+                                   Padding="16"
+                                   Margin="0,0,0,8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Grid.Column="0"
+                                            IsChecked="{Binding Status, Converter={StaticResource TaskStatusToBoolConverter}}"
+                                            Margin="0,0,12,0"/>
+
+                                    <StackPanel Grid.Column="1" Spacing="4">
+                                        <TextBlock Text="{Binding Title}"
+                                                 FontSize="15"
+                                                 FontFamily="Consolas"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#00F0FF"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <Border Background="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"
+                                                   CornerRadius="0"
+                                                   BorderBrush="#00F0FF"
+                                                   BorderThickness="1"
+                                                   Padding="8,4">
+                                                <TextBlock Text="{Binding Priority}"
+                                                         FontSize="11"
+                                                         FontFamily="Consolas"
+                                                         Foreground="White"/>
+                                            </Border>
+                                            <TextBlock Text="{Binding Category}"
+                                                     FontSize="12"
+                                                     FontFamily="Consolas"
+                                                     Foreground="#8A9BA8"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <FontIcon Grid.Column="2"
+                                            Glyph="&#xE8FB;"
+                                            FontSize="16"
+                                            Foreground="{StaticResource CyberPrimaryBrush}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </StackPanel>
+
+            <!-- Recent Containers Section -->
+            <StackPanel Spacing="16">
+                <TextBlock Text="📦 FILE VAULT"
+                          FontSize="20"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberAccentBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#9D00FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <GridView ItemsSource="{x:Bind ViewModel.RecentContainers, Mode=OneWay}"
+                         SelectionMode="None">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource GlowingCardStyle}"
+                                   Width="200"
+                                   Height="140"
+                                   Padding="16">
+                                <StackPanel Spacing="12">
+                                    <FontIcon Glyph="{Binding IconGlyph}"
+                                            FontSize="32"
+                                            Foreground="{Binding Color}">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="#9D00FF" BlurRadius="15" ShadowDepth="0" Opacity="0.8"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
+                                    <TextBlock Text="{Binding Name}"
+                                             FontSize="16"
+                                             FontFamily="Consolas"
+                                             FontWeight="SemiBold"
+                                             Foreground="#00F0FF"
+                                             TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock FontSize="12"
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8">
+                                        <Run Text="{Binding Items.Count}"/>
+                                        <Run Text=" items"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </StackPanel>
+
+            <!-- Wellbeing Metrics Overview -->
+            <StackPanel Spacing="16">
+                <TextBlock Text="💚 WELLBEING METRICS"
+                          FontSize="20"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberSuccessBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00FF41" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.ActiveMetrics, Mode=OneWay}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CyberCardStyle}"
+                                   Padding="20"
+                                   Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <FontIcon Grid.Column="0"
+                                            Glyph="{Binding IconGlyph}"
+                                            FontSize="24"
+                                            Foreground="{Binding Color}"
+                                            Margin="0,0,16,0">
+                                        <FontIcon.Effect>
+                                            <DropShadowEffect Color="#00FF41" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                        </FontIcon.Effect>
+                                    </FontIcon>
+
+                                    <StackPanel Grid.Column="1" Spacing="8">
+                                        <TextBlock Text="{Binding Name}"
+                                                 FontSize="16"
+                                                 FontFamily="Consolas"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#00F0FF"/>
+                                        <ProgressBar Value="{Binding CurrentValue}"
+                                                   Maximum="{Binding MaxValue}"
+                                                   Foreground="{Binding Color}"
+                                                   Height="8"/>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                                             VerticalAlignment="Center"
+                                             Margin="16,0,0,0">
+                                        <Run Text="{Binding CurrentValue}"
+                                             FontSize="20"
+                                             FontFamily="Consolas"
+                                             FontWeight="Bold"
+                                             Foreground="{Binding Color}"/>
+                                        <Run Text="{Binding Unit}"
+                                             FontSize="14"
+                                             FontFamily="Consolas"
+                                             Foreground="#8A9BA8"/>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,119 @@
+<Window
+    x:Class="TimeLordDashboard.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    Title="⚡ TIMELORD DASHBOARD ⚡ CYBERSTEAM PROTOCOL ACTIVE">
+
+    <Grid>
+        <!-- Dark Cybersteam Background -->
+        <Grid.Background>
+            <SolidColorBrush Color="#0A0E14"/>
+        </Grid.Background>
+
+        <!-- Circuit Pattern Overlay -->
+        <Rectangle Fill="{StaticResource CircuitPatternBrush}"
+                  Opacity="0.15"/>
+
+        <!-- Scanline Effect -->
+        <Rectangle Fill="{StaticResource ScanlineBrush}"
+                  Opacity="0.08"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cybersteam Title Bar -->
+        <Grid Grid.Row="0" Background="#1A1D23" Padding="16,0">
+            <Grid.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+            </Grid.Effect>
+
+            <!-- Top Border Glow -->
+            <Border Height="2" VerticalAlignment="Top"
+                   Background="{StaticResource CyberPrimaryBrush}"
+                   Opacity="0.6"/>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <FontIcon Glyph="&#xE943;" FontSize="20" Foreground="{StaticResource CyberPrimaryBrush}">
+                    <FontIcon.Effect>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.8"/>
+                    </FontIcon.Effect>
+                </FontIcon>
+                <TextBlock Text="TimeLord Dashboard"
+                          FontSize="16"
+                          FontWeight="SemiBold"
+                          FontFamily="Consolas"
+                          Foreground="{StaticResource CyberPrimaryBrush}"
+                          VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+
+            <CommandBar Grid.Column="2"
+                       Background="Transparent"
+                       DefaultLabelPosition="Right"
+                       IsOpen="False">
+                <CommandBar.Resources>
+                    <Style TargetType="AppBarButton">
+                        <Setter Property="Foreground" Value="{StaticResource CyberPrimaryBrush}"/>
+                    </Style>
+                </CommandBar.Resources>
+                <AppBarButton Icon="Setting" Label="Settings" Click="SettingsButton_Click"/>
+                <AppBarButton Icon="Refresh" Label="Refresh" Click="RefreshButton_Click"/>
+            </CommandBar>
+        </Grid>
+
+        <!-- Cybersteam Navigation -->
+        <NavigationView Grid.Row="1"
+                       x:Name="NavView"
+                       IsBackButtonVisible="Collapsed"
+                       IsSettingsVisible="False"
+                       PaneDisplayMode="Left"
+                       SelectionChanged="NavView_SelectionChanged"
+                       PaneBackground="#0F1216"
+                       Background="#0A0E14">
+
+            <NavigationView.Resources>
+                <Style TargetType="NavigationViewItem">
+                    <Setter Property="Foreground" Value="#8A9BA8"/>
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                </Style>
+                <Style TargetType="NavigationViewItemHeader">
+                    <Setter Property="Foreground" Value="{StaticResource CyberPrimaryBrush}"/>
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                </Style>
+            </NavigationView.Resources>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="⚡ DASHBOARD" Tag="Dashboard"/>
+                <NavigationViewItem Content="📁 FILE VAULT" Tag="FileManagement">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8B7;" Foreground="{StaticResource CyberSecondaryBrush}"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="💚 WELLBEING" Tag="Wellbeing">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE95E;" Foreground="{StaticResource CyberSuccessBrush}"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="📊 ANALYTICS" Tag="Analytics">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE9D9;" Foreground="{StaticResource CyberAccentBrush}"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" Background="Transparent"/>
+        </NavigationView>
+    </Grid>
+</Window>

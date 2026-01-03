@@ -1,0 +1,97 @@
+<UserControl
+    x:Class="TimeLordDashboard.Controls.FocusSessionPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Style="{StaticResource CyberCardStyle}"
+            Padding="20"
+            MinHeight="200">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,16">
+                <TextBlock Text="⏱️ FOCUS SESSION"
+                          FontSize="14"
+                          FontFamily="Consolas"
+                          FontWeight="SemiBold"
+                          Foreground="{StaticResource CyberSecondaryBrush}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FF00FF" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock x:Name="SessionTypeText"
+                          FontSize="11"
+                          FontFamily="Consolas"
+                          Foreground="#8A9BA8"/>
+            </StackPanel>
+
+            <!-- Timer Display -->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" Spacing="12">
+                <TextBlock x:Name="TimerText"
+                          Text="25:00"
+                          FontSize="52"
+                          FontWeight="Bold"
+                          FontFamily="Consolas"
+                          TextAlignment="Center"
+                          Foreground="#FF00FF">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FF00FF" BlurRadius="15" ShadowDepth="0" Opacity="0.8"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <TextBlock x:Name="StatusText"
+                          Text="Ready to focus"
+                          FontSize="13"
+                          FontFamily="Consolas"
+                          TextAlignment="Center"
+                          Foreground="#8A9BA8"/>
+            </StackPanel>
+
+            <!-- Control Buttons -->
+            <StackPanel Grid.Row="2" Spacing="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="StartButton"
+                           Grid.Column="0"
+                           Content="▶ START"
+                           Click="StartButton_Click"
+                           Style="{StaticResource CyberButtonStyle}"
+                           HorizontalAlignment="Stretch"
+                           Margin="0,0,4,0"/>
+
+                    <Button x:Name="StopButton"
+                           Grid.Column="1"
+                           Content="⏹ STOP"
+                           Click="StopButton_Click"
+                           Style="{StaticResource CyberButtonStyle}"
+                           HorizontalAlignment="Stretch"
+                           Margin="4,0,0,0"
+                           IsEnabled="False"/>
+                </Grid>
+
+                <!-- Session Type Selector -->
+                <ComboBox x:Name="SessionTypeComboBox"
+                         Header="SESSION TYPE"
+                         SelectedIndex="0"
+                         FontFamily="Consolas"
+                         Foreground="#00F0FF"
+                         HorizontalAlignment="Stretch"
+                         SelectionChanged="SessionType_SelectionChanged">
+                    <ComboBoxItem Content="⚡ FOCUS (25 min)" Tag="25"/>
+                    <ComboBoxItem Content="☕ SHORT BREAK (5 min)" Tag="5"/>
+                    <ComboBoxItem Content="🌴 LONG BREAK (15 min)" Tag="15"/>
+                    <ComboBoxItem Content="🔥 DEEP WORK (90 min)" Tag="90"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,57 @@
+<UserControl
+    x:Class="TimeLordDashboard.Controls.MetricCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="20"
+            MinWidth="280"
+            MinHeight="180">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0">
+                <FontIcon x:Name="MetricIcon"
+                         FontSize="24"
+                         HorizontalAlignment="Left"/>
+                <TextBlock x:Name="MetricName"
+                          FontSize="16"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Right"/>
+            </Grid>
+
+            <!-- Current Value -->
+            <StackPanel Grid.Row="1"
+                       VerticalAlignment="Center"
+                       Spacing="4">
+                <TextBlock TextAlignment="Center">
+                    <Run x:Name="CurrentValueRun"
+                         FontSize="48"
+                         FontWeight="Bold"/>
+                </TextBlock>
+                <TextBlock x:Name="UnitText"
+                          FontSize="14"
+                          TextAlignment="Center"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+
+            <!-- Progress to Target -->
+            <StackPanel Grid.Row="2" Spacing="4">
+                <TextBlock FontSize="12"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                    <Run Text="Target:"/>
+                    <Run x:Name="TargetValueRun"/>
+                    <Run x:Name="TargetUnitRun"/>
+                </TextBlock>
+                <ProgressBar x:Name="ProgressBar"
+                            Height="6"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
