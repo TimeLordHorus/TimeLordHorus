@@ -154,7 +154,7 @@
                            Style="{StaticResource CyberCardStyle}"
                            Padding="20">
                         <StackPanel Spacing="16">
-                            <TextBlock Text="STREAK & GOALS"
+                            <TextBlock Text="STREAK &amp; GOALS"
                                      FontSize="14"
                                      FontFamily="Consolas"
                                      FontWeight="SemiBold"

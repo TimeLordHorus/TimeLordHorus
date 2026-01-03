@@ -9,7 +9,7 @@
         <StackPanel Padding="24" Spacing="24">
             <!-- Page Header -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Analytics & Insights"
+                <TextBlock Text="Analytics &amp; Insights"
                           FontSize="32"
                           FontWeight="SemiBold"/>
                 <TextBlock Text="Track your productivity and wellbeing trends over time"
@@ -166,7 +166,7 @@
 
             <!-- Insights Section -->
             <StackPanel Spacing="16">
-                <TextBlock Text="Insights & Recommendations"
+                <TextBlock Text="Insights &amp; Recommendations"
                           FontSize="20"
                           FontWeight="SemiBold"/>
 

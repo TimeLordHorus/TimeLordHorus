@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "Checking for XAML syntax issues..."
+echo ""
+echo "=== Checking CybersteamTheme.xaml ==="
+xmllint --noout Themes/CybersteamTheme.xaml 2>&1 || echo "Theme file has XML issues"
+echo ""
+echo "=== Checking App.xaml ==="
+xmllint --noout App.xaml 2>&1 || echo "App.xaml has XML issues"
+echo ""
+echo "=== Checking DashboardPage.xaml ==="
+xmllint --noout Views/DashboardPage.xaml 2>&1 || echo "DashboardPage has XML issues"
