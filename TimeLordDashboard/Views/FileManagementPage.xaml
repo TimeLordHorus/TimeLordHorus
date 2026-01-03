@@ -61,7 +61,7 @@
                                     FontSize="20"
                                     Margin="0,0,12,0">
                                 <FontIcon.Effect>
-                                    <DropShadowEffect Color="{Binding Color}" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                    <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
                                 </FontIcon.Effect>
                             </FontIcon>
 

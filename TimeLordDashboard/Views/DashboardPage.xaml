@@ -323,7 +323,7 @@
                                             FontSize="32"
                                             Foreground="{Binding Color}">
                                         <FontIcon.Effect>
-                                            <DropShadowEffect Color="{Binding Color}" BlurRadius="15" ShadowDepth="0" Opacity="0.8"/>
+                                            <DropShadowEffect Color="#9D00FF" BlurRadius="15" ShadowDepth="0" Opacity="0.8"/>
                                         </FontIcon.Effect>
                                     </FontIcon>
                                     <TextBlock Text="{Binding Name}"
@@ -376,7 +376,7 @@
                                             Foreground="{Binding Color}"
                                             Margin="0,0,16,0">
                                         <FontIcon.Effect>
-                                            <DropShadowEffect Color="{Binding Color}" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                            <DropShadowEffect Color="#00FF41" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
                                         </FontIcon.Effect>
                                     </FontIcon>
 
